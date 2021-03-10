@@ -1,0 +1,86 @@
+import 'dart:typed_data';
+
+import 'package:algorand_dart/src/exceptions/exceptions.dart';
+import 'package:algorand_dart/src/mnemonic/mnemonic.dart';
+import 'package:algorand_dart/src/models/models.dart';
+import 'package:convert/convert.dart';
+import 'package:cryptography/cryptography.dart';
+
+class Account {
+  final SimplePublicKey publicKey;
+
+  final SimpleKeyPair keyPair;
+
+  final Address address;
+
+  Account._create({required this.publicKey, required this.keyPair})
+      : address = new Address(publicKey: Uint8List.fromList(publicKey.bytes));
+
+  /// Create a new, random generated account.
+  static Future<Account> random() async {
+    final keyPair = await Ed25519().newKeyPair();
+    final publicKey = await keyPair.extractPublicKey();
+    final account = Account._create(publicKey: publicKey, keyPair: keyPair);
+
+    return account;
+  }
+
+  /// Load an existing account from a private key.
+  /// Private key is a hexadecimal representation of the seed.
+  ///
+  /// Throws [UnsupportedError] if seeds are unsupported.
+  static Future<Account> fromPrivateKey(String privateKey) async {
+    // TODO Derive the seed from the private key
+    final keyPair = await Ed25519().newKeyPairFromSeed(hex.decode(privateKey));
+    final publicKey = await keyPair.extractPublicKey();
+    final account = Account._create(publicKey: publicKey, keyPair: keyPair);
+
+    return account;
+  }
+
+  /// Load an existing account from an rfc8037 private key.
+  /// Seed is the binary representation of the seed.
+  ///
+  /// Throws [UnsupportedError] if seeds are unsupported.
+  static Future<Account> fromSeed(List<int> seed) async {
+    final keyPair = await Ed25519().newKeyPairFromSeed(seed);
+    final publicKey = await keyPair.extractPublicKey();
+    final account = Account._create(publicKey: publicKey, keyPair: keyPair);
+
+    return account;
+  }
+
+  /// Load an existing account from a 25-word seed phrase.
+  ///
+  /// Throws [MnemonicException] if there is an invalid mnemonic/seedphrase.
+  /// Throws [AlgorandException] if the account cannot be restored.
+  /// Throws [UnsupportedError] if seeds are unsupported.
+  static Future<Account> fromSeedPhrase(List<String> words) async {
+    // Get the seed from the mnemonic.
+    final seed = await Mnemonic.seed(words);
+    return fromSeed(seed);
+  }
+
+  /// Get the public, human readable address of the account,
+  /// also known as the Algorand address.
+  String get publicAddress => address.encodedAddress;
+
+  /// Get the 25-word seed phrase/mnemonic.
+  ///
+  /// This converts the private 32-byte key into a 25 word mnemonic.
+  /// The generated mnemonic includes a checksum.
+  /// Each word in the mnemonic represents 11 bits of data, and the last 11 bits
+  /// are reserved for the checksum.
+  ///
+  /// https://developer.algorand.org/docs/features/accounts/#transformation-private-key-to-25-word-mnemonic
+  ///
+  /// Throws [MnemonicException] when unable to create the seed phrase.
+  /// Returns the seed phrase which is a list containing 25 words.
+  Future<List<String>> get seedPhrase async {
+    // Get seed from private key
+    final privateKeyBytes = await this.keyPair.extractPrivateKeyBytes();
+
+    // Generate mnemonic from seed
+    return await Mnemonic.generate(privateKeyBytes);
+  }
+}

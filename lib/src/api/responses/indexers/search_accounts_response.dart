@@ -1,0 +1,26 @@
+import 'package:algorand_dart/src/models/models.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'search_accounts_response.g.dart';
+
+@JsonSerializable(fieldRename: FieldRename.kebab)
+class SearchAccountsResponse {
+  final int currentRound;
+  final String? nextToken;
+  @JsonKey(name: 'accounts', defaultValue: [])
+  final List<AccountInformation> accounts;
+  @JsonKey(name: 'balances', defaultValue: [])
+  final List<MiniAssetHolding> balances;
+
+  SearchAccountsResponse({
+    required this.currentRound,
+    this.nextToken,
+    required this.accounts,
+    required this.balances,
+  });
+
+  factory SearchAccountsResponse.fromJson(Map<String, dynamic> json) =>
+      _$SearchAccountsResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SearchAccountsResponseToJson(this);
+}

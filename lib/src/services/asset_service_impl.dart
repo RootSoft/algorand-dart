@@ -1,0 +1,52 @@
+part of 'asset_service.dart';
+
+class _AssetService implements AssetService {
+  _AssetService(this._dio, {this.baseUrl = null}) {
+    ArgumentError.checkNotNull(_dio, '_dio');
+  }
+
+  final dio.Dio _dio;
+
+  String? baseUrl;
+
+  @override
+  Future<SearchAssetsResponse> searchAssets(
+      Map<String, dynamic> queryParameters) async {
+    const _extra = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+      '/v2/assets',
+      queryParameters: queryParameters,
+      options: dio.RequestOptions(
+        method: 'GET',
+        headers: <String, dynamic>{},
+        extra: _extra,
+        baseUrl: baseUrl,
+      ),
+      data: _data,
+    );
+    final value = SearchAssetsResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<AssetResponse> getAssetById(int assetId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+      '/v2/assets/$assetId',
+      queryParameters: queryParameters,
+      options: dio.RequestOptions(
+        method: 'GET',
+        headers: <String, dynamic>{},
+        extra: _extra,
+        baseUrl: baseUrl,
+      ),
+      data: _data,
+    );
+    final value = AssetResponse.fromJson(_result.data);
+    return value;
+  }
+}
