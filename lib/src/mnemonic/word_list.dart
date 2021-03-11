@@ -2,7 +2,7 @@ import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/mnemonic/word_list_english.dart';
 
 class WordList {
-  static final instances = Map();
+  static final instances = <String, WordList>{};
 
   final String language;
 
@@ -12,13 +12,13 @@ class WordList {
     required this.language,
   }) {
     // Load the words and iterate over them
-    this.words = WORD_LIST_ENGLISH.split('\n');
+    words = WORD_LIST_ENGLISH.split('\n');
 
     // Drop the last word (\n) in the list
-    this.words.removeLast();
+    words.removeLast();
 
-    if (this.words.length != 2048) {
-      throw new MnemonicException(
+    if (words.length != 2048) {
+      throw MnemonicException(
         'BIP39 words list file must have precise 2048 entries',
       );
     }
@@ -29,7 +29,7 @@ class WordList {
   }
 
   static WordList getLanguage({String language = 'english'}) {
-    final instance = instances[language] ?? null;
+    final instance = instances[language];
     if (instance != null) {
       return instance;
     }

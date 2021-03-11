@@ -30,9 +30,10 @@ class Block {
   @JsonKey(name: 'transactions', defaultValue: [])
   final List<Transaction> transactions;
 
-  /// TransactionsRoot authenticates the set of transactions appearing in the block.
-  /// More specifically, it's the root of a merkle tree whose leaves are the block's Txids,
-  /// in lexicographic order.
+  /// TransactionsRoot authenticates the set of transactions appearing in
+  /// the block.
+  /// More specifically, it's the root of a merkle tree whose leaves are the
+  /// block's Txids, in lexicographic order.
   ///
   /// For the empty block, it's 0. Note that the TxnRoot does not authenticate
   /// the signatures on the transactions, only the transactions themselves.

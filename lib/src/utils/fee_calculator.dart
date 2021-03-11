@@ -3,12 +3,15 @@ import 'package:algorand_dart/src/utils/encoders/msgpack_encoder.dart';
 
 class FeeCalculator {
   /// Calculate the total fee for a transaction.
-  /// This value is multiplied by the estimated size of the transaction in bytes to determine the total transaction fee.
-  /// If the result is less than the minimum fee, the minimum fee is used instead.
+  /// This value is multiplied by the estimated size of the transaction in
+  /// bytes to determine the total transaction fee.
+  ///
+  /// If the result is less than the minimum fee, the minimum fee is used
+  /// instead.
   static Future<int> calculateFeePerByte(
       RawTransaction transaction, int suggestedFeePerByte) async {
     final transactionSize = await estimateTransactionSize(transaction);
-    int transactionFee = suggestedFeePerByte * transactionSize;
+    var transactionFee = suggestedFeePerByte * transactionSize;
 
     // Check min fee
     if (transactionFee < RawTransaction.MIN_TX_FEE_UALGOS) {
@@ -19,11 +22,14 @@ class FeeCalculator {
   }
 
   /// Calculate the total fee for a transaction.
-  /// This value is multiplied by the estimated size of the transaction in bytes to determine the total transaction fee.
-  /// If the result is less than the minimum fee, the minimum fee is used instead.
+  /// This value is multiplied by the estimated size of the transaction in
+  /// bytes to determine the total transaction fee.
+  ///
+  /// If the result is less than the minimum fee, the minimum fee is used
+  /// instead.
   static Future<int> calculateTransactionFee(
       int transactionSize, int suggestedFeePerByte) async {
-    int transactionFee = suggestedFeePerByte * transactionSize;
+    var transactionFee = suggestedFeePerByte * transactionSize;
 
     // Check min fee
     if (transactionFee < RawTransaction.MIN_TX_FEE_UALGOS) {
@@ -33,8 +39,11 @@ class FeeCalculator {
     return transactionFee;
   }
 
-  /// Returns the estimated encoded size of the transaction, including the signature.
-  /// This function is useful for calculating the fee from suggested fee per byte.
+  /// Returns the estimated encoded size of the transaction, including
+  /// the signature.
+  ///
+  /// This function is useful for calculating the fee from suggested
+  /// fee per byte.
   ///
   /// Returns an estimated byte size for the transaction.
   static Future<int> estimateTransactionSize(RawTransaction transaction) async {

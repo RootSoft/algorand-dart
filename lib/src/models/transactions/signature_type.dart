@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
 enum SignatureType {
-  @JsonValue("sig")
+  @JsonValue('sig')
   STANDARD,
-  @JsonValue("msig")
+  @JsonValue('msig')
   MULTI,
-  @JsonValue("lsig")
+  @JsonValue('lsig')
   LOGIC,
 }
 

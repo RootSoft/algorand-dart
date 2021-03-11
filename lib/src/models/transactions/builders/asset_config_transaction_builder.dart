@@ -10,9 +10,11 @@ class AssetConfigTransactionBuilder
 
   /// The total number of base units of the asset to create.
   /// This number cannot be changed. Required on creation.
-  int? _total;
+  int? totalAssetsToCreate;
 
-  /// The number of digits to use after the decimal point when displaying the asset.
+  /// The number of digits to use after the decimal point when displaying
+  /// the asset.
+  ///
   /// If 0, the asset is not divisible.
   /// If 1, the base unit of the asset is in tenths.
   /// If 2, the base unit of the asset is in hundredths.
@@ -70,14 +72,6 @@ class AssetConfigTransactionBuilder
   bool destroy = false;
 
   AssetConfigTransactionBuilder() : super(TransactionType.ASSET_CONFIG);
-
-  /// The total number of base units of the asset to create.
-  /// This number cannot be changed. Required on creation.
-  int? get totalAssetsToCreate => _total;
-
-  set totalAssetsToCreate(int? value) {
-    _total = value;
-  }
 
   @override
   Future<int> estimatedTransactionSize() async {

@@ -47,7 +47,7 @@ class Mnemonic {
 
   Mnemonic._create({this.wordCount = ALGORAND_WORD_COUNT}) {
     if (wordCount != ALGORAND_WORD_COUNT) {
-      throw new MnemonicException('Mnemonic words count must be 25');
+      throw MnemonicException('Mnemonic words count must be 25');
     }
   }
 
@@ -84,13 +84,12 @@ class Mnemonic {
 
   Mnemonic useEntropy(List<int> entropy) {
     // Validate the entropy
-    if (entropy.length != 32)
-      throw new MnemonicException('Invalid entropy length');
+    if (entropy.length != 32) throw MnemonicException('Invalid entropy length');
 
     final entropyBits = Uint8List.fromList(entropy);
     this.entropy = entropyBits;
-    this.checksum = _checksum(entropyBits);
-    this.binaryChunks = toUint11List(entropyBits);
+    checksum = _checksum(entropyBits);
+    binaryChunks = toUint11List(entropyBits);
 
     return this;
   }
@@ -115,29 +114,30 @@ class Mnemonic {
     final binaryChunks = <int>[];
 
     // Get the index for each (11-bit) word
-    words.forEach((word) {
+    for (var word in words) {
       final index = wordList.findIndex(word);
       binaryChunks.add(index);
-    });
+    }
 
     // 11 bit binary chunks to 8 bit
     final bytes = toUint8List(binaryChunks);
 
     if (bytes.length != KEY_LEN_BYTES + 1) {
-      throw new MnemonicException('Wrong key length');
+      throw MnemonicException('Wrong key length');
     }
 
     if (bytes[KEY_LEN_BYTES] != 0) {
-      throw new MnemonicException('Unexpected byte from key');
+      throw MnemonicException('Unexpected byte from key');
     }
 
-    // Chop the last byte. The last byte was 3 bits, padded with 8 bits to create the 24th word.
+    // Chop the last byte.
+    // The last byte was 3 bits, padded with 8 bits to create the 24th word.
     final entropyBits = bytes.sublist(0, KEY_LEN_BYTES);
 
     // Checksum validation
     final computedChecksum = _checksumWord(entropyBits);
     if (checksumWord != computedChecksum) {
-      throw new MnemonicException('Checksums do not match.');
+      throw MnemonicException('Checksums do not match.');
     }
 
     return entropyBits;
@@ -148,8 +148,7 @@ class Mnemonic {
   /// Throws [MnemonicException] if a mnemonic cannot be created.
   /// Returns the seed phrase as list of words.
   List<String> mnemonic() {
-    if (this.entropy == null)
-      throw MnemonicException('Entropy is not defined.');
+    if (entropy == null) throw MnemonicException('Entropy is not defined.');
 
     final checksum = this.checksum;
     if (checksum == null) throw MnemonicException('Checksum is not defined.');
@@ -157,10 +156,15 @@ class Mnemonic {
     final wordList = this.wordList;
     if (wordList == null) throw MnemonicException('Word list is not defined.');
 
+    final binaryChunks = this.binaryChunks;
+    if (binaryChunks == null) {
+      throw MnemonicException('Binary chunks not defined');
+    }
+
     final words = <String>[];
-    binaryChunks?.forEach((index) {
+    for (var index in binaryChunks) {
       words.add(wordList.getWord(index));
-    });
+    }
 
     // Checksum
     final checksumIndex = toUint11List(checksum)[0];
@@ -188,21 +192,21 @@ class Mnemonic {
   ///  Convert a bytearray to an list of 11-bit numbers.
   List<int> toUint11List(Uint8List data) {
     var buffer = 0;
-    var num_of_bits = 0;
+    var numOfBits = 0;
     var output = <int>[];
 
     for (var i in data) {
-      buffer |= i << num_of_bits;
-      num_of_bits += 8;
+      buffer |= i << numOfBits;
+      numOfBits += 8;
 
-      if (num_of_bits >= 11) {
+      if (numOfBits >= 11) {
         output.add(buffer & 2047);
         buffer = buffer >> 11;
-        num_of_bits -= 11;
+        numOfBits -= 11;
       }
     }
 
-    if (num_of_bits != 0) {
+    if (numOfBits != 0) {
       output.add(buffer & 2047);
     }
 
@@ -212,21 +216,21 @@ class Mnemonic {
   /// Convert a list of 11-bit numbers to a bytearray.
   Uint8List toUint8List(List<int> nums) {
     var buffer = 0;
-    var num_of_bits = 0;
+    var numOfBits = 0;
     var output = <int>[];
 
     for (var i in nums) {
-      buffer |= i << num_of_bits;
-      num_of_bits += 11;
+      buffer |= i << numOfBits;
+      numOfBits += 11;
 
-      while (num_of_bits >= 8) {
+      while (numOfBits >= 8) {
         output.add(buffer & 255);
         buffer = buffer >> 8;
-        num_of_bits -= 8;
+        numOfBits -= 8;
       }
     }
 
-    if (num_of_bits != 0) {
+    if (numOfBits != 0) {
       output.add(buffer & 255);
     }
 

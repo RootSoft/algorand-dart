@@ -23,7 +23,7 @@ abstract class AccountService extends ApiService {
   //@GET("/v2/accounts/{accountId}")
   Future<AccountResponse> getAccountById(
     /*@Path('accountId')*/ String accountId, {
-    /*@Query('round')*/ int? round = null,
+    /*@Query('round')*/ int? round,
   });
 
   //@GET("/v2/assets/{assetId}/balances")

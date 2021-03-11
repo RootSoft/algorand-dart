@@ -20,7 +20,7 @@ class AccountRepository {
     try {
       return await accountService.getAccountByAddress(address);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 }

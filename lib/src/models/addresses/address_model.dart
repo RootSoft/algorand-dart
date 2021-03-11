@@ -38,9 +38,10 @@ class Address extends Equatable {
   ///  may not be compatible.
   static String encodeAddress(Uint8List publicKey) {
     // Sanitize public key length
-    if (publicKey.length != PUBLIC_KEY_LENGTH)
-      throw new AlgorandException(
-          message: "Public key is an invalid address. Wrong length");
+    if (publicKey.length != PUBLIC_KEY_LENGTH) {
+      throw AlgorandException(
+          message: 'Public key is an invalid address. Wrong length');
+    }
 
     // Compute the hash using sha512/256
     final digest = sha512256.convert(publicKey);
@@ -61,9 +62,10 @@ class Address extends Equatable {
     final addressBytes = base32.decode(address);
 
     // Sanity length check
-    if (addressBytes.length != PUBLIC_KEY_LENGTH + CHECKSUM_BYTE_LENGTH)
-      throw new AlgorandException(
-          message: "Input string is an invalid address. Wrong length");
+    if (addressBytes.length != PUBLIC_KEY_LENGTH + CHECKSUM_BYTE_LENGTH) {
+      throw AlgorandException(
+          message: 'Input string is an invalid address. Wrong length');
+    }
 
     // Find the public key & checksum
     final publicKey = addressBytes.sublist(0, PUBLIC_KEY_LENGTH);
@@ -76,9 +78,10 @@ class Address extends Equatable {
         .bytes
         .sublist(PUBLIC_KEY_LENGTH - CHECKSUM_BYTE_LENGTH);
 
-    if (!ListEquality().equals(computedChecksum, checksum))
-      throw new AlgorandException(
+    if (!const ListEquality().equals(computedChecksum, checksum)) {
+      throw AlgorandException(
           message: 'Invalid Algorand address. Checksums do not match.');
+    }
 
     return publicKey;
   }

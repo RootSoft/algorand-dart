@@ -1,7 +1,7 @@
 part of 'indexer_service.dart';
 
 class _IndexerService implements IndexerService {
-  _IndexerService(this._dio, {this.baseUrl = null}) {
+  _IndexerService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
   }
 
@@ -17,15 +17,14 @@ class _IndexerService implements IndexerService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/health',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = IndexerHealth.fromJson(_result.data);
+    final value = IndexerHealth.fromJson(_result.data!);
     return value;
   }
 
@@ -38,15 +37,14 @@ class _IndexerService implements IndexerService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/transactions',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = SearchTransactionsResponse.fromJson(_result.data);
+    final value = SearchTransactionsResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -60,15 +58,14 @@ class _IndexerService implements IndexerService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/accounts/$accountId/transactions',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = SearchTransactionsResponse.fromJson(_result.data);
+    final value = SearchTransactionsResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -82,15 +79,14 @@ class _IndexerService implements IndexerService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/assets/$assetId/transactions',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = SearchTransactionsResponse.fromJson(_result.data);
+    final value = SearchTransactionsResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -103,15 +99,14 @@ class _IndexerService implements IndexerService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/transactions/$transactionId',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = TransactionResponse.fromJson(_result.data);
+    final value = TransactionResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -124,15 +119,14 @@ class _IndexerService implements IndexerService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/blocks/$round',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = Block.fromJson(_result.data);
+    final value = Block.fromJson(_result.data!);
     return value;
   }
 }

@@ -11,5 +11,5 @@ class AddressTransformer implements MessagePackConverter<Address?, Uint8List?> {
       Address(publicKey: Uint8List(32));
 
   @override
-  Uint8List? toMessagePack(Address? address) => address?.publicKey ?? null;
+  Uint8List? toMessagePack(Address? address) => address?.publicKey;
 }

@@ -26,7 +26,7 @@ class TransactionRepository {
     try {
       return await transactionService.getSuggestedTransactionParams();
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -51,7 +51,7 @@ class TransactionRepository {
 
       return response.transactionId;
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -62,7 +62,7 @@ class TransactionRepository {
   /// Returns the id of the transaction.
   Future<String> sendTransactions(List<SignedTransaction> transactions) async {
     final txWriter = ByteDataWriter();
-    for (SignedTransaction transaction in transactions) {
+    for (var transaction in transactions) {
       txWriter.write(Encoder.encodeMessagePack(transaction.toMessagePack()));
     }
 
@@ -71,7 +71,7 @@ class TransactionRepository {
           await transactionService.sendTransaction(txWriter.toBytes());
       return response.transactionId;
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -90,12 +90,12 @@ class TransactionRepository {
       return await transactionService.getPendingTransactionsByAddress(address,
           max: max);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
-  /// Get the list of pending transactions, sorted by priority, in decreasing order,
-  /// truncated at the end at MAX.
+  /// Get the list of pending transactions, sorted by priority,
+  /// in decreasing order, truncated at the end at MAX.
   ///
   /// If MAX = 0, returns all pending transactions.
   ///
@@ -107,19 +107,23 @@ class TransactionRepository {
     try {
       return await transactionService.getPendingTransactions(max: max);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
   /// Get a specific pending transaction.
   ///
-  /// Given a transaction id of a recently submitted transaction, it returns information about it.
+  /// Given a transaction id of a recently submitted transaction, it returns
+  /// information about it.
+  ///
   /// There are several cases when this might succeed:
   /// - transaction committed (committed round > 0)
   /// - transaction still in the pool (committed round = 0, pool error = "")
-  /// - transaction removed from pool due to error (committed round = 0, pool error != "")
+  /// - transaction removed from pool due to error
+  /// (committed round = 0, pool error != "")
   ///
-  /// Or the transaction may have happened sufficiently long ago that the node no longer remembers it, and this will return an error.
+  /// Or the transaction may have happened sufficiently long ago that the node
+  /// no longer remembers it, and this will return an error.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the pending transaction.
@@ -129,12 +133,13 @@ class TransactionRepository {
     try {
       return await transactionService.getPendingTransactionById(transactionId);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
   /// Utility function to wait on a transaction to be confirmed.
-  /// The timeout parameter indicates how many rounds do you wish to check pending transactions for.
+  /// The timeout parameter indicates how many rounds do you wish to check
+  /// pending transactions for.
   ///
   /// On Algorand, transactions are final as soon as they are incorporated into
   /// a block and blocks are produced, on average, every 5 seconds.
@@ -147,7 +152,7 @@ class TransactionRepository {
     try {
       final status = await nodeService.status();
       final startRound = status.lastRound + 1;
-      int currentRound = startRound;
+      var currentRound = startRound;
 
       while (currentRound < (startRound + timeout)) {
         final pending = await getPendingTransactionById(transactionId);
@@ -160,7 +165,7 @@ class TransactionRepository {
         currentRound++;
       }
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
 
     throw AlgorandException(

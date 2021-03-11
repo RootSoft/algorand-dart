@@ -7,12 +7,6 @@ class AssetQueryBuilder extends QueryBuilder<AssetQueryBuilder> {
 
   AssetQueryBuilder({required this.indexerRepository});
 
-  /// Include results with the given asset id.
-  AssetQueryBuilder whereAssetId(int assetId) {
-    addQueryParameter('asset-id', assetId);
-    return this;
-  }
-
   /// Filter just assets with the given creator address.
   AssetQueryBuilder whereCreator(String creator) {
     addQueryParameter('creator', creator);
@@ -32,7 +26,7 @@ class AssetQueryBuilder extends QueryBuilder<AssetQueryBuilder> {
   }
 
   /// Perform the query and fetch the transactions.
-  Future<SearchAssetsResponse> search({int? limit = null}) async {
+  Future<SearchAssetsResponse> search({int? limit}) async {
     if (limit != null) {
       this.limit(limit);
     }

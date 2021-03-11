@@ -82,21 +82,21 @@ class NodeStatus implements Equatable {
 
   @override
   List<Object?> get props => [
-        this.catchupTime,
-        this.lastRound,
-        this.lastVersion,
-        this.nextVersion,
-        this.nextVersionRound,
-        this.nextVersionSupported,
-        this.stoppedAtUnsupportedRound,
-        this.timeSinceLastRound,
-        this.catchpoint,
-        this.catchpointAcquiredBlocks,
-        this.catchpointProcessedAccounts,
-        this.catchpointTotalAccounts,
-        this.catchpointTotalBlocks,
-        this.catchpointVerifiedAccounts,
-        this.lastCatchpoint,
+        catchupTime,
+        lastRound,
+        lastVersion,
+        nextVersion,
+        nextVersionRound,
+        nextVersionSupported,
+        stoppedAtUnsupportedRound,
+        timeSinceLastRound,
+        catchpoint,
+        catchpointAcquiredBlocks,
+        catchpointProcessedAccounts,
+        catchpointTotalAccounts,
+        catchpointTotalBlocks,
+        catchpointVerifiedAccounts,
+        lastCatchpoint,
       ];
 
   @override

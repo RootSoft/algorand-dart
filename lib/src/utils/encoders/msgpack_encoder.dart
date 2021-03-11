@@ -12,7 +12,8 @@ class Encoder {
     data.forEach((key, value) {
       var v = value;
       if (data[key] is Map<String, dynamic>) {
-        v = prepareMessagePack(data[key]);
+        final x = data[key] as Map<String, dynamic>;
+        v = prepareMessagePack(x);
       }
       sanitizedMap[key] = v;
     });

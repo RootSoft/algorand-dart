@@ -11,7 +11,8 @@ class AccountInformation {
   /// total number of MicroAlgos in the account
   final int amount;
 
-  /// specifies the amount of MicroAlgos in the account, without the pending rewards.
+  /// specifies the amount of MicroAlgos in the account, without the pending
+  /// rewards.
   final int amountWithoutPendingRewards;
 
   /// Round during which this account first appeared in a transaction.
@@ -36,9 +37,10 @@ class AccountInformation {
   final int round;
 
   /// Delegation status of the account's MicroAlgos
-  /// * Offline - indicates that the associated account is delegated.
-  /// * Online - indicates that the associated account used as part of the delegation pool.
-  /// * NotParticipating - indicates that the associated account is neither a delegator nor a delegate.
+  /// * Offline - the associated account is delegated.
+  /// * Online - the associated account used as part of the delegation pool.
+  /// * NotParticipating - the associated account is neither a delegator nor a
+  /// delegate.
   final String status;
 
   /// Round during which this account was most recently closed.
@@ -65,10 +67,12 @@ class AccountInformation {
   @JsonKey(name: 'apps-local-state', defaultValue: [])
   final List<ApplicationLocalState> appsLocalState;
 
-  ///  stores the sum of all of the local schemas and global schemas in this account.
+  ///  stores the sum of all of the local schemas and global schemas in this
+  ///  account.
   final ApplicationStateSchema? appsTotalSchema;
 
-  /// parameters of applications created by this account including app global data.
+  /// parameters of applications created by this account including app global
+  /// data.
   @JsonKey(name: 'created-apps', defaultValue: [])
   final List<Application> createdApps;
 

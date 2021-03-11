@@ -24,7 +24,8 @@ class AlgorandIndexer {
   }
 
   /// Allow searching all transactions that have occurred on the blockchain.
-  /// This call contains many parameters to refine the search for specific values.
+  /// This call contains many parameters to refine the search for specific
+  /// values.
   TransactionQueryBuilder transactions() {
     return TransactionQueryBuilder(
       indexerRepository: _indexerRepository,
@@ -32,7 +33,8 @@ class AlgorandIndexer {
   }
 
   /// Allow searching all assets that have occurred on the blockchain.
-  /// This call contains many parameters to refine the search for specific values.
+  /// This call contains many parameters to refine the search for specific
+  /// values.
   AssetQueryBuilder assets() {
     return AssetQueryBuilder(
       indexerRepository: _indexerRepository,
@@ -40,7 +42,8 @@ class AlgorandIndexer {
   }
 
   /// Allow searching all accounts that have occurred on the blockchain.
-  /// This call contains many parameters to refine the search for specific values.
+  /// This call contains many parameters to refine the search for specific
+  /// values.
   AccountQueryBuilder accounts() {
     return AccountQueryBuilder(
       indexerRepository: _indexerRepository,
@@ -53,7 +56,7 @@ class AlgorandIndexer {
   /// Returns the account information for the given account id.
   Future<AccountResponse> getAccountById(
     String accountId, {
-    int? round = null,
+    int? round,
   }) async {
     return _indexerRepository.getAccountById(accountId, round: round);
   }

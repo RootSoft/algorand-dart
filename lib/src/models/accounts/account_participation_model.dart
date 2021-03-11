@@ -16,7 +16,8 @@ class AccountParticipation {
   /// Last round for which this participation is valid.
   final int voteLastValid;
 
-  /// root participation public key (if any) currently registered for this round.
+  /// root participation public key (if any) currently registered for
+  /// this round.
   final String voteParticipationKey;
 
   AccountParticipation({

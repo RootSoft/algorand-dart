@@ -34,7 +34,7 @@ class SignedTransaction {
   /// transaction to it.
   Future<File> export(String filePath) async {
     final encodedTransaction = Encoder.encodeMessagePack(toMessagePack());
-    return new File(filePath).writeAsBytes(encodedTransaction);
+    return File(filePath).writeAsBytes(encodedTransaction);
   }
 
   factory SignedTransaction.fromJson(Map<String, dynamic> json) =>

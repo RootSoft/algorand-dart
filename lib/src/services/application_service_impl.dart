@@ -1,7 +1,7 @@
 part of 'application_service.dart';
 
 class _ApplicationService implements ApplicationService {
-  _ApplicationService(this._dio, {this.baseUrl = null}) {
+  _ApplicationService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
   }
 
@@ -16,14 +16,14 @@ class _ApplicationService implements ApplicationService {
     //final _data = Stream.fromIterable(sourceCode.map((i) => [i]));
     final _result = await _dio.request<Map<String, dynamic>>('/v2/teal/compile',
         queryParameters: queryParameters,
-        options: dio.RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{r'Content-Type': 'application/x-binary'},
-            extra: _extra,
-            contentType: 'application/x-binary',
-            baseUrl: baseUrl),
+        options: dio.Options(
+          method: 'POST',
+          headers: <String, dynamic>{r'Content-Type': 'application/x-binary'},
+          extra: _extra,
+          contentType: 'application/x-binary',
+        ),
         data: sourceCode);
-    final value = TealCompilation.fromJson(_result.data);
+    final value = TealCompilation.fromJson(_result.data!);
     return value;
   }
 }

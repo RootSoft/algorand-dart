@@ -12,7 +12,8 @@ class ApplicationParams {
   final String? clearStateProgram;
 
   /// The address that created this application.
-  /// This is the address where the parameters and global state for this application can be found.
+  /// This is the address where the parameters and global state for this
+  /// application can be found.
   final String? creator;
 
   /// global schema

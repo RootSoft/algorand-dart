@@ -49,7 +49,7 @@ packages:
       name: buffer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0-nullsafety.0"
+    version: "1.1.0"
   build:
     dependency: transitive
     description:
@@ -168,7 +168,7 @@ packages:
       name: cryptography
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-nullsafety.2"
+    version: "2.0.1"
   dart_style:
     dependency: transitive
     description:
@@ -182,7 +182,7 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.10"
+    version: "4.0.0-beta7"
   equatable:
     dependency: "direct main"
     description:
@@ -231,7 +231,7 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.4"
+    version: "4.0.0"
   io:
     dependency: transitive
     description:
@@ -287,7 +287,7 @@ packages:
       name: msgpack_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.7"
+    version: "1.0.0"
   node_preamble:
     dependency: transitive
     description:
@@ -310,12 +310,12 @@ packages:
     source: hosted
     version: "1.8.0"
   pedantic:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.0"
+    version: "1.11.0"
   pool:
     dependency: transitive
     description:
@@ -343,7 +343,7 @@ packages:
       name: shelf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.9"
+    version: "1.0.0"
   shelf_packages_handler:
     dependency: transitive
     description:
@@ -414,13 +414,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  string_validator:
-    dependency: "direct main"
-    description:
-      name: string_validator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0-nullsafety.0"
   term_glyph:
     dependency: transitive
     description:
@@ -499,4 +492,4 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.12.0-29.10.beta <3.0.0"
+  dart: ">=2.12.0 <3.0.0"

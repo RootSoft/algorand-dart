@@ -15,12 +15,13 @@ class ApplicationRepository {
   /// Given TEAL source code in plain text, return base64 encoded program bytes
   /// and base32 SHA512_256 hash of program bytes (Address style).
   ///
-  /// This endpoint is only enabled when a node's configureation file sets EnableDeveloperAPI to true.
+  /// This endpoint is only enabled when a node's configureation file sets
+  /// EnableDeveloperAPI to true.
   Future<TealCompilation> compileTEAL(String sourceCode) async {
     try {
       return await applicationService.compileTEAL(sourceCode);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 }

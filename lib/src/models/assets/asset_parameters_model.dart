@@ -7,7 +7,8 @@ class AssetParameters {
   /// The total number of units of this asset.
   final int total;
 
-  /// The number of digits to use after the decimal point when displaying this asset.
+  /// The number of digits to use after the decimal point when displaying
+  /// this asset.
   ///
   /// If 0, the asset is not divisible.
   /// If 1, the base unit of the asset is in tenths.
@@ -21,7 +22,8 @@ class AssetParameters {
   /// The address that created this asset.
   ///
   /// This is the address where the parameters for this asset can be found,
-  /// and also the address where unwanted asset units can be sent in the worst case.
+  /// and also the address where unwanted asset units can be sent in the
+  /// worst case.
   final String creator;
 
   /// Address of account used to clawback holdings of this asset.
@@ -37,7 +39,8 @@ class AssetParameters {
   /// If empty, freezing is not permitted.
   final String? freeze;
 
-  /// Address of account used to manage the keys of this asset and to destroy it.
+  /// Address of account used to manage the keys of this asset and to
+  /// destroy it.
   final String? manager;
 
   /// Name of this asset, as supplied by the creator.

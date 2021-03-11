@@ -40,7 +40,7 @@ class AtomicTransfer {
     // Calculate the group id and assign to each transaction
     final groupId = computeGroupId(transactions);
     final groupedTransactions = <RawTransaction>[];
-    for (RawTransaction transaction in transactions) {
+    for (var transaction in transactions) {
       if (address == null || address == transaction.sender) {
         transaction.assignGroupId(groupId);
         groupedTransactions.add(transaction);
@@ -52,17 +52,18 @@ class AtomicTransfer {
 
   /// Compute the group id of the transactions.
   static Uint8List computeGroupId(List<RawTransaction> transactions) {
-    if (transactions.length == 0) {
+    if (transactions.isEmpty) {
       throw AlgorandException(message: 'Empty transaction list');
     }
 
-    if (transactions.length > MAX_TRANSACTION_GROUP_SIZE)
+    if (transactions.length > MAX_TRANSACTION_GROUP_SIZE) {
       throw AlgorandException(
-          message: "Max. group size is $MAX_TRANSACTION_GROUP_SIZE");
+          message: 'Max. group size is $MAX_TRANSACTION_GROUP_SIZE');
+    }
 
     // Calculate the transaction ids for every transaction
     final transactionIds = <Uint8List>[];
-    for (RawTransaction transaction in transactions) {
+    for (var transaction in transactions) {
       transactionIds.add(transaction.rawId);
     }
 

@@ -17,17 +17,20 @@ abstract class AlgorandClient {
     required this.apiUrl,
     required this.apiKey,
     required this.tokenKey,
+    bool debug = false,
   }) {
-    BaseOptions options = new BaseOptions(
+    final options = BaseOptions(
       baseUrl: apiUrl,
-      connectTimeout: Duration(seconds: 30).inMilliseconds,
-      receiveTimeout: Duration(seconds: 30).inMilliseconds,
+      connectTimeout: const Duration(seconds: 30).inMilliseconds,
+      receiveTimeout: const Duration(seconds: 30).inMilliseconds,
       headers: {
         tokenKey: apiKey,
       },
     );
 
     client = Dio(options);
-    client.interceptors.add(LogInterceptor());
+    if (debug) {
+      client.interceptors.add(LogInterceptor());
+    }
   }
 }

@@ -20,7 +20,8 @@ part 'raw_transaction_model.g.dart';
 /// broadcast to the network.
 ///
 /// Algorand's msgpack encoding follows to following rules -
-///  1. Every integer must be encoded to the smallest type possible (0-255->8bit, 256-65535->16bit, etx)
+///  1. Every integer must be encoded to the smallest type possible
+///  (0-255->8bit, 256-65535->16bit, etx)
 ///  2. All fields names must be sorted
 ///  3. All empty and 0 fields should be omitted
 ///  4. Every positive number must be encoded as uint
@@ -40,7 +41,8 @@ class RawTransaction {
   final int? fee;
 
   /// The first round for when the transaction is valid.
-  /// If the transaction is sent prior to this round it will be rejected by the network.
+  /// If the transaction is sent prior to this round it will be rejected by
+  /// the network.
   @JsonKey(name: 'fv')
   final int? firstValid;
 
@@ -127,7 +129,7 @@ class RawTransaction {
   /// This creates a new File with the given filePath and streams the encoded
   /// transaction to it.
   Future<File> export(String filePath) async {
-    return new File(filePath).writeAsBytes(getEncodedTransaction());
+    return File(filePath).writeAsBytes(getEncodedTransaction());
   }
 
   /// Assign a group id to this transaction.
@@ -135,13 +137,13 @@ class RawTransaction {
   ///
   /// This is used for Atomic Transfers.
   void assignGroupId(Uint8List groupId) {
-    this.group = groupId;
+    group = groupId;
   }
 
   /// Sign the transaction with the given account.
   ///
-  /// If the SK's corresponding address is different than the txn sender's, the SK's
-  /// corresponding address will be assigned as AuthAddr.
+  /// If the SK's corresponding address is different than the txn sender's,
+  /// the SK's corresponding address will be assigned as AuthAddr.
   Future<SignedTransaction> sign(Account account) async {
     // Get the encoded transaction
     final encodedTransaction = getEncodedTransaction();

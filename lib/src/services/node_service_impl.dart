@@ -1,7 +1,7 @@
 part of 'node_service.dart';
 
 class _NodeService implements NodeService {
-  _NodeService(this._dio, {this.baseUrl = null}) {
+  _NodeService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
   }
 
@@ -16,14 +16,13 @@ class _NodeService implements NodeService {
     final _data = <String, dynamic>{};
     final _result = await _dio.request<String>('/genesis',
         queryParameters: queryParameters,
-        options: RequestOptions(
+        options: Options(
           method: 'GET',
           headers: <String, dynamic>{},
           extra: _extra,
-          baseUrl: baseUrl,
         ),
         data: _data);
-    final value = _result.data;
+    final value = _result.data!;
     return value;
   }
 
@@ -34,11 +33,10 @@ class _NodeService implements NodeService {
     final _data = <String, dynamic>{};
     await _dio.request<void>('/health',
         queryParameters: queryParameters,
-        options: RequestOptions(
+        options: Options(
           method: 'GET',
           headers: <String, dynamic>{},
           extra: _extra,
-          baseUrl: baseUrl,
         ),
         data: _data);
     return null;
@@ -52,15 +50,14 @@ class _NodeService implements NodeService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/status',
       queryParameters: queryParameters,
-      options: RequestOptions(
+      options: Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = NodeStatus.fromJson(_result.data);
+    final value = NodeStatus.fromJson(_result.data!);
     return value;
   }
 
@@ -73,15 +70,14 @@ class _NodeService implements NodeService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/status/wait-for-block-after/$roundId',
       queryParameters: queryParameters,
-      options: RequestOptions(
+      options: Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = NodeStatus.fromJson(_result.data);
+    final value = NodeStatus.fromJson(_result.data!);
     return value;
   }
 
@@ -93,15 +89,14 @@ class _NodeService implements NodeService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/ledger/supply',
       queryParameters: queryParameters,
-      options: RequestOptions(
+      options: Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = LedgerSupply.fromJson(_result.data);
+    final value = LedgerSupply.fromJson(_result.data!);
     return value;
   }
 }

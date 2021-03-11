@@ -29,7 +29,7 @@ class AccountQueryBuilder extends QueryBuilder<AccountQueryBuilder> {
   }
 
   /// Perform the query and fetch the transactions.
-  Future<SearchAccountsResponse> search({int? limit = null}) async {
+  Future<SearchAccountsResponse> search({int? limit}) async {
     if (limit != null) {
       this.limit(limit);
     }

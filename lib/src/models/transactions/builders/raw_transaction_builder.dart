@@ -13,15 +13,18 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
   /// Paid by the sender to the FeeSink to prevent denial-of-service.
   /// The minimum fee on Algorand is currently 1000 microAlgos.
   /// This field cannot be combined with flat fee.
-  int? _suggestedFeePerByte;
+  int? suggestedFeePerByte;
 
-  /// This value will be used for the transaction fee, or 1000, whichever is higher.
+  /// This value will be used for the transaction fee, or 1000,
+  /// whichever is higher.
+  ///
   /// This field cannot be combined with fee.
   /// The minimum fee on Algorand is currently 1000 microAlgos.
-  int? _flatFee;
+  int? flatFee;
 
   /// The first round for when the transaction is valid.
-  /// If the transaction is sent prior to this round it will be rejected by the network.
+  /// If the transaction is sent prior to this round it will be rejected by
+  /// the network.
   int? firstValid;
 
   /// The hash of the genesis block of the network for which the transaction
@@ -89,25 +92,6 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
   }
 
   int get fee => _fee;
-
-  int? get flatFee => _flatFee;
-
-  int? get suggestedFeePerByte => _suggestedFeePerByte;
-
-  /// Set the fee per bytes value (in microAlgos).
-  /// This value is multiplied by the estimated size of the transaction to reach a final transaction fee, or 1000,
-  /// whichever is higher.
-  /// This field cannot be combined with flatFee.
-  set suggestedFeePerByte(int? value) {
-    _suggestedFeePerByte = value;
-  }
-
-  /// Set the flat fee (in microAlgos).
-  /// This value will be used for the transaction fee, or 1000, whichever is higher.
-  /// This field cannot be combined with fee.
-  set flatFee(int? value) {
-    _flatFee = value;
-  }
 
   Future<int> estimatedTransactionSize();
 

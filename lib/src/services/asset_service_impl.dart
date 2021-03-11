@@ -1,7 +1,7 @@
 part of 'asset_service.dart';
 
 class _AssetService implements AssetService {
-  _AssetService(this._dio, {this.baseUrl = null}) {
+  _AssetService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
   }
 
@@ -17,15 +17,14 @@ class _AssetService implements AssetService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/assets',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = SearchAssetsResponse.fromJson(_result.data);
+    final value = SearchAssetsResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -38,15 +37,14 @@ class _AssetService implements AssetService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/assets/$assetId',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = AssetResponse.fromJson(_result.data);
+    final value = AssetResponse.fromJson(_result.data!);
     return value;
   }
 }

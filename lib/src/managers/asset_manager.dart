@@ -34,10 +34,10 @@ class AssetManager {
     required int totalAssets,
     required int decimals,
     bool defaultFrozen = false,
-    Address? managerAddress = null,
-    Address? reserveAddress = null,
-    Address? freezeAddress = null,
-    Address? clawbackAddress = null,
+    Address? managerAddress,
+    Address? reserveAddress,
+    Address? freezeAddress,
+    Address? clawbackAddress,
   }) async {
     // Fetch the suggested transaction params
     final params = await transactionRepository.getSuggestedTransactionParams();
@@ -81,10 +81,10 @@ class AssetManager {
   Future<String> editAsset({
     required int assetId,
     required Account account,
-    Address? managerAddress = null,
-    Address? reserveAddress = null,
-    Address? freezeAddress = null,
-    Address? clawbackAddress = null,
+    Address? managerAddress,
+    Address? reserveAddress,
+    Address? freezeAddress,
+    Address? clawbackAddress,
   }) async {
     // Fetch the suggested transaction params
     final params = await transactionRepository.getSuggestedTransactionParams();
@@ -108,7 +108,9 @@ class AssetManager {
 
   /// Destroy (remove) an existing asset from the Algorand ledger.
   ///
-  /// A Destroy Transaction is issued to remove an asset from the Algorand ledger.
+  /// A Destroy Transaction is issued to remove an asset from the Algorand
+  /// ledger.
+  ///
   /// To destroy an existing asset on Algorand, the original creator must be
   /// in possession of all units of the asset
   /// and the manager must send and therefore authorize the transaction.
@@ -145,10 +147,11 @@ class AssetManager {
   /// Assets can be transferred between accounts that have opted-in to receiving
   /// the asset.
   ///
-  /// These are analogous to standard payment transactions but for Algorand Standard Assets.
+  /// These are analogous to standard payment transactions but for
+  /// Algorand Standard Assets.
   ///
-  /// Throws [AlgorandException] if unable to opt in to the the asset or send the
-  /// transaction.
+  /// Throws [AlgorandException] if unable to opt in to the the asset or send
+  /// the transaction.
   ///
   /// Returns the transaction id.
   Future<String> optIn({
@@ -217,17 +220,19 @@ class AssetManager {
   /// defaultfrozen state.
   ///
   /// If the defaultfrozen state is set to true the corresponding freeze address
-  /// must issue unfreeze transactions, to allow trading of the asset to and from that account.
+  /// must issue unfreeze transactions, to allow trading of the asset to and
+  /// from that account.
+  ///
   /// This may be useful in situations that require holders of the asset to pass
   /// certain checks prior to ownership.
   ///
-  /// If the defaultfrozen state is set to false anyone would be allowed to trade
-  /// the asset and the freeze address could issue freeze transactions to
+  /// If the defaultfrozen state is set to false anyone would be allowed to
+  /// trade the asset and the freeze address could issue freeze transactions to
   /// specific accounts to disallow trading of that asset.
   ///
-  /// If you want to ensure to asset holders that the asset will never be frozen,
-  /// set the defaultfrozen state to false and set the freeze address to null or
-  /// an empty string in goal and the SDKs.
+  /// If you want to ensure to asset holders that the asset will never be
+  /// frozen,  set the defaultfrozen state to false and set the freeze address
+  /// to null or an empty string in goal and the SDKs.
   ///
   /// Throws [AlgorandException] if unable to freeze the asset or send the
   /// transaction.
@@ -260,19 +265,24 @@ class AssetManager {
 
   /// Revokes an asset for a given account.
   ///
-  /// Revoking an asset for an account removes a specific number of the asset from the revoke target account.
-  /// Revoking an asset from an account requires specifying an asset sender (the revoke target account) and an
-  /// asset receiver (the account to transfer the funds back to).
+  /// Revoking an asset for an account removes a specific number of the asset
+  /// from the revoke target account.
   ///
-  /// The clawback address, if specified, is able to revoke the asset from any account and place them in any other
-  /// account that has previously opted-in.
+  /// Revoking an asset from an account requires specifying an asset sender
+  /// (the revoke target account) and an asset receiver (the account to
+  /// transfer the funds back to).
   ///
-  /// This may be useful in situations where a holder of the asset breaches some set of terms that you established
-  /// for that asset. You could issue a freeze transaction to investigate, and if you determine that they can no longer
-  /// own the asset, you could revoke the assets.
+  /// The clawback address, if specified, is able to revoke the asset from any
+  /// account and place them in any other account that has previously opted-in.
   ///
-  /// Similar to freezing, if you would rather ensure to asset holders that you will never have the ability to
-  /// revoke assets, set the clawback address to null.
+  /// This may be useful in situations where a holder of the asset breaches
+  /// some set of terms that you established for that asset.
+  /// You could issue a freeze transaction to investigate, and if you determine
+  /// that they can no longer own the asset, you could revoke the assets.
+  ///
+  /// Similar to freezing, if you would rather ensure to asset holders that you
+  /// will never have the ability to revoke assets, set the clawback address
+  /// to null.
   ///
   /// Throws [AlgorandException] if unable to revoke the asset or send the
   /// transaction.

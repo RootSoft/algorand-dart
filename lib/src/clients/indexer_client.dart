@@ -13,5 +13,6 @@ class IndexerClient extends AlgorandClient {
     required String apiUrl,
     required String apiKey,
     String tokenKey = INDEXER_API_TOKEN,
-  }) : super(apiUrl: apiUrl, apiKey: apiKey, tokenKey: tokenKey);
+    bool debug = false,
+  }) : super(apiUrl: apiUrl, apiKey: apiKey, tokenKey: tokenKey, debug: debug);
 }

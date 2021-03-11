@@ -14,7 +14,7 @@ class Account {
   final Address address;
 
   Account._create({required this.publicKey, required this.keyPair})
-      : address = new Address(publicKey: Uint8List.fromList(publicKey.bytes));
+      : address = Address(publicKey: Uint8List.fromList(publicKey.bytes));
 
   /// Create a new, random generated account.
   static Future<Account> random() async {
@@ -78,7 +78,7 @@ class Account {
   /// Returns the seed phrase which is a list containing 25 words.
   Future<List<String>> get seedPhrase async {
     // Get seed from private key
-    final privateKeyBytes = await this.keyPair.extractPrivateKeyBytes();
+    final privateKeyBytes = await keyPair.extractPrivateKeyBytes();
 
     // Generate mnemonic from seed
     return await Mnemonic.generate(privateKeyBytes);

@@ -14,7 +14,8 @@ class ApplicationLocalState {
   /// Round when account closed out of the application.
   final int? closedOutAtRound;
 
-  /// Whether or not the application local state is currently deleted from its account.
+  /// Whether or not the application local state is currently deleted from
+  /// its account.
   final bool? deleted;
 
   /// storage

@@ -1,14 +1,14 @@
 name: algorand_dart
 description: Unofficial community SDK to interact with the Algorand network, for Dart & Flutter
-version: 0.0.1-dev.1
+version: 0.0.2-beta.2
 homepage: https://www.algorand.com
 
 environment:
-  sdk: '>=2.12.0-0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   # Ed25519 - nullsafety
-  cryptography: ^2.0.0-nullsafety.2 #- waiting for retrofit generator
+  cryptography: ^2.0.0-nullsafety.2
 
   # SHA512/256 - nullsafety
   crypto: ^3.0.0
@@ -22,9 +22,6 @@ dependencies:
   # Easily work with bytes - nullsafety
   buffer: ^1.1.0-nullsafety.0
 
-  # Sanitization - nullsafety
-  string_validator: ^0.2.0-nullsafety.0
-
   # Equatable - nullsafety
   equatable: ^2.0.0
 
@@ -35,11 +32,11 @@ dependencies:
   collection: ^1.15.0
 
   # HTTP & REST (Update to v4 when stable)
-  dio: ^3.0.10
+  dio: ^4.0.0-beta7
   #retrofit: ^1.3.4+1
 
   # Messagepack
-  msgpack_dart: ^0.0.7
+  msgpack_dart: ^1.0.0
 
 dev_dependencies:
   # Testing framework
@@ -47,6 +44,9 @@ dev_dependencies:
 
   # Build Runner & Source Generation
   build_runner: ^1.11.5
+
+  # Linter
+  pedantic: ^1.11.0
 
   # HTTP REST
   #retrofit_generator: ^1.4.1+3

@@ -7,9 +7,9 @@ part 'search_accounts_response.g.dart';
 class SearchAccountsResponse {
   final int currentRound;
   final String? nextToken;
-  @JsonKey(name: 'accounts', defaultValue: [])
+  @JsonKey(name: 'accounts', defaultValue: <AccountInformation>[])
   final List<AccountInformation> accounts;
-  @JsonKey(name: 'balances', defaultValue: [])
+  @JsonKey(name: 'balances', defaultValue: <MiniAssetHolding>[])
   final List<MiniAssetHolding> balances;
 
   SearchAccountsResponse({

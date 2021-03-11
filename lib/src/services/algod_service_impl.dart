@@ -1,7 +1,7 @@
 part of 'algod_service.dart';
 
 class _AlgodService implements AlgodService {
-  _AlgodService(this._dio, {this.baseUrl = null}) {
+  _AlgodService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
   }
 
@@ -18,15 +18,14 @@ class _AlgodService implements AlgodService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/blocks/$round',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = Block.fromJson(_result.data);
+    final value = Block.fromJson(_result.data!);
     return value;
   }
 }

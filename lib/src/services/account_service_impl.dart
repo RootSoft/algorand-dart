@@ -1,7 +1,7 @@
 part of 'account_service.dart';
 
 class _AccountService implements AccountService {
-  _AccountService(this._dio, {this.baseUrl = null}) {
+  _AccountService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
   }
 
@@ -18,15 +18,14 @@ class _AccountService implements AccountService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/accounts/$address',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = AccountInformation.fromJson(_result.data);
+    final value = AccountInformation.fromJson(_result.data!);
     return value;
   }
 
@@ -38,22 +37,21 @@ class _AccountService implements AccountService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/accounts',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = SearchAccountsResponse.fromJson(_result.data);
+    final value = SearchAccountsResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<AccountResponse> getAccountById(
     String accountId, {
-    int? round = null,
+    int? round,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'round': round};
@@ -62,15 +60,14 @@ class _AccountService implements AccountService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/accounts/$accountId',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = AccountResponse.fromJson(_result.data);
+    final value = AccountResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -82,15 +79,14 @@ class _AccountService implements AccountService {
     final _result = await _dio.request<Map<String, dynamic>>(
       '/v2/assets/$assetId/balances',
       queryParameters: queryParameters,
-      options: dio.RequestOptions(
+      options: dio.Options(
         method: 'GET',
         headers: <String, dynamic>{},
         extra: _extra,
-        baseUrl: baseUrl,
       ),
       data: _data,
     );
-    final value = SearchAccountsResponse.fromJson(_result.data);
+    final value = SearchAccountsResponse.fromJson(_result.data!);
     return value;
   }
 }

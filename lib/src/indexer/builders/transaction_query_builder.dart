@@ -25,13 +25,15 @@ class TransactionQueryBuilder extends QueryBuilder<TransactionQueryBuilder> {
     return this;
   }
 
-  /// Only include transactions with this address in one of the transaction fields.
+  /// Only include transactions with this address in one of the transaction
+  /// fields.
   TransactionQueryBuilder whereAddress(Address address) {
     addQueryParameter('address', address.encodedAddress);
     return this;
   }
 
-  /// Combine with the address parameter to define what type of address to search for.
+  /// Combine with the address parameter to define what type of address to
+  /// search for.
   TransactionQueryBuilder whereAddressRole(AddressRole role) {
     addQueryParameter('address-role', role.value);
     return this;
@@ -51,8 +53,10 @@ class TransactionQueryBuilder extends QueryBuilder<TransactionQueryBuilder> {
     return this;
   }
 
-  /// Combine with address and address-role parameters to define what type of address
-  /// to search for. The close to fields are normally treated as a receiver, if you
+  /// Combine with address and address-role parameters to define what type of
+  /// address to search for.
+  ///
+  /// The close to fields are normally treated as a receiver, if you
   /// would like to exclude them set this parameter to true.
   TransactionQueryBuilder excludeCloseTo(bool excludeCloseTo) {
     addQueryParameter('exclude-close-to', excludeCloseTo);
@@ -80,12 +84,6 @@ class TransactionQueryBuilder extends QueryBuilder<TransactionQueryBuilder> {
   /// Include results with the given application id.
   TransactionQueryBuilder whereApplicationId(int applicationId) {
     addQueryParameter('application-id', applicationId);
-    return this;
-  }
-
-  /// Include results with the given asset id.
-  TransactionQueryBuilder whereAssetId(int assetId) {
-    addQueryParameter('asset-id', assetId);
     return this;
   }
 
@@ -121,7 +119,7 @@ class TransactionQueryBuilder extends QueryBuilder<TransactionQueryBuilder> {
   }
 
   /// Perform the query and fetch the transactions.
-  Future<SearchTransactionsResponse> search({int? limit = null}) async {
+  Future<SearchTransactionsResponse> search({int? limit}) async {
     if (limit != null) {
       this.limit(limit);
     }

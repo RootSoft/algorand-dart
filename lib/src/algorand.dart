@@ -194,7 +194,8 @@ class Algorand {
   /// You can use the waitForConfirmation parameter to asynchronously wait on
   /// the transaction to be commited on the blockchain.
   ///
-  /// The timeout parameter indicates how many rounds do you wish to check pending transactions for.
+  /// The timeout parameter indicates how many rounds do you wish to check
+  /// pending transactions for.
   ///
   /// Throws an [AlgorandException] if unable to send the payment.
   Future<String> sendPayment({
@@ -253,7 +254,8 @@ class Algorand {
         max: max);
   }
 
-  /// Get the list of unconfirmed pending transactions currently in the transaction pool
+  /// Get the list of unconfirmed pending transactions currently in the
+  /// transaction pool
   /// sorted by priority, in decreasing order, truncated at the end at MAX.
   ///
   /// If MAX = 0, returns all pending transactions.
@@ -268,13 +270,16 @@ class Algorand {
 
   /// Get a specific pending transaction.
   ///
-  /// Given a transaction id of a recently submitted transaction, it returns information about it.
+  /// Given a transaction id of a recently submitted transaction, it returns
+  /// information about it.
   /// There are several cases when this might succeed:
   /// - transaction committed (committed round > 0)
   /// - transaction still in the pool (committed round = 0, pool error = "")
-  /// - transaction removed from pool due to error (committed round = 0, pool error != "")
+  /// - transaction removed from pool due to error
+  /// (committed round = 0, pool error != "")
   ///
-  /// Or the transaction may have happened sufficiently long ago that the node no longer remembers it, and this will return an error.
+  /// Or the transaction may have happened sufficiently long ago that the node
+  /// no longer remembers it, and this will return an error.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the pending transaction.
@@ -286,18 +291,14 @@ class Algorand {
     );
   }
 
-  /// Get a specific pending transaction.
+  /// Utility function to wait on a transaction to be confirmed.
+  /// The timeout parameter indicates how many rounds do you wish to check
+  /// pending transactions for.
   ///
-  /// Given a transaction id of a recently submitted transaction, it returns information about it.
-  /// There are several cases when this might succeed:
-  /// - transaction committed (committed round > 0)
-  /// - transaction still in the pool (committed round = 0, pool error = "")
-  /// - transaction removed from pool due to error (committed round = 0, pool error != "")
+  /// On Algorand, transactions are final as soon as they are incorporated into
+  /// a block and blocks are produced, on average, every 5 seconds.
   ///
-  /// Or the transaction may have happened sufficiently long ago that the node no longer remembers it, and this will return an error.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the pending transaction.
+  /// This means that transactions are confirmed, on average, in 5 seconds
   Future<PendingTransaction> waitForConfirmation(
     String transactionId, {
     int timeout = 5,

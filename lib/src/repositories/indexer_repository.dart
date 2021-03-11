@@ -30,7 +30,7 @@ class IndexerRepository {
     try {
       return await indexerService.health();
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -44,7 +44,8 @@ class IndexerRepository {
     try {
       // Find transactions for account
       if (queryParams.containsKey(TransactionQueryBuilder.KEY_ACCOUNT_ID)) {
-        final accountId = queryParams[TransactionQueryBuilder.KEY_ACCOUNT_ID];
+        final accountId =
+            queryParams[TransactionQueryBuilder.KEY_ACCOUNT_ID] as String;
         return await indexerService.searchTransactionsForAccount(
           accountId,
           queryParams,
@@ -53,7 +54,8 @@ class IndexerRepository {
 
       // Find transactions for asset
       if (queryParams.containsKey(TransactionQueryBuilder.KEY_ASSET_ID)) {
-        final assetId = queryParams[TransactionQueryBuilder.KEY_ASSET_ID];
+        final assetId =
+            queryParams[TransactionQueryBuilder.KEY_ASSET_ID] as int;
         return await indexerService.searchTransactionsForAsset(
           assetId,
           queryParams,
@@ -62,7 +64,7 @@ class IndexerRepository {
 
       return await indexerService.searchTransactions(queryParams);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -76,7 +78,7 @@ class IndexerRepository {
     try {
       return await assetService.searchAssets(queryParams);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -89,7 +91,7 @@ class IndexerRepository {
   ) async {
     try {
       if (queryParams.containsKey(AccountQueryBuilder.KEY_BALANCE_ID)) {
-        final assetId = queryParams[AccountQueryBuilder.KEY_BALANCE_ID];
+        final assetId = queryParams[AccountQueryBuilder.KEY_BALANCE_ID] as int;
         return await accountService.searchAccountsWithBalance(
           assetId,
           queryParams,
@@ -98,7 +100,7 @@ class IndexerRepository {
 
       return await accountService.searchAccounts(queryParams);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -108,12 +110,12 @@ class IndexerRepository {
   /// Returns the account information for the given account id.
   Future<AccountResponse> getAccountById(
     String accountId, {
-    int? round = null,
+    int? round,
   }) async {
     try {
       return await accountService.getAccountById(accountId, round: round);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -125,7 +127,7 @@ class IndexerRepository {
     try {
       return await assetService.getAssetById(assetId);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -137,7 +139,7 @@ class IndexerRepository {
     try {
       return await indexerService.getTransactionById(transactionId);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 
@@ -149,7 +151,7 @@ class IndexerRepository {
     try {
       return await indexerService.getBlockByRound(round);
     } on DioError catch (ex) {
-      throw new AlgorandException(message: ex.message, cause: ex);
+      throw AlgorandException(message: ex.message, cause: ex);
     }
   }
 }

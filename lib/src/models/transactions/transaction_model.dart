@@ -54,7 +54,8 @@ class Transaction {
   /// Validation signature associated with some data.
   final TransactionSignature signature;
 
-  /// Indicates what type of transaction this is. Different types have different fields.
+  /// Indicates what type of transaction this is.
+  /// Different types have different fields.
   /// Valid types, and where their fields are stored:
   /// [pay] payment-transaction
   /// [keyreg] keyreg-transaction

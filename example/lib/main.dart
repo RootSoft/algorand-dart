@@ -1,3 +1,4 @@
+import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/algorand.dart';
 import 'package:algorand_dart/src/clients/algod_client.dart';
 import 'package:algorand_dart/src/clients/indexer_client.dart';
@@ -8,32 +9,20 @@ import 'package:algorand_dart/src/utils/algo_unit.dart';
 import 'package:convert/convert.dart';
 
 void main() async {
-  /// Test credentials on TestNet
-  final mnemonic =
-      'rule stereo half prize arrest explain just coyote olympic phone moon roast benefit hill crush debate reopen frost gasp fatal athlete surge area abandon clump';
-  final encodedAddress =
-      'RQM43TQH4CHTOXKPLDWVH4FUZQVOWYHRXATHJSQLF7GN6CFFLC35FLNYHM';
-  final encodedAddressCs =
-      'RQM43TQH4CHTOXKPLDWVH4FUZQVOWYHRXATHJSQLF7GN6CFFLC3QRJKYW4';
-  final publicKeyHex =
-      '8c19cdce07e08f375d4f58ed53f0b4cc2aeb60f1b82674ca0b2fccdf08a558b7';
-  final privateKeyHex =
-      'e965f5d0b43a06422daf31d2e4281fb19b8aaea14638b35d57c0381507696b01325156033e09477beed73a485044d8d6ba6a708e17356826c6d9e6247fe9bfc2';
-
   final apiKey = '';
-  final algodClient = new AlgodClient(
+  final algodClient = AlgodClient(
     apiUrl: PureStake.TESTNET_ALGOD_API_URL,
     apiKey: apiKey,
     tokenKey: PureStake.API_TOKEN_HEADER,
   );
 
-  final indexerClient = new IndexerClient(
+  final indexerClient = IndexerClient(
     apiUrl: PureStake.TESTNET_INDEXER_API_URL,
     apiKey: apiKey,
     tokenKey: PureStake.API_TOKEN_HEADER,
   );
 
-  final algorand = new Algorand(
+  final algorand = Algorand(
     algodClient: algodClient,
     indexerClient: indexerClient,
   );
@@ -50,13 +39,14 @@ void main() async {
   final account = await algorand.loadAccountFromSeed(seed);
   final newAccount = await algorand.loadAccountFromSeed(seed2);
 
+  // FlutterCoin - 14618993
   final transactionId = await algorand.sendPayment(
     account: account,
     recipient: newAccount.address,
-    amount: Algo.toMicroAlgos(0.5),
+    amount: Algo.toMicroAlgos(5),
   );
 
-  // FlutterCoin - 14618993
+  print(transactionId);
 }
 
 Future<String> atomicTransfer(
@@ -82,7 +72,7 @@ Future<String> atomicTransfer(
       .build();
 
   // Combine the transactions and calculate the group id
-  final transactions = AtomicTransfer.group([transactionA, transactionB]);
+  AtomicTransfer.group([transactionA, transactionB]);
 
   // Sign the transactions
   final signedTxA = await transactionA.sign(accountA);

@@ -14,7 +14,8 @@ class ApplicationManager {
   /// Given TEAL source code in plain text, return base64 encoded program bytes
   /// and base32 SHA512_256 hash of program bytes (Address style).
   ///
-  /// This endpoint is only enabled when a node's configuration file sets EnableDeveloperAPI to true.
+  /// This endpoint is only enabled when a node's configuration file sets
+  /// EnableDeveloperAPI to true.
   Future<TealCompilation> compileTEAL(String sourceCode) async {
     return await applicationRepository.compileTEAL(sourceCode);
   }
