@@ -29,7 +29,9 @@ class Encoder {
     // Sanitize the map and remove canonical values
     sortedData.removeWhere(
       (key, value) =>
-          value == null || value == false || (value is String && value.isEmpty),
+          value == null ||
+          value == false ||
+          (value is String && value.isEmpty || (value is int && value == 0)),
     );
 
     return sortedData;
