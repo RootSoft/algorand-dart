@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Algo {
   static const MICRO_ALGOS = 'microAlgos';
   static const ALGOS = 'ALGOS';
@@ -13,7 +15,12 @@ class Algo {
   }
 
   /// Convert an amount of microAlgo's to Algos.
-  static int fromMicroAlgos(double microAlgos) {
-    return (microAlgos / converters[ALGOS]!).round();
+  static double fromMicroAlgos(int microAlgos) {
+    return microAlgos / converters[ALGOS]!;
+  }
+
+  /// Format a given amount with the decimals.
+  static int format(double amount, int decimals) {
+    return (amount * (pow(10, decimals))).toInt();
   }
 }
