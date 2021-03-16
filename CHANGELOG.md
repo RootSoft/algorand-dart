@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.2-beta.3 - 2021-03-15
+
+- Bugfix in AlgoUnit
+- Added Indexer AssetTransfer
+- Added balance helper method
+
 ## 0.0.2-beta.1 0.0.2-beta.2 - 2021-03-11
 
 - Effective Dart
