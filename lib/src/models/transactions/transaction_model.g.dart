@@ -29,6 +29,10 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) {
     roundTime: json['round-time'] as int?,
     senderRewards: json['sender-rewards'] as int?,
     note: json['note'] as String?,
+    assetTransferTransaction: json['asset-transfer-transaction'] == null
+        ? null
+        : AssetTransferTransactionResponse.fromJson(
+            json['asset-transfer-transaction'] as Map<String, dynamic>),
   );
 }
 
@@ -52,4 +56,5 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'signature': instance.signature,
       'tx-type': instance.type,
       'note': instance.note,
+      'asset-transfer-transaction': instance.assetTransferTransaction,
     };

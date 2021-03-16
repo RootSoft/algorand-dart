@@ -239,6 +239,18 @@ class Algorand {
     return await _accountRepository.getAccountByAddress(address);
   }
 
+  /// Get the balance (in microAlgos) of the given address.
+  /// Given a specific account public key, this call returns the current
+  /// balance.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the account's balance in microAlgos.
+  Future<int> getBalance(String address) async {
+    final accountInformation =
+        await _accountRepository.getAccountByAddress(address);
+    return accountInformation.amountWithoutPendingRewards;
+  }
+
   /// Get the list of pending transactions by address, sorted by priority,
   /// in decreasing order, truncated at the end at MAX.
   ///

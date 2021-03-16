@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/api/responses/transactions/asset_transfer_transaction_response.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -71,6 +72,9 @@ class Transaction {
   /// Free form data.
   final String? note;
 
+  /// Optional information about an asset transfer
+  final AssetTransferTransactionResponse? assetTransferTransaction;
+
   Transaction({
     required this.id,
     required this.fee,
@@ -90,6 +94,7 @@ class Transaction {
     this.roundTime,
     this.senderRewards,
     this.note,
+    this.assetTransferTransaction,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) =>
