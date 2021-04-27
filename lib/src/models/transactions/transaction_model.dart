@@ -1,4 +1,4 @@
-import 'package:algorand_dart/src/api/responses/transactions/asset_transfer_transaction_response.dart';
+import 'package:algorand_dart/src/api/responses/transactions/transactions.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -74,6 +74,9 @@ class Transaction {
 
   /// Optional information about an asset transfer
   final AssetTransferTransactionResponse? assetTransferTransaction;
+
+  /// Optional information about a payment transaction - see payment
+  //final PaymentTransactionResponse? paymentTransaction;
 
   Transaction({
     required this.id,

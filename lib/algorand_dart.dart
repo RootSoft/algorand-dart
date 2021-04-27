@@ -1,5 +1,7 @@
 library algorand_dart;
 
+export 'package:dio/dio.dart';
+
 export 'src/algorand.dart';
 export 'src/api/responses.dart';
 export 'src/clients/clients.dart';
