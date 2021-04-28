@@ -46,6 +46,10 @@ class IndexerRepository {
       if (queryParams.containsKey(TransactionQueryBuilder.KEY_ACCOUNT_ID)) {
         final accountId =
             queryParams[TransactionQueryBuilder.KEY_ACCOUNT_ID] as String;
+
+        // Remove the query param
+        queryParams.remove(TransactionQueryBuilder.KEY_ACCOUNT_ID);
+
         return await indexerService.searchTransactionsForAccount(
           accountId,
           queryParams,
@@ -56,6 +60,10 @@ class IndexerRepository {
       if (queryParams.containsKey(TransactionQueryBuilder.KEY_ASSET_ID)) {
         final assetId =
             queryParams[TransactionQueryBuilder.KEY_ASSET_ID] as int;
+
+        // Remove the query param
+        queryParams.remove(TransactionQueryBuilder.KEY_ASSET_ID);
+
         return await indexerService.searchTransactionsForAsset(
           assetId,
           queryParams,
@@ -92,6 +100,10 @@ class IndexerRepository {
     try {
       if (queryParams.containsKey(AccountQueryBuilder.KEY_BALANCE_ID)) {
         final assetId = queryParams[AccountQueryBuilder.KEY_BALANCE_ID] as int;
+
+        // Remove the query param
+        queryParams.remove(AccountQueryBuilder.KEY_BALANCE_ID);
+
         return await accountService.searchAccountsWithBalance(
           assetId,
           queryParams,

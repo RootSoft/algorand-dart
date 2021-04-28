@@ -2,7 +2,7 @@ import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/algorand.dart';
 import 'package:algorand_dart/src/clients/algod_client.dart';
 import 'package:algorand_dart/src/clients/indexer_client.dart';
-import 'package:algorand_dart/src/clients/pure_stake.dart';
+import 'package:algorand_dart/src/clients/providers.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
 import 'package:algorand_dart/src/utils/algo_unit.dart';
