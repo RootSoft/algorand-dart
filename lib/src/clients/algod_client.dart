@@ -9,7 +9,7 @@ class AlgodClient extends AlgorandClient {
 
   AlgodClient({
     required String apiUrl,
-    required String apiKey,
+    String apiKey = '',
     String tokenKey = ALGOD_API_TOKEN,
     bool debug = false,
   }) : super(apiUrl: apiUrl, apiKey: apiKey, tokenKey: tokenKey, debug: debug);
