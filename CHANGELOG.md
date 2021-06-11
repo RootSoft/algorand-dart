@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.2-beta.4 - 2021-04-30
+
+- Bugfix zero amount transaction
+- Added export for Dio HTTP
+- Added support for AlgoExplorer API
+
 ## 0.0.2-beta.3 - 2021-03-15
 
 - Bugfix in AlgoUnit
