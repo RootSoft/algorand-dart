@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:algorand_dart/src/api/responses.dart';
 import 'package:algorand_dart/src/exceptions/algorand_exception.dart';
@@ -25,6 +26,29 @@ class TransactionRepository {
   Future<TransactionParams> getSuggestedTransactionParams() async {
     try {
       return await transactionService.getSuggestedTransactionParams();
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
+  /// Broadcast a new (signed) raw transaction on the network.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the id of the transaction.
+  Future<String> sendRawTransaction(
+    Uint8List transaction, {
+    bool waitForConfirmation = false,
+    int timeout = 5,
+  }) async {
+    try {
+      final response = await transactionService.sendTransaction(transaction);
+
+      if (!waitForConfirmation) return response.transactionId;
+
+      // Wait for confirmation
+      await this.waitForConfirmation(response.transactionId, timeout: timeout);
+
+      return response.transactionId;
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }
