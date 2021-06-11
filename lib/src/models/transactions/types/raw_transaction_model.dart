@@ -202,6 +202,9 @@ class RawTransaction {
   factory RawTransaction.fromJson(Map<String, dynamic> json) =>
       _$RawTransactionFromJson(json);
 
+  /// Get the base64-encoded representation of the transaction..
+  String toBase64() => base64Encode(Encoder.encodeMessagePack(toMessagePack()));
+
   Map<String, dynamic> toJson() => _$RawTransactionToJson(this);
 
   Map<String, dynamic> toMessagePack() => <String, dynamic>{

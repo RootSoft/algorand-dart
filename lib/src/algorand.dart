@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:algorand_dart/src/api/responses.dart';
 import 'package:algorand_dart/src/clients/algod_client.dart';
 import 'package:algorand_dart/src/clients/indexer_client.dart';
@@ -157,6 +159,22 @@ class Algorand {
   /// Returns the suggested transaction parameters.
   Future<TransactionParams> getSuggestedTransactionParams() async {
     return await _transactionRepository.getSuggestedTransactionParams();
+  }
+
+  /// Broadcast a new (signed) transaction on the network.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the id of the transaction.
+  Future<String> sendRawTransaction(
+    Uint8List transaction, {
+    bool waitForConfirmation = false,
+    int timeout = 5,
+  }) async {
+    return await _transactionRepository.sendRawTransaction(
+      transaction,
+      waitForConfirmation: waitForConfirmation,
+      timeout: timeout,
+    );
   }
 
   /// Broadcast a new (signed) transaction on the network.
