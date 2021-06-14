@@ -54,6 +54,35 @@ class TransactionRepository {
     }
   }
 
+  /// Group a list of (signed) transactions and broadcast it on the network.
+  /// This is mostly used for atomic transfers.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the id of the transaction.
+  Future<String> sendRawTransactions(
+    List<Uint8List> transactions, {
+    bool waitForConfirmation = false,
+    int timeout = 5,
+  }) async {
+    final txWriter = ByteDataWriter();
+    for (var transaction in transactions) {
+      txWriter.write(transaction);
+    }
+
+    try {
+      final response =
+          await transactionService.sendTransaction(txWriter.toBytes());
+      if (!waitForConfirmation) return response.transactionId;
+
+      // Wait for confirmation
+      await this.waitForConfirmation(response.transactionId, timeout: timeout);
+
+      return response.transactionId;
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
   /// Broadcast a new (signed) transaction on the network.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.

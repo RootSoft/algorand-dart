@@ -177,6 +177,22 @@ class Algorand {
     );
   }
 
+  /// Broadcast a list of (signed) transaction on the network.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the id of the transaction.
+  Future<String> sendRawTransactions(
+    List<Uint8List> transactions, {
+    bool waitForConfirmation = false,
+    int timeout = 5,
+  }) async {
+    return await _transactionRepository.sendRawTransactions(
+      transactions,
+      waitForConfirmation: waitForConfirmation,
+      timeout: timeout,
+    );
+  }
+
   /// Broadcast a new (signed) transaction on the network.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
