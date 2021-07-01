@@ -354,4 +354,67 @@ class Algorand {
       timeout: timeout,
     );
   }
+
+  /// Register an account online.
+  ///
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the pending transaction.
+  Future<String> registerOnline({
+    required ParticipationPublicKey votePK,
+    required VRFPublicKey selectionPK,
+    required int voteFirst,
+    required int voteLast,
+    required int voteKeyDilution,
+    required Account account,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = await _transactionRepository.getSuggestedTransactionParams();
+
+    // Transfer the asset
+    final transaction = await (KeyRegistrationTransactionBuilder()
+          ..votePK = votePK
+          ..selectionPK = selectionPK
+          ..voteFirst = voteFirst
+          ..voteLast = voteLast
+          ..voteKeyDilution = voteKeyDilution
+          ..sender = account.address
+          ..suggestedParams = params)
+        .build();
+
+    // Sign the transactions
+    final signedTransaction = await transaction.sign(account);
+
+    // Send the transaction
+    return await _transactionRepository.sendTransaction(signedTransaction);
+  }
+
+  /// Register an account offline.
+  ///
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the pending transaction.
+  Future<String> registerOffline({
+    required Account account,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = await _transactionRepository.getSuggestedTransactionParams();
+
+    // Transfer the asset
+    final transaction = await (KeyRegistrationTransactionBuilder()
+          ..votePK = null
+          ..selectionPK = null
+          ..voteFirst = null
+          ..voteLast = null
+          ..voteKeyDilution = null
+          ..sender = account.address
+          ..suggestedParams = params)
+        .build();
+
+    // Sign the transactions
+    final signedTransaction = await transaction.sign(account);
+
+    // Send the transaction
+    return await _transactionRepository.sendTransaction(signedTransaction);
+  }
 }
