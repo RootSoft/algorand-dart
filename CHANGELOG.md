@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.2-beta.5 - 2021-06-15
+
+- Added support for raw transactions
+- Added support for AlgoSigner Web Plugin
+- Added support for Atomic Transfers
+- Bugfix group serialization
+
 ## 0.0.2-beta.4 - 2021-04-30
 
 - Bugfix zero amount transaction
