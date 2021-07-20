@@ -4,7 +4,7 @@ part 'indexer_health.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.kebab)
 class IndexerHealth {
-  final dynamic? data;
+  final dynamic data;
   final bool dbAvailable;
   final bool isMigrating;
   final String message;

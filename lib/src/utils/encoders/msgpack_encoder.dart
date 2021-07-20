@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/utils/message_packable.dart';
 import 'package:msgpack_dart/msgpack_dart.dart';
 
 class Encoder {
@@ -14,7 +15,12 @@ class Encoder {
       if (data[key] is Map<String, dynamic>) {
         final x = data[key] as Map<String, dynamic>;
         v = prepareMessagePack(x);
+      } else if (data[key] is MessagePackable) {
+        final x = data[key] as MessagePackable;
+        v = prepareMessagePack(x.toMessagePack());
+        print(v);
       }
+
       sanitizedMap[key] = v;
     });
 

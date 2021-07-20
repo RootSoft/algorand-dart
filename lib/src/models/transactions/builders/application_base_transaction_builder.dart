@@ -1,0 +1,51 @@
+import 'dart:typed_data';
+
+import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/models/transactions/builders/raw_transaction_builder.dart';
+import 'package:algorand_dart/src/utils/fee_calculator.dart';
+
+class ApplicationBaseTransactionBuilder<T extends ApplicationBaseTransaction>
+    extends RawTransactionBuilder<ApplicationBaseTransaction> {
+  /// ApplicationID is the application being interacted with,
+  /// or 0 if creating a new application.
+  int _applicationId = 0;
+
+  /// Defines what additional actions occur with the transaction.
+  /// See the OnComplete section of the TEAL spec for details.
+  OnCompletion onCompletion;
+
+  /// Transaction specific arguments accessed from the application's
+  /// approval-program and clear-state-program.
+  List<Uint8List>? arguments;
+
+  ApplicationBaseTransactionBuilder([this.onCompletion = OnCompletion.NO_OP_OC])
+      : super(TransactionType.APPLICATION_CALL);
+
+  /// Get the id of the application being interacted with,
+  /// or 0 if creating a new application.
+  int get applicationId => _applicationId;
+
+  set applicationId(int value) {
+    if (value < 0) {
+      throw AlgorandException(
+        message: 'Application id can\'t be smaller than 0.',
+      );
+    }
+    _applicationId = value;
+  }
+
+  @override
+  Future<int> estimatedTransactionSize() async {
+    return await FeeCalculator.estimateTransactionSize(
+      ApplicationBaseTransaction.builder(this),
+    );
+  }
+
+  @override
+  Future<ApplicationBaseTransaction> build() async {
+    await super.build();
+
+    return ApplicationBaseTransaction.builder(this);
+  }
+}

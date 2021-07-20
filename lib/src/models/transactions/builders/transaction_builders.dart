@@ -1,3 +1,11 @@
+export 'application_base_transaction_builder.dart';
+export 'application_call_transaction_builder.dart';
+export 'application_clear_state_transaction_builder.dart';
+export 'application_close_out_transaction_builder.dart';
+export 'application_create_transaction_builder.dart';
+export 'application_delete_transaction_builder.dart';
+export 'application_opt_in_transaction_builder.dart';
+export 'application_update_transaction_builder.dart';
 export 'asset_config_transaction_builder.dart';
 export 'asset_freeze_transaction_builder.dart';
 export 'asset_transfer_transaction_builder.dart';

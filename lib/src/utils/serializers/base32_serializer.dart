@@ -15,7 +15,7 @@ class Base32Serializer implements JsonConverter<Uint8List?, String?> {
 
     try {
       return base32.decode(json);
-    } on FormatException catch (ex) {
+    } on FormatException {
       return Uint8List.fromList(utf8.encode(json));
     }
   }

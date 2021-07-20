@@ -1,4 +1,7 @@
 export 'responses/accounts/account_lookup_response.dart';
+export 'responses/applications/dry_run_response.dart';
+export 'responses/applications/dry_run_state.dart';
+export 'responses/applications/dry_run_tx_result.dart';
 export 'responses/applications/teal_compilation_response.dart';
 export 'responses/assets/asset_lookup_response.dart';
 export 'responses/indexers/search_accounts_response.dart';

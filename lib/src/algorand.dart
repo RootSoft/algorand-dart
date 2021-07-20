@@ -58,6 +58,7 @@ class Algorand {
     _assetManager = AssetManager(transactionRepository: _transactionRepository);
     _applicationManager = ApplicationManager(
       applicationRepository: _applicationRepository,
+      transactionRepository: _transactionRepository,
     );
 
     // TODO Inject and provide the Algorand Indexer

@@ -26,4 +26,22 @@ class _ApplicationService implements ApplicationService {
     final value = TealCompilation.fromJson(_result.data!);
     return value;
   }
+
+  @override
+  Future<DryRunResponse> dryrun(Uint8List request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = Stream.fromIterable(request.map((i) => [i]));
+    final _result = await _dio.request<Map<String, dynamic>>('/v2/teal/dryrun',
+        queryParameters: queryParameters,
+        options: dio.Options(
+          method: 'POST',
+          headers: <String, dynamic>{r'Content-Type': 'application/x-binary'},
+          extra: _extra,
+          contentType: 'application/x-binary',
+        ),
+        data: _data);
+    final value = DryRunResponse.fromJson(_result.data!);
+    return value;
+  }
 }

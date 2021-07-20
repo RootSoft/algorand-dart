@@ -10,7 +10,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'signed_transaction_model.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.kebab)
+@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.kebab)
 class SignedTransaction {
   /// The signature of the transaction
   @JsonKey(name: 'sig')

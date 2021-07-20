@@ -32,10 +32,12 @@ class PendingTransaction {
   final int? confirmedRound;
 
   /// Global state key/value changes for the application being executed by this transaction.
-  // StateDelta? globalStateDelta;
+  @JsonKey(name: 'global-state-delta', defaultValue: [])
+  final List<EvalDeltaKeyValue> globalStateDelta;
 
   /// Local state key/value changes for the application being executed by this transaction.
-  // List<AccountStateDelta>![] localStateDelta;
+  @JsonKey(name: 'local-state-delta', defaultValue: [])
+  final List<AccountStateDelta> localStateDelta;
 
   /// Indicates that the transaction was kicked out of this node's
   /// transaction pool  (and specifies why that happened).
@@ -57,6 +59,8 @@ class PendingTransaction {
   PendingTransaction({
     required this.transaction,
     required this.poolError,
+    required this.globalStateDelta,
+    required this.localStateDelta,
     this.applicationIndex,
     this.assetIndex,
     this.closeRewards,

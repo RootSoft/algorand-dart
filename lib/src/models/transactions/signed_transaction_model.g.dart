@@ -16,6 +16,6 @@ SignedTransaction _$SignedTransactionFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$SignedTransactionToJson(SignedTransaction instance) =>
     <String, dynamic>{
       'sig': const SignatureSerializer().toJson(instance.signature),
-      'txn': instance.transaction,
+      'txn': instance.transaction.toJson(),
       'sgnr': const AddressSerializer().toJson(instance.authAddress),
     };
