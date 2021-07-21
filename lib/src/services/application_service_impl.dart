@@ -44,4 +44,44 @@ class _ApplicationService implements ApplicationService {
     final value = DryRunResponse.fromJson(_result.data!);
     return value;
   }
+
+  @override
+  Future<SearchApplicationsResponse> searchApplications(
+    Map<String, dynamic> queryParameters,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+      '/v2/applications',
+      queryParameters: queryParameters,
+      options: dio.Options(
+        method: 'GET',
+        headers: <String, dynamic>{},
+        extra: _extra,
+      ),
+      data: _data,
+    );
+    final value = SearchApplicationsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApplicationResponse> getApplicationById(int applicationId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+      '/v2/applications/$applicationId',
+      queryParameters: queryParameters,
+      options: dio.Options(
+        method: 'GET',
+        headers: <String, dynamic>{},
+        extra: _extra,
+      ),
+      data: _data,
+    );
+    final value = ApplicationResponse.fromJson(_result.data!);
+    return value;
+  }
 }

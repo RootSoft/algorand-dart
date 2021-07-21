@@ -1,4 +1,5 @@
 import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/src/indexer/builders/application_query_builder.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
 import 'package:algorand_dart/src/indexer/indexer_health.dart';
 import 'package:algorand_dart/src/models/models.dart';
@@ -50,6 +51,15 @@ class AlgorandIndexer {
     );
   }
 
+  /// Allow searching all applications on the blockchain.
+  /// This call contains many parameters to refine the search for specific
+  /// values.
+  ApplicationQueryBuilder applications() {
+    return ApplicationQueryBuilder(
+      indexerRepository: _indexerRepository,
+    );
+  }
+
   /// Lookup account information by a given account id.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
@@ -67,6 +77,14 @@ class AlgorandIndexer {
   /// Returns the asset information for the given asset id.
   Future<AssetResponse> getAssetById(int assetId) async {
     return _indexerRepository.getAssetById(assetId);
+  }
+
+  /// Lookup application information by a given id.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the application information for the given application id.
+  Future<ApplicationResponse> getApplicationById(int applicationId) async {
+    return _indexerRepository.getApplicationById(applicationId);
   }
 
   /// Lookup transaction information by a given transaction id.

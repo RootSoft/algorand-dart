@@ -23,6 +23,14 @@ abstract class QueryBuilder<T extends QueryBuilder<T>> {
     return me();
   }
 
+  /// Include all items including closed accounts, deleted applications,
+  /// destroyed assets, opted-out asset holdings, and closed-out
+  /// application localstates.
+  T includeAll(bool includeAll) {
+    addQueryParameter('include-all', includeAll);
+    return me();
+  }
+
   /// The next page of results.
   /// Use the next token provided by the previous results.
   T next(String next) {

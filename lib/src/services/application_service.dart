@@ -19,4 +19,13 @@ abstract class ApplicationService extends ApiService {
   //@POST("/v2/teal/dryrun")
   //@Headers(<String, dynamic>{"Content-Type": "application/x-binary"})
   Future<DryRunResponse> dryrun(/*@Body()*/ Uint8List request);
+
+  //@GET("/v2/applications")
+  Future<SearchApplicationsResponse> searchApplications(
+    Map<String, dynamic> queryParameters,
+  );
+
+  //@GET("/v2/applications/{applicationId}")
+  Future<ApplicationResponse> getApplicationById(
+      /*@Path('applicationId')*/ int applicationId);
 }

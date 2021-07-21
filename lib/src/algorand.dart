@@ -67,6 +67,7 @@ class Algorand {
         indexerService: IndexerService(indexerClient.client),
         accountService: AccountService(indexerClient.client),
         assetService: AssetService(indexerClient.client),
+        applicationService: ApplicationService(indexerClient.client),
       ),
     );
   }

@@ -16,10 +16,14 @@ class IndexerRepository {
   /// Service used to fetch assets
   final AssetService assetService;
 
+  /// Service used to fetch assets
+  final ApplicationService applicationService;
+
   IndexerRepository({
     required this.indexerService,
     required this.accountService,
     required this.assetService,
+    required this.applicationService,
   });
 
   /// Check if the indexer is healthy.
@@ -116,6 +120,20 @@ class IndexerRepository {
     }
   }
 
+  /// Search accounts using the indexer.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the filtered accounts.
+  Future<SearchApplicationsResponse> searchApplications(
+    Map<String, dynamic> queryParams,
+  ) async {
+    try {
+      return await applicationService.searchApplications(queryParams);
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
   /// Lookup account information by a given account id.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
@@ -150,6 +168,18 @@ class IndexerRepository {
   Future<TransactionResponse> getTransactionById(String transactionId) async {
     try {
       return await indexerService.getTransactionById(transactionId);
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
+  /// Lookup application information by a given id.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the application information for the given application id.
+  Future<ApplicationResponse> getApplicationById(int applicationId) async {
+    try {
+      return await applicationService.getApplicationById(applicationId);
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }
