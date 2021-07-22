@@ -5,6 +5,7 @@ import 'package:algorand_dart/src/utils/crypto_utils.dart';
 import 'package:base32/base32.dart';
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
+import 'package:cryptography/cryptography.dart';
 import 'package:equatable/equatable.dart';
 
 class Address extends Equatable {
@@ -94,6 +95,14 @@ class Address extends Equatable {
     } catch (ex) {
       return false;
     }
+  }
+
+  /// Returns address' public key in a form suitable for verification.
+  PublicKey toVerifyKey() {
+    return SimplePublicKey(
+      publicKey,
+      type: KeyPairType.ed25519,
+    );
   }
 
   @override

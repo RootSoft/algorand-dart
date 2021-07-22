@@ -4,6 +4,10 @@ import 'dart:typed_data';
 import 'package:algorand_dart/algorand_dart.dart';
 
 extension CryptoStringExtension on String {
+  Uint8List toBytes() {
+    return Uint8List.fromList(utf8.encode(this));
+  }
+
   String trimPadding() {
     return replaceAll(RegExp(r'='), '');
   }
