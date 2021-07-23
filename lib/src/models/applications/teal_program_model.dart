@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/crypto/crypto.dart';
+import 'package:algorand_dart/src/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-//part 'teal_program_model.g.dart';
-
-//@JsonSerializable(fieldRename: FieldRename.kebab)
 class TEALProgram {
   @JsonKey(name: 'program')
   final Uint8List _program;
@@ -18,10 +17,16 @@ class TEALProgram {
   TEALProgram.fromSource({required String source})
       : this(program: Uint8List.fromList(utf8.encode(source)));
 
+  /// Get the program bytes.
   Uint8List get program => _program;
 
-  // factory TEALProgram.fromJson(Map<String, dynamic> json) =>
-  //     _$TEALProgramFromJson(json);
-  //
-  // Map<String, dynamic> toJson() => _$TEALProgramToJson(this);
+  /// Creates Signature compatible with ed25519verify TEAL opcode from data
+  /// and program bytes.
+  Future<Signature> sign({
+    required Account account,
+    required Uint8List data,
+  }) async {
+    final lsig = LogicSignature(logic: program);
+    return lsig.toAddress().sign(account: account, data: data);
+  }
 }

@@ -5,10 +5,8 @@ import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/crypto/crypto.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
-import 'package:algorand_dart/src/utils/serializers/signature_serializer.dart';
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart' as crypto;
-import 'package:json_annotation/json_annotation.dart';
 
 /// Most Algorand transactions are authorized by a signature from a single
 /// account or a multisignature account.
@@ -26,16 +24,8 @@ import 'package:json_annotation/json_annotation.dart';
 class LogicSignature implements MessagePackable {
   static const LOGIC_PREFIX = 'Program';
 
-  static const SIGN_ALGO = 'EdDSA';
-
-  @JsonKey(name: 'l', defaultValue: [])
-  @SignatureSerializer()
   final Uint8List logic;
-
-  @JsonKey(name: 'arg', defaultValue: [])
   final List<Uint8List>? arguments;
-
-  @JsonKey(name: 'sig')
   final Signature? signature;
 
   // @JsonKey(name: 'msig')

@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/crypto/crypto.dart' as crypto;
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
+import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/crypto_utils.dart';
 import 'package:base32/base32.dart';
 import 'package:collection/collection.dart';
@@ -14,6 +17,9 @@ class Address extends Equatable {
 
   /// The length of the Algorand checksum.
   static const CHECKSUM_BYTE_LENGTH = 4;
+
+  /// Prefix for signing TEAL program data
+  static const PROGDATA_SIGN_PREFIX = 'ProgData';
 
   /// The public key, in bytes
   final Uint8List publicKey;
@@ -95,6 +101,29 @@ class Address extends Equatable {
     } catch (ex) {
       return false;
     }
+  }
+
+  /// Creates Signature compatible with ed25519verify TEAL opcode from data and
+  /// contract address (program hash).
+  Future<crypto.Signature> sign({
+    required Account account,
+    required Uint8List data,
+  }) async {
+    final rawAddress = Uint8List.fromList(publicKey);
+
+    // Prepend the prefix
+    final progDataBytes = utf8.encode(PROGDATA_SIGN_PREFIX);
+
+    // Merge the byte arrays
+    final buffer = Uint8List.fromList([
+      ...progDataBytes,
+      ...rawAddress,
+      ...data,
+    ]);
+
+    final signedBytes = await account.sign(buffer);
+
+    return crypto.Signature(bytes: signedBytes);
   }
 
   /// Returns address' public key in a form suitable for verification.
