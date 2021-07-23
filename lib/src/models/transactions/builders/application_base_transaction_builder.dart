@@ -19,6 +19,19 @@ class ApplicationBaseTransactionBuilder<T extends ApplicationBaseTransaction>
   /// approval-program and clear-state-program.
   List<Uint8List>? arguments;
 
+  /// List of accounts in addition to the sender that may be accessed from the
+  /// application's approval-program and clear-state-program.
+  List<Address>? accounts;
+
+  /// Lists the applications in addition to the application-id whose global
+  /// states may be accessed by this application's approval-program and
+  /// clear-state-program. The access is read-only.
+  List<int>? foreignApps;
+
+  /// Lists the assets whose AssetParams may be accessed by this application's
+  /// approval-program and clear-state-program. The access is read-only.
+  List<int>? foreignAssets;
+
   ApplicationBaseTransactionBuilder([this.onCompletion = OnCompletion.NO_OP_OC])
       : super(TransactionType.APPLICATION_CALL);
 

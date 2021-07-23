@@ -17,11 +17,27 @@ class ApplicationBaseTransaction extends RawTransaction {
   /// approval-program and clear-state-program.
   List<Uint8List>? arguments;
 
+  /// List of accounts in addition to the sender that may be accessed from the
+  /// application's approval-program and clear-state-program.
+  List<Address>? accounts;
+
+  /// Lists the applications in addition to the application-id whose global
+  /// states may be accessed by this application's approval-program and
+  /// clear-state-program. The access is read-only.
+  List<int>? foreignApps;
+
+  /// Lists the assets whose AssetParams may be accessed by this application's
+  /// approval-program and clear-state-program. The access is read-only.
+  List<int>? foreignAssets;
+
   ApplicationBaseTransaction.builder(
     ApplicationBaseTransactionBuilder builder,
   )   : applicationId = builder.applicationId,
         onCompletion = builder.onCompletion,
         arguments = builder.arguments,
+        accounts = builder.accounts,
+        foreignApps = builder.foreignApps,
+        foreignAssets = builder.foreignAssets,
         super(
           type: builder.type.value,
           fee: builder.fee,
@@ -42,6 +58,9 @@ class ApplicationBaseTransaction extends RawTransaction {
     fields['apid'] = applicationId;
     fields['apan'] = onCompletion?.value;
     fields['apaa'] = arguments;
+    fields['apat'] = accounts?.map((account) => account.publicKey).toList();
+    fields['apfa'] = foreignApps;
+    fields['apas'] = foreignAssets;
 
     return fields;
   }
