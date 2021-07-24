@@ -8,7 +8,6 @@ void main() {
 
   test('Test logic sig creation', () async {
     final program = Uint8List.fromList(<int>[0x01, 0x20, 0x01, 0x01, 0x22]);
-    final args = <Uint8List>[];
     final programHash =
         '6Z3C3LDVWGMX23BMSYMANACQOSINPFIRF77H7N3AWJZYV6OH6GWTJKVMXY';
     final sender = Address.fromAlgorandAddress(address: programHash);

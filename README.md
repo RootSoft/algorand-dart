@@ -45,7 +45,8 @@ algorand.assetManager.createAsset(
 * Atomic Transfers
 * Account management
 * Asset management
-* TEAL compilation
+* Smart Contracts
+* Authorization (Signatures, Logic Signatures, Multi Signatures)
 * Flutter 2.0 support :heart:
 
 ## Getting started
@@ -337,6 +338,243 @@ algorand.assetManager.revoke(
   );
 ```
 
+## Stateless Smart Contracts
+
+### Contract Account
+
+### Account Delegation
+
+## Stateful Smart Contracts
+
+**Create a new application**
+
+Before creating a stateful smart contract, the code for the ApprovalProgram and the ClearStateProgram program should be written.
+The creator is the account that is creating the application and this transaction is signed by this account.
+The approval program and the clear state program should also be provided.
+The number of global and local byte slices (byte-array value) and integers also needs to be specified.
+These represent the absolute on-chain amount of space that the smart contract will use.
+Once set, these values can never be changed.
+
+When the smart contract is created the network will return a unique ApplicationID.
+This ID can then be used to make ApplicationCall transactions to the smart contract.
+
+```dart
+// declare application state storage (immutable)
+final localInts = 1;
+final localBytes = 1;
+final globalInts = 1;
+final globalBytes = 0;
+
+final txId = await algorand.applicationManager.createApplicationFromSource(
+  account: account,
+  approvalProgramSource: approvalProgramSource,
+  clearProgramSource: clearProgramSource,
+  globalStateSchema: StateSchema(
+    numUint: globalInts,
+    numByteSlice: globalBytes,
+  ),
+  localStateSchema: StateSchema(
+    numUint: localInts,
+    numByteSlice: localBytes,
+  ),
+);
+```
+
+Or you can build the raw transaction using the ```ApplicationCreateTransactionBuilder```.
+
+```dart
+// declare application state storage (immutable)
+final localInts = 1;
+final localBytes = 1;
+final globalInts = 1;
+final globalBytes = 0;
+
+final approvalProgram =
+    await algorand.applicationManager.compileTEAL(approvalProgramSource);
+
+final clearProgram =
+    await algorand.applicationManager.compileTEAL(clearProgramSource);
+
+final params = await algorand.getSuggestedTransactionParams();
+
+final transaction = await (ApplicationCreateTransactionBuilder()
+      ..sender = account.address
+      ..approvalProgram = approvalProgram.program
+      ..clearStateProgram = clearProgram.program
+      ..globalStateSchema = StateSchema(
+        numUint: globalInts,
+        numByteSlice: globalBytes,
+      )
+      ..localStateSchema = StateSchema(
+        numUint: localInts,
+        numByteSlice: localBytes,
+      )
+      ..suggestedParams = params)
+    .build();
+
+final signedTx = await transaction.sign(account);
+final txId = await algorand.sendTransaction(
+  signedTx,
+  waitForConfirmation: true,
+);
+```
+
+**Opt into the Smart Contract**
+
+Before any account, including the creator of the smart contract, can begin to make Application
+Transaction calls that use local state, it must first opt into the smart contract.
+This prevents accounts from being spammed with smart contracts.
+To opt in, an ApplicationCall transaction of type OptIn needs to be signed and submitted by the
+account desiring to opt into the smart contract.
+
+```dart
+final txId = await algorand.applicationManager.optIn(
+  account: account,
+  applicationId: 19964146,
+);
+```
+
+Or you can build the raw transaction using the ```ApplicationOptInTransactionBuilder```.
+
+```
+final params = await algorand.getSuggestedTransactionParams();
+
+final transaction = await (ApplicationOptInTransactionBuilder()
+      ..sender = account.address
+      ..applicationId = 19964146
+      ..suggestedParams = params)
+    .build();
+
+final signedTx = await transaction.sign(account);
+final txId = await algorand.sendTransaction(
+  signedTx,
+  waitForConfirmation: true,
+);
+```
+
+**Calling a Stateful Smart Contract**
+
+Once an account has opted into a stateful smart contract it can begin to make calls to the contract.
+These calls will be in the form of ApplicationCall transactions that can be submitted with goal or the SDKs.
+Depending on the individual type of transaction as described in The Lifecycle of a Stateful Smart
+Contract, either the ApprovalProgram or the ClearStateProgram will be called.
+Generally, individual calls will supply application arguments.
+See [Passing Arguments to a Smart Contract](https://developer.algorand.org/docs/features/asc1/stateful/#passing-arguments-to-stateful-smart-contracts) for details on passing arguments.
+
+```dart
+final txId = algorand.applicationManager.call(
+  account: account,
+  applicationId: 19964146,
+  arguments: arguments,
+);
+```
+
+Or you can build the raw transaction using the ```ApplicationCallTransactionBuilder```.
+
+```dart
+final arguments = 'str:arg1,int:12'.toApplicationArguments();
+final params = await algorand.getSuggestedTransactionParams();
+
+final transaction = await (ApplicationCallTransactionBuilder()
+      ..sender = account.address
+      ..applicationId = 19964146
+      ..arguments = arguments
+      ..suggestedParams = params)
+    .build();
+
+final signedTx = await transaction.sign(account);
+final txId = await algorand.sendTransaction(
+  signedTx,
+  waitForConfirmation: true,
+);
+```
+
+**Update a Stateful Smart Contract**
+
+A stateful smart contract’s programs can be updated at any time.
+This is done by an ApplicationCall transaction type of UpdateApplication.
+This operation can be done with goal or the SDKs and requires passing the new programs and specifying the application ID.
+The one caveat to this operation is that global or local state requirements for the smart contract can never be updated.
+
+```dart
+final approvalProgram =
+    await algorand.applicationManager.compileTEAL(approvalProgramSource);
+
+final clearProgram =
+    await algorand.applicationManager.compileTEAL(clearProgramSource);
+
+final txId = await algorand.applicationManager.update(
+  account: account,
+  applicationId: 19964146,
+  approvalProgram: approvalProgram.program,
+  clearProgram: clearProgram.program,
+);
+```
+
+Or you can build the raw transaction using the ```ApplicationUpdateTransactionBuilder```.
+
+```dart
+final approvalProgram =
+    await algorand.applicationManager.compileTEAL(approvalProgramSource);
+
+final clearProgram =
+    await algorand.applicationManager.compileTEAL(clearProgramSource);
+
+final params = await algorand.getSuggestedTransactionParams();
+
+final transaction = await (ApplicationUpdateTransactionBuilder()
+      ..sender = account.address
+      ..applicationId = 19964146
+      ..approvalProgram = approvalProgram.program
+      ..clearStateProgram = clearProgram.program
+      ..suggestedParams = params)
+    .build();
+
+final signedTx = await transaction.sign(account);
+final txId = await algorand.sendTransaction(
+  signedTx,
+  waitForConfirmation: true,
+);
+```
+
+**Delete a Stateful Smart Contract**
+
+To delete a smart contract, an ApplicationCall transaction of type DeleteApplication must be submitted to the blockchain.
+The ApprovalProgram handles this transaction type and if the call returns true the application will be deleted.
+
+```
+final txId = await algorand.applicationManager.delete(
+  account: account,
+  applicationId: 19964146,
+);
+```
+
+**Close out**
+
+The user may discontinue use of the application by sending a close out transaction. This will remove the local state for this application from the user's account
+
+```dart
+final txId = await algorand.applicationManager.close(
+  account: account,
+  applicationId: 19964146,
+);
+```
+
+**Clear state**
+
+The user may clear the local state for an application at any time, even if the application was deleted by the creator. This method uses the same 3 parameter.
+
+```dart
+final txId = await algorand.applicationManager.clearState(
+  account: account,
+  applicationId: 19964146,
+);
+```
+
+### Multi Signatures
+
+**Create a new asset**
+
 ## Indexer
 Algorand provides a standalone daemon algorand-indexer that reads committed blocks from the Algorand blockchain and
 maintains a local database of transactions and accounts that are searchable and indexed.
@@ -388,12 +626,23 @@ final accounts = await algorand
       .whereAuthAddress(account.publicAddress)
       .search(limit: 5);
 ```
+
+### Applications
+Allow searching all applications on the blockchain.
+
+```dart
+final applications = await algorand
+    .indexer()
+    .applications()
+    .whereApplicationId(19964146)
+    .limit(5)
+    .search();
+```
+
 ## Roadmap
 * Better support for Big Integers
-* Participation in consensus
 * KMD
-* Smart contracts
-* Authorization & rekeying
+* Rekeying
 * Tests
 
 ## Changelog

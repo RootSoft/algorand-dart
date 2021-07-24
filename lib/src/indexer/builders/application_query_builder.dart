@@ -11,7 +11,7 @@ class ApplicationQueryBuilder extends QueryBuilder<ApplicationQueryBuilder> {
   ApplicationQueryBuilder({required this.indexerRepository});
 
   /// Application ID
-  ApplicationQueryBuilder applicationId(int applicationId) {
+  ApplicationQueryBuilder whereApplicationId(int applicationId) {
     addQueryParameter('application-id', applicationId);
     return this;
   }
