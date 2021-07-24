@@ -42,6 +42,7 @@ algorand.assetManager.createAsset(
 * Algod
 * Indexer
 * Transactions
+* Key registration
 * Authorization
 * Atomic Transfers
 * Account management
@@ -56,7 +57,7 @@ algorand.assetManager.createAsset(
 You can install the package via pub.dev:
 
 ```bash
-algorand_dart: ^0.0.1-dev.1
+algorand_dart: ^latest-version
 ```
 
 > **Note**: Algorand-dart requires Dart >=2.12.0 & null safety
@@ -364,9 +365,6 @@ int 123
 ==
 ```
 
-The samplearg.teal file will compile to the address UVBYHRZIHUNUELDO6HWUAHOZF6G66W6T3JOXIIUSV3LDSBWVCFZ6LM6NCA,
-please fund this address with at least 11000 microALGO else executing the sample code as written will result in an overspend response from the network node.
-
 ```dart
 final arguments = <Uint8List>[];
 arguments.add(Uint8List.fromList([123]));
@@ -665,7 +663,7 @@ final txId = await algorand.applicationManager.clearState(
 );
 ```
 
-### Multi Signatures
+## Multi Signatures
 Multisignature accounts are a logical representation of an ordered set of addresses with a threshold and version.
 Multisignature accounts can perform the same operations as other accounts, including sending transactions and participating in consensus.
 The address for a multisignature account is essentially a hash of the ordered list of accounts, the threshold and version values.
