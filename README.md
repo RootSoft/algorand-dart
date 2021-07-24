@@ -42,11 +42,11 @@ algorand.assetManager.createAsset(
 * Algod
 * Indexer
 * Transactions
+* Authorization
 * Atomic Transfers
 * Account management
 * Asset management
 * Smart Contracts
-* Authorization (Signatures, Logic Signatures, Multi Signatures)
 * Flutter 2.0 support :heart:
 
 ## Getting started
@@ -236,7 +236,7 @@ Or as usual, you can use the ```TransactionBuilder``` to create your asset:
 
 ```dart
 // Fetch the suggested transaction params
-final params = await transactionRepository.getSuggestedTransactionParams();
+final params = await algorand.getSuggestedTransactionParams();
 
 final transaction = await (AssetConfigTransactionBuilder()
       ..assetName = 'FlutterCoin'
@@ -256,7 +256,7 @@ final transaction = await (AssetConfigTransactionBuilder()
 final signedTransaction = await transaction.sign(account);
 
 // Send the transaction
-final txId = await transactionRepository.sendTransaction(signedTransaction);
+final txId = await algorand.sendTransaction(signedTransaction);
 ```
 
 **Edit an asset**
@@ -340,9 +340,102 @@ algorand.assetManager.revoke(
 
 ## Stateless Smart Contracts
 
+Most Algorand transactions are authorized by a signature from a single account or a multisignature account.
+Algorand’s stateful smart contracts allow for a third type of signature using a
+Transaction Execution Approval Language (TEAL) program, called a logic signature (LogicSig).
+Stateless smart contracts provide two modes for TEAL logic to operate as a LogicSig,
+to create a contract account that functions similar to an escrow or to delegate signature authority to another account.
+
 ### Contract Account
 
+Contract accounts are great for setting up escrow style accounts where you want to limit withdrawals or you want to do periodic payments, etc.
+To spend from a contract account, create a transaction that will evaluate to True against the TEAL logic,
+then add the compiled TEAL code as its logic signature.
+It is worth noting that anyone can create and submit the transaction that spends from a contract account as long as they have the compiled TEAL contract to add as a logic signature.
+
+Sample teal file
+```teal
+// samplearg.teal
+// This code is meant for learning purposes only
+// It should not be used in production
+arg_0
+btoi
+int 123
+==
+```
+
+The samplearg.teal file will compile to the address UVBYHRZIHUNUELDO6HWUAHOZF6G66W6T3JOXIIUSV3LDSBWVCFZ6LM6NCA, 
+please fund this address with at least 11000 microALGO else executing the sample code as written will result in an overspend response from the network node.
+
+```dart
+final arguments = <Uint8List>[];
+arguments.add(Uint8List.fromList([123]));
+
+final result =
+    await algorand.applicationManager.compileTEAL(sampleArgsTeal);
+final logicSig = LogicSignature.fromProgram(
+  program: result.program,
+  arguments: arguments,
+);
+
+final receiver =
+    'KTFZ5SQU3AQ6UFYI2QOWF5X5XJTAFRHACWHXAZV6CPLNKS2KSGQWPT4ACE';
+final params = await algorand.getSuggestedTransactionParams();
+final transaction = await (PaymentTransactionBuilder()
+      ..sender = logicSig.toAddress()
+      ..note = 'Logic Signature'
+      ..amount = 100000
+      ..receiver = Address.fromAlgorandAddress(address: receiver)
+      ..suggestedParams = params)
+    .build();
+
+// Sign the logic transaction
+final signedTx = await logicSig.signTransaction(transaction: transaction);
+
+// Send the transaction
+final txId = await algorand.sendTransaction(
+  signedTx,
+  waitForConfirmation: true,
+);
+```
+
 ### Account Delegation
+
+Stateless smart contracts can also be used to delegate signatures, which means that a private key can sign a TEAL program 
+and the resulting output can be used as a signature in transactions on behalf of the account associated with the private key.
+The owner of the delegated account can share this logic signature, allowing anyone to spend funds from his or her account according to the logic within the TEAL program. 
+
+```dart
+final arguments = <Uint8List>[];
+arguments.add(Uint8List.fromList([123]));
+
+final result =
+    await algorand.applicationManager.compileTEAL(sampleArgsTeal);
+final logicSig = await LogicSignature.fromProgram(
+  program: result.program,
+  arguments: arguments,
+).sign(account: account);
+
+final receiver =
+    'KTFZ5SQU3AQ6UFYI2QOWF5X5XJTAFRHACWHXAZV6CPLNKS2KSGQWPT4ACE';
+final params = await algorand.getSuggestedTransactionParams();
+final transaction = await (PaymentTransactionBuilder()
+      ..sender = account.address
+      ..note = 'Account delegation'
+      ..amount = 100000
+      ..receiver = Address.fromAlgorandAddress(address: receiver)
+      ..suggestedParams = params)
+    .build();
+
+// Sign the logic transaction
+final signedTx = await logicSig.signTransaction(transaction: transaction);
+
+// Send the transaction
+final txId = await algorand.sendTransaction(
+  signedTx,
+  waitForConfirmation: true,
+);
+```
 
 ## Stateful Smart Contracts
 
@@ -455,7 +548,6 @@ final txId = await algorand.sendTransaction(
 **Calling a Stateful Smart Contract**
 
 Once an account has opted into a stateful smart contract it can begin to make calls to the contract.
-These calls will be in the form of ApplicationCall transactions that can be submitted with goal or the SDKs.
 Depending on the individual type of transaction as described in The Lifecycle of a Stateful Smart
 Contract, either the ApprovalProgram or the ClearStateProgram will be called.
 Generally, individual calls will supply application arguments.
@@ -493,7 +585,7 @@ final txId = await algorand.sendTransaction(
 
 A stateful smart contract’s programs can be updated at any time.
 This is done by an ApplicationCall transaction type of UpdateApplication.
-This operation can be done with goal or the SDKs and requires passing the new programs and specifying the application ID.
+This operation requires passing the new programs and specifying the application ID.
 The one caveat to this operation is that global or local state requirements for the smart contract can never be updated.
 
 ```dart
