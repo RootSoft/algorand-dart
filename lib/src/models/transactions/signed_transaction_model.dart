@@ -32,10 +32,18 @@ class SignedTransaction implements MessagePackable {
   @JsonKey(name: 'lsig', ignore: true)
   final LogicSignature? logicSignature;
 
+  /// The logic signature
+  @JsonKey(name: 'msig', ignore: true)
+  final MultiSignature? multiSignature;
+
+  final String transactionId;
+
   SignedTransaction({
     required this.transaction,
     this.signature,
     this.logicSignature,
+    this.multiSignature,
+    this.transactionId = '',
   });
 
   /// Export the transaction to a file.
@@ -59,6 +67,7 @@ class SignedTransaction implements MessagePackable {
       'sig': signature,
       'txn': transaction.toMessagePack(),
       'lsig': logicSignature?.toMessagePack(),
+      'msig': multiSignature?.toMessagePack(),
     };
   }
 }

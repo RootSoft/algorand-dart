@@ -7,6 +7,7 @@ import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart' as crypto;
+import 'package:equatable/equatable.dart';
 
 /// Most Algorand transactions are authorized by a signature from a single
 /// account or a multisignature account.
@@ -21,23 +22,24 @@ import 'package:cryptography/cryptography.dart' as crypto;
 ///
 /// More information, see
 /// https://developer.algorand.org/docs/features/asc1/stateless/sdks/
-class LogicSignature implements MessagePackable {
+class LogicSignature extends Equatable implements MessagePackable {
   static const LOGIC_PREFIX = 'Program';
 
   final Uint8List logic;
   final List<Uint8List>? arguments;
   final Signature? signature;
-
-  // @JsonKey(name: 'msig')
-  // final MultiSignature? multiSignature;
+  final MultiSignature? multiSignature;
 
   /// Create a new logic signature.
   /// Throws an [AlgorandException] if unable to check the logic.
-  LogicSignature({required this.logic, this.arguments, this.signature}) {
+  LogicSignature({
+    required this.logic,
+    this.arguments,
+    this.signature,
+    this.multiSignature,
+  }) {
     // Validate program/logic
     Logic.checkProgram(program: logic, arguments: arguments);
-
-    // TODO Multisig
   }
 
   /// Create a new logic signature from a given TEAL program.
@@ -56,23 +58,36 @@ class LogicSignature implements MessagePackable {
     Uint8List? logic,
     List<Uint8List>? arguments,
     Signature? signature,
+    MultiSignature? multiSignature,
   }) {
     return LogicSignature(
       logic: logic ?? this.logic,
       arguments: arguments ?? this.arguments,
       signature: signature ?? this.signature,
+      multiSignature: multiSignature ?? this.multiSignature,
     );
   }
 
   /// Perform signature verification against the sender address.
   Future<bool> verify(Address address) async {
+    // Multisig
+    if (signature != null && multiSignature != null) {
+      return false;
+    }
+
     try {
       Logic.checkProgram(program: logic, arguments: arguments);
     } catch (ex) {
       return false;
     }
 
-    // TODO Multisig
+    if (signature == null && multiSignature == null) {
+      try {
+        return address == toAddress();
+      } catch (ex) {
+        return false;
+      }
+    }
 
     // Verify signature
     if (signature != null) {
@@ -87,8 +102,9 @@ class LogicSignature implements MessagePackable {
       return verified;
     }
 
-    // TODO Verify multisig
-    return true;
+    // Verify multisig
+    final verified = await multiSignature?.verify(data: getEncodedProgram());
+    return verified ?? false;
   }
 
   /// Generate escrow address from logic sig program.
@@ -112,7 +128,14 @@ class LogicSignature implements MessagePackable {
   /// Sign a logic signature with account secret key.
   Future<LogicSignature> sign({
     required Account account,
+    MultiSigAddress? multiSigAddress,
   }) async {
+    if (multiSigAddress != null) {
+      return _signLogicSigAsMultiSig(
+        account: account,
+        address: multiSigAddress,
+      );
+    }
     // Get the encoded program
     final encodedProgram = getEncodedProgram();
 
@@ -126,6 +149,49 @@ class LogicSignature implements MessagePackable {
     return copyWith(
       signature: Signature(bytes: Uint8List.fromList(signature.bytes)),
     );
+  }
+
+  /// Sign a logic signature as a multisig.
+  Future<LogicSignature> _signLogicSigAsMultiSig({
+    required Account account,
+    required MultiSigAddress address,
+  }) async {
+    final publicKey = Ed25519PublicKey(
+      bytes: Uint8List.fromList(account.publicKey.bytes),
+    );
+
+    final index = address.publicKeys.indexOf(publicKey);
+    if (index == -1) {
+      throw AlgorandException(
+        message: 'Multisig account does not contain this secret key',
+      );
+    }
+
+    // Sign the program
+    final bytes = await account.sign(getEncodedProgram());
+    final signature = Signature(bytes: bytes);
+
+    // Create the multi signature
+    final multiSignature = MultiSignature(
+      version: address.version,
+      threshold: address.threshold,
+      subsigs: [],
+    );
+
+    for (var i = 0; i < address.publicKeys.length; i++) {
+      if (i == index) {
+        multiSignature.subsigs.add(
+          MultisigSubsig(key: publicKey, signature: signature),
+        );
+      } else {
+        multiSignature.subsigs.add(
+          MultisigSubsig(key: address.publicKeys[i]),
+        );
+      }
+    }
+
+    // Update the signature
+    return copyWith(multiSignature: multiSignature);
   }
 
   /// Create a signed transaction from a LogicSignature and transaction.
@@ -156,12 +222,50 @@ class LogicSignature implements MessagePackable {
     return signedTransaction;
   }
 
+  /// Appends a signature to multisig logic signed transaction
+  Future<LogicSignature> append({required Account account}) async {
+    final multiSignature = this.multiSignature;
+    if (multiSignature == null) {
+      throw AlgorandException(message: 'The logicsig has no valid multisig');
+    }
+
+    final publicKey = Ed25519PublicKey(
+      bytes: Uint8List.fromList(account.publicKey.bytes),
+    );
+
+    final index = multiSignature.subsigs.indexWhere(
+      (subsig) => subsig.key == publicKey,
+    );
+
+    if (index == -1) {
+      throw AlgorandException(
+          message: 'Multisig account does not contain this secret key');
+    }
+
+    final bytes = await account.sign(getEncodedProgram());
+    final signature = Signature(bytes: bytes);
+    multiSignature.subsigs[index] = MultisigSubsig(
+      key: publicKey,
+      signature: signature,
+    );
+
+    return copyWith(multiSignature: multiSignature);
+  }
+
   @override
   Map<String, dynamic> toMessagePack() {
     return {
       'l': logic,
       'arg': arguments,
       'sig': signature?.bytes,
+      'msig': multiSignature?.toMessagePack(),
     };
   }
+
+  @override
+  List<Object?> get props => [
+        ...logic,
+        signature,
+        multiSignature,
+      ];
 }

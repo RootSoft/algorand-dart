@@ -42,13 +42,8 @@ class MultiSigAddress extends Equatable implements MessagePackable {
     }
   }
 
-  /// Helper method to convert list of byte[]s to list of Ed25519PublicKeys.
-  static List<Ed25519PublicKey> toKeys(List<Uint8List> keys) {
-    return keys.map((key) => Ed25519PublicKey(bytes: key)).toList();
-  }
-
   /// Creates a multisig transaction from the input and the multisig account.
-  Future<SignedTransaction?> sign({
+  Future<SignedTransaction> sign({
     required Account account,
     required RawTransaction transaction,
   }) async {
@@ -101,8 +96,26 @@ class MultiSigAddress extends Equatable implements MessagePackable {
       subsigs: subsigs,
     );
 
-    // TODO Add support for MSA
-    return SignedTransaction(transaction: transaction);
+    return SignedTransaction(
+      transaction: transaction,
+      multiSignature: mSig,
+      transactionId: signedTx.transactionId,
+    );
+  }
+
+  /// Appends our signature to the given multisig transaction.
+  /// Transaction is the partially signed msig tx to which to append signature.
+  /// Returns a merged multisig transaction.
+  Future<SignedTransaction> append({
+    required Account account,
+    required SignedTransaction transaction,
+  }) async {
+    final signedTx = await sign(
+      account: account,
+      transaction: transaction.transaction,
+    );
+
+    return mergeMultisigTransactions([signedTx, transaction]);
   }
 
   /// Convert the MultiSignature Address to more easily represent as a string.
@@ -119,6 +132,67 @@ class MultiSigAddress extends Equatable implements MessagePackable {
 
     final digest = sha512256.convert(writer.toBytes());
     return Address(publicKey: Uint8List.fromList(digest.bytes));
+  }
+
+  /// Merges the given (partially) signed multisig transactions.
+  /// Transactions are the partially signed multisig transactions to merge.
+  /// Underlying transactions may be mutated.
+  ///
+  /// Returns the merged multisig transaction
+  static Future<SignedTransaction> mergeMultisigTransactions(
+    List<SignedTransaction> transactions,
+  ) async {
+    if (transactions.length < 2) {
+      throw AlgorandException(message: 'Cannot merge a single transaction');
+    }
+
+    final merged = transactions[0];
+    for (var i = 0; i < transactions.length; i++) {
+      final tx = transactions[i];
+      final mSig = tx.multiSignature;
+      if (mSig == null) {
+        throw AlgorandException(message: 'No valid multisignature');
+      }
+
+      if (mSig.version != merged.multiSignature?.version ||
+          mSig.threshold != merged.multiSignature?.threshold) {
+        throw AlgorandException(
+          message: 'transaction msig parameters do not match',
+        );
+      }
+
+      for (var j = 0; j < mSig.subsigs.length; j++) {
+        var myMsig = merged.multiSignature?.subsigs[j];
+        var theirMsig = mSig.subsigs[j];
+        if (myMsig == null) {
+          throw AlgorandException(message: 'No valid subsig');
+        }
+
+        if (theirMsig.key != myMsig.key) {
+          throw AlgorandException(
+            message: 'transaction msig public keys do not match',
+          );
+        }
+
+        if (myMsig.signature == null) {
+          myMsig = myMsig.copyWith(signature: theirMsig.signature);
+        } else if (myMsig.signature != theirMsig.signature &&
+            theirMsig.signature != null) {
+          throw AlgorandException(
+            message: 'transaction msig has mismatched signatures',
+          );
+        }
+
+        merged.multiSignature?.subsigs[j] = myMsig;
+      }
+    }
+
+    return merged;
+  }
+
+  /// Helper method to convert list of byte[]s to list of Ed25519PublicKeys.
+  static List<Ed25519PublicKey> toKeys(List<Uint8List> keys) {
+    return keys.map((key) => Ed25519PublicKey(bytes: key)).toList();
   }
 
   @override

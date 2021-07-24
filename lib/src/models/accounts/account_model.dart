@@ -84,6 +84,7 @@ class Account {
     return await Mnemonic.generate(privateKeyBytes);
   }
 
+  /// Sign the given bytes with the secret key.
   Future<Uint8List> sign(Uint8List bytes) async {
     // Sign the transaction with secret key
     final signature = await Ed25519().sign(

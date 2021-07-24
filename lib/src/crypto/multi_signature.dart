@@ -62,7 +62,7 @@ class MultiSignature extends Equatable implements MessagePackable {
     return {
       'v': version,
       'thr': threshold,
-      'subsig': subsigs,
+      'subsig': subsigs.map((subsig) => subsig.toMessagePack()).toList(),
     };
   }
 }
@@ -72,6 +72,13 @@ class MultisigSubsig extends Equatable implements MessagePackable {
   final Signature? signature;
 
   MultisigSubsig({required this.key, this.signature});
+
+  MultisigSubsig copyWith({Signature? signature}) {
+    return MultisigSubsig(
+      key: key,
+      signature: signature,
+    );
+  }
 
   @override
   List<Object?> get props => [key, signature];
