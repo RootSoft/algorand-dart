@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.2-beta.6 - 2021-07-24
+
+- Added support for smart contracts
+- Added support for logic signatures
+- Added support for multisignatures
+- Added support for TEAL signing
+- Added support for key registration transactions
+
 ## 0.0.2-beta.5 - 2021-06-15
 
 - Added support for raw transactions
