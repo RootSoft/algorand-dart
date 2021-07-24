@@ -364,7 +364,7 @@ int 123
 ==
 ```
 
-The samplearg.teal file will compile to the address UVBYHRZIHUNUELDO6HWUAHOZF6G66W6T3JOXIIUSV3LDSBWVCFZ6LM6NCA, 
+The samplearg.teal file will compile to the address UVBYHRZIHUNUELDO6HWUAHOZF6G66W6T3JOXIIUSV3LDSBWVCFZ6LM6NCA,
 please fund this address with at least 11000 microALGO else executing the sample code as written will result in an overspend response from the network node.
 
 ```dart
@@ -401,9 +401,9 @@ final txId = await algorand.sendTransaction(
 
 ### Account Delegation
 
-Stateless smart contracts can also be used to delegate signatures, which means that a private key can sign a TEAL program 
+Stateless smart contracts can also be used to delegate signatures, which means that a private key can sign a TEAL program
 and the resulting output can be used as a signature in transactions on behalf of the account associated with the private key.
-The owner of the delegated account can share this logic signature, allowing anyone to spend funds from his or her account according to the logic within the TEAL program. 
+The owner of the delegated account can share this logic signature, allowing anyone to spend funds from his or her account according to the logic within the TEAL program.
 
 ```dart
 final arguments = <Uint8List>[];
@@ -438,6 +438,8 @@ final txId = await algorand.sendTransaction(
 ```
 
 ## Stateful Smart Contracts
+Stateful smart contracts are contracts that live on the chain and are used to keep track of some form of global and/or local state for the contract.
+Stateful smart contracts form the backbone of applications that intend to run on the Algorand blockchain. Stateful smart contracts act similar to Algorand ASAs in that they have specific global values and per-user values.
 
 **Create a new application**
 
@@ -664,8 +666,74 @@ final txId = await algorand.applicationManager.clearState(
 ```
 
 ### Multi Signatures
+Multisignature accounts are a logical representation of an ordered set of addresses with a threshold and version.
+Multisignature accounts can perform the same operations as other accounts, including sending transactions and participating in consensus.
+The address for a multisignature account is essentially a hash of the ordered list of accounts, the threshold and version values.
+The threshold determines how many signatures are required to process any transaction from this multisignature account.
 
-**Create a new asset**
+**Create a multisignature address**
+
+```dart
+final one = Address.fromAlgorandAddress(
+  address: 'XMHLMNAVJIMAW2RHJXLXKKK4G3J3U6VONNO3BTAQYVDC3MHTGDP3J5OCRU',
+);
+final two = Address.fromAlgorandAddress(
+  address: 'HTNOX33OCQI2JCOLZ2IRM3BC2WZ6JUILSLEORBPFI6W7GU5Q4ZW6LINHLA',
+);
+
+final three = Address.fromAlgorandAddress(
+  address: 'E6JSNTY4PVCY3IRZ6XEDHEO6VIHCQ5KGXCIQKFQCMB2N6HXRY4IB43VSHI',
+);
+
+final publicKeys = [one, two, three]
+    .map((address) => Ed25519PublicKey(bytes: address.publicKey))
+    .toList();
+
+final multiSigAddr =
+    MultiSigAddress(version: 1, threshold: 2, publicKeys: publicKeys);
+```
+
+**Sign a transaction with a multisignature account**
+This section shows how to create, sign, and send a transaction from a multisig account.
+
+```dart
+final account1 = await Account.fromSeed(seed1);
+final account2 = await Account.fromSeed(seed2);
+final account3 = await Account.fromSeed(seed3);
+
+final publicKeys = [account1, account2, account3]
+    .map((account) => Ed25519PublicKey(bytes: account.address.publicKey))
+    .toList();
+
+final msa =
+    MultiSigAddress(version: 1, threshold: 2, publicKeys: publicKeys);
+
+final params = await algorand.getSuggestedTransactionParams();
+final transaction = await (PaymentTransactionBuilder()
+      ..sender = msa.toAddress()
+      ..note = 'MSA '
+      ..amount = 1000000
+      ..receiver = account3.address
+      ..suggestedParams = params)
+    .build();
+
+// Sign the transaction with the first account.
+final signedTx = await msa.sign(
+  account: account1,
+  transaction: transaction,
+);
+
+final completeTx = await msa.append(
+  account: account2,
+  transaction: signedTx,
+);
+
+// Send the transaction
+final txId = await algorand.sendTransaction(
+  completeTx,
+  waitForConfirmation: true,
+);
+```
 
 ## Indexer
 Algorand provides a standalone daemon algorand-indexer that reads committed blocks from the Algorand blockchain and
