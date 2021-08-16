@@ -126,6 +126,9 @@ class Address extends Equatable {
     return crypto.Signature(bytes: signedBytes);
   }
 
+  /// Returns a copy of the public key address.
+  Uint8List toBytes() => Uint8List.fromList(publicKey);
+
   /// Returns address' public key in a form suitable for verification.
   PublicKey toVerifyKey() {
     return SimplePublicKey(

@@ -143,6 +143,27 @@ class Logic {
     return VarintResult();
   }
 
+  /// Varints are a method of serializing integers using one or more bytes.
+  /// Smaller numbers take a smaller number of bytes.
+  /// Each byte in a varint, except the last byte, has the most significant
+  /// bit (msb) set – this indicates that there are further bytes to come.
+  /// The lower 7 bits of each byte are used to store the two's complement
+  /// representation of the number in groups of 7 bits, least significant
+  /// group first.
+  /// https://developers.google.com/protocol-buffers/docs/encoding
+  ///
+  /// value is the value being serialized
+  /// Returns the byte array holding the serialized bits
+  static Uint8List putUVarint(int value) {
+    final buffer = <int>[];
+    while (value >= 0x80) {
+      buffer.add(((value & 0xFF) | 0x80));
+      value >>= 7;
+    }
+    buffer.add(value & 0xFF);
+    return Uint8List.fromList(buffer);
+  }
+
   static IntConstBlock readIntConstBlock(Uint8List program, int pc) {
     final results = <int>[];
     var size = 1;
@@ -204,8 +225,10 @@ class Logic {
           message: '"byte[] const block exceeds program length',
         );
       }
-      final buffer = Uint8List.sublistView(program, pc + size, result.value);
-      results.add(buffer);
+
+      final buffer = List.filled(result.value, 0);
+      buffer.setRange(0, result.value, program, pc + size);
+      results.add(Uint8List.fromList(buffer));
       size += result.value;
     }
 

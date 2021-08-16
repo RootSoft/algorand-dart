@@ -45,8 +45,6 @@ void main() async {
     recipient: newAccount.address,
     amount: Algo.toMicroAlgos(5),
   );
-
-  print(transactionId);
 }
 
 Future<String> atomicTransfer(

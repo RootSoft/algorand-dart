@@ -18,7 +18,6 @@ class Encoder {
       } else if (data[key] is MessagePackable) {
         final x = data[key] as MessagePackable;
         v = prepareMessagePack(x.toMessagePack());
-        print(v);
       }
 
       sanitizedMap[key] = v;

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -54,6 +55,9 @@ class SignedTransaction implements MessagePackable {
     final encodedTransaction = Encoder.encodeMessagePack(toMessagePack());
     return File(filePath).writeAsBytes(encodedTransaction);
   }
+
+  /// Get the base64-encoded representation of the transaction..
+  String toBase64() => base64Encode(Encoder.encodeMessagePack(toMessagePack()));
 
   factory SignedTransaction.fromJson(Map<String, dynamic> json) =>
       _$SignedTransactionFromJson(json);

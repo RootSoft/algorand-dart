@@ -13,6 +13,10 @@ class PaymentTransactionBuilder
   /// Micro denotes a unit x 10^-6. 1 Algo equals 1,000,000 microAlgos.
   int? amount;
 
+  /// When set, indicates that the sending account should be closed and all
+  /// remaining funds be transferred to this address.
+  Address? closeRemainderTo;
+
   PaymentTransactionBuilder() : super(TransactionType.PAYMENT);
 
   @override

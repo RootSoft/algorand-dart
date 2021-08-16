@@ -18,13 +18,13 @@ class PaymentTransaction extends RawTransaction {
 
   /// When set, indicates that the sending account should be closed and all
   /// remaining funds be transferred to this address.
-  final String? closeRemainderTo;
+  final Address? closeRemainderTo;
 
   PaymentTransaction.builder(PaymentTransactionBuilder builder)
       : receiver = builder.receiver,
         amount = builder.amount,
         closeAmount = null,
-        closeRemainderTo = null,
+        closeRemainderTo = builder.closeRemainderTo,
         super(
           type: builder.type.value,
           fee: builder.fee,
@@ -45,6 +45,7 @@ class PaymentTransaction extends RawTransaction {
     final paymentFields = {
       'rcv': const AddressTransformer().toMessagePack(receiver),
       'amt': amount,
+      'close': const AddressTransformer().toMessagePack(closeRemainderTo),
     };
 
     // Merge them
