@@ -37,6 +37,7 @@ class SignedTransaction implements MessagePackable {
   @JsonKey(name: 'msig', ignore: true)
   final MultiSignature? multiSignature;
 
+  @JsonKey(ignore: true)
   final String transactionId;
 
   SignedTransaction({

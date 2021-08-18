@@ -40,6 +40,6 @@ void main() {
       ),
     );
 
-    expect(verified, true);
+    expect(verified, isTrue);
   });
 }

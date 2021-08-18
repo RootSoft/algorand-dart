@@ -55,7 +55,7 @@ class FeeCalculator {
       final signature = await account.sign(transaction.getEncodedTransaction());
       final signedTransaction = SignedTransaction(
         transaction: transaction,
-        signature: signature,
+        signature: signature.bytes,
       );
 
       return Encoder.encodeMessagePack(signedTransaction.toMessagePack())

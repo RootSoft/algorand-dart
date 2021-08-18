@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/crypto/crypto.dart' as crypto;
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/mnemonic/mnemonic.dart';
 import 'package:algorand_dart/src/models/models.dart';
@@ -7,6 +9,9 @@ import 'package:convert/convert.dart';
 import 'package:cryptography/cryptography.dart';
 
 class Account {
+  /// Prefix for signing bytes
+  static const BYTES_SIGN_PREFIX = 'MX';
+
   final SimplePublicKey publicKey;
 
   final SimpleKeyPair keyPair;
@@ -85,13 +90,34 @@ class Account {
   }
 
   /// Sign the given bytes with the secret key.
-  Future<Uint8List> sign(Uint8List bytes) async {
+  Future<crypto.Signature> sign(Uint8List bytes) async {
     // Sign the transaction with secret key
     final signature = await Ed25519().sign(
       bytes,
       keyPair: keyPair,
     );
 
-    return Uint8List.fromList(signature.bytes);
+    return crypto.Signature(bytes: Uint8List.fromList(signature.bytes));
+  }
+
+  /// Sign the given bytes, and wrap in signature.
+  /// The message is prepended with "MX" for domain separation.
+  Future<crypto.Signature> signBytes(Uint8List bytes) async {
+    // Prepend the bytes
+    final signPrefix = utf8.encode(BYTES_SIGN_PREFIX);
+
+    // Merge the byte arrays
+    final buffer = Uint8List.fromList([
+      ...signPrefix,
+      ...bytes,
+    ]);
+
+    // Sign the transaction with secret key
+    final signature = await Ed25519().sign(
+      buffer,
+      keyPair: keyPair,
+    );
+
+    return crypto.Signature(bytes: Uint8List.fromList(signature.bytes));
   }
 }

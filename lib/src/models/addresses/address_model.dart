@@ -21,6 +21,9 @@ class Address extends Equatable {
   /// Prefix for signing TEAL program data
   static const PROGDATA_SIGN_PREFIX = 'ProgData';
 
+  /// Prefix for signing bytes
+  static const BYTES_SIGN_PREFIX = 'MX';
+
   /// The public key, in bytes
   final Uint8List publicKey;
 
@@ -121,9 +124,30 @@ class Address extends Equatable {
       ...data,
     ]);
 
-    final signedBytes = await account.sign(buffer);
+    return await account.sign(buffer);
+  }
 
-    return crypto.Signature(bytes: signedBytes);
+  /// Verifies that the signature for the message is valid for the public key.
+  /// The message should have been prepended with "MX" when signing.
+  Future<bool> verify(Uint8List message, crypto.Signature signature) async {
+    final publicKey = toVerifyKey();
+
+    // Prepend the prefix
+    final signBytes = utf8.encode(BYTES_SIGN_PREFIX);
+
+    // Merge the byte arrays
+    final buffer = Uint8List.fromList([
+      ...signBytes,
+      ...message,
+    ]);
+
+    return await Ed25519().verify(
+      buffer,
+      signature: Signature(
+        signature.bytes,
+        publicKey: publicKey,
+      ),
+    );
   }
 
   /// Returns a copy of the public key address.

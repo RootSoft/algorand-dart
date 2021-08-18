@@ -3,12 +3,13 @@ import 'dart:typed_data';
 
 import 'package:json_annotation/json_annotation.dart';
 
-class ByteArraySerializer implements JsonConverter<Uint8List, String> {
+class ByteArraySerializer implements JsonConverter<Uint8List?, String?> {
   const ByteArraySerializer();
 
   @override
-  Uint8List fromJson(String json) => base64.decode(json);
+  Uint8List? fromJson(String? json) =>
+      json != null ? base64.decode(json) : null;
 
   @override
-  String toJson(Uint8List data) => base64.encode(data);
+  String? toJson(Uint8List? data) => data != null ? base64.encode(data) : null;
 }

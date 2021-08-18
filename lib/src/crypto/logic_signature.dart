@@ -168,8 +168,7 @@ class LogicSignature extends Equatable implements MessagePackable {
     }
 
     // Sign the program
-    final bytes = await account.sign(getEncodedProgram());
-    final signature = Signature(bytes: bytes);
+    final signature = await account.sign(getEncodedProgram());
 
     // Create the multi signature
     final multiSignature = MultiSignature(
@@ -242,8 +241,7 @@ class LogicSignature extends Equatable implements MessagePackable {
           message: 'Multisig account does not contain this secret key');
     }
 
-    final bytes = await account.sign(getEncodedProgram());
-    final signature = Signature(bytes: bytes);
+    final signature = await account.sign(getEncodedProgram());
     multiSignature.subsigs[index] = MultisigSubsig(
       key: publicKey,
       signature: signature,
