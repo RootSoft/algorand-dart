@@ -17,7 +17,7 @@ RawTransaction _$RawTransactionFromJson(Map<String, dynamic> json) {
     genesisId: json['gen'] as String?,
     group: const Base32Serializer().fromJson(json['grp'] as String?),
     lease: json['lx'] as String?,
-    note: json['note'] as String?,
+    note: const ByteArraySerializer().fromJson(json['note'] as String?),
     rekeyTo: json['rekey'] as String?,
   );
 }
@@ -33,6 +33,6 @@ Map<String, dynamic> _$RawTransactionToJson(RawTransaction instance) =>
       'gen': instance.genesisId,
       'grp': const Base32Serializer().toJson(instance.group),
       'lx': instance.lease,
-      'note': instance.note,
+      'note': const ByteArraySerializer().toJson(instance.note),
       'rekey': instance.rekeyTo,
     };

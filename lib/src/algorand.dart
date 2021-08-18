@@ -248,7 +248,7 @@ class Algorand {
     // Build the transaction
     final transaction = await (PaymentTransactionBuilder()
           ..sender = account.address
-          ..note = note
+          ..noteText = note
           ..amount = amount
           ..receiver = recipient
           ..suggestedParams = params)

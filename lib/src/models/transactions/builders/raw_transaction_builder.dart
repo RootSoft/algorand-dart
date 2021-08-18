@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
@@ -74,13 +75,25 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
   String? lease;
 
   /// Any data up to 1000 bytes.
-  String? note;
+  Uint8List? note;
 
   /// Specifies the authorized address.
   /// This address will be used to authorize all future transactions.
   String? rekeyTo;
 
   RawTransactionBuilder(this.type);
+
+  set noteText(String? data) {
+    if (data == null) {
+      return;
+    }
+
+    note = Uint8List.fromList(utf8.encode(data));
+  }
+
+  set noteB64(String data) {
+    note = base64Decode(data);
+  }
 
   /// The suggested params to use
   set suggestedParams(TransactionParams value) {

@@ -55,7 +55,7 @@ Future<String> atomicTransfer(
   // Build the transaction
   final transactionA = await (PaymentTransactionBuilder()
         ..sender = accountA.address
-        ..note = 'Atomic transfer from account A to account B'
+        ..noteText = 'Atomic transfer from account A to account B'
         ..amount = Algo.toMicroAlgos(1.2)
         ..receiver = accountB.address
         ..suggestedParams = params)
@@ -63,7 +63,7 @@ Future<String> atomicTransfer(
 
   final transactionB = await (PaymentTransactionBuilder()
         ..sender = accountB.address
-        ..note = 'Atomic transfer from account B to account A'
+        ..noteText = 'Atomic transfer from account B to account A'
         ..amount = Algo.toMicroAlgos(2)
         ..receiver = accountA.address
         ..suggestedParams = params)

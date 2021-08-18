@@ -7,8 +7,8 @@ import 'package:algorand_dart/src/utils/crypto_utils.dart';
 import 'package:algorand_dart/src/utils/encoders/msgpack_encoder.dart';
 import 'package:algorand_dart/src/utils/serializers/address_serializer.dart';
 import 'package:algorand_dart/src/utils/serializers/base32_serializer.dart';
+import 'package:algorand_dart/src/utils/serializers/byte_array_serializer.dart';
 import 'package:algorand_dart/src/utils/transformers/address_transformer.dart';
-import 'package:algorand_dart/src/utils/transformers/note_transformer.dart';
 import 'package:algorand_dart/src/utils/utils.dart';
 import 'package:base32/base32.dart';
 import 'package:crypto/crypto.dart';
@@ -104,7 +104,8 @@ class RawTransaction {
 
   /// Any data up to 1000 bytes.
   @JsonKey(name: 'note')
-  final String? note;
+  @ByteArraySerializer()
+  final Uint8List? note;
 
   /// Specifies the authorized address.
   /// This address will be used to authorize all future transactions.
@@ -224,7 +225,7 @@ class RawTransaction {
         'gen': genesisId,
         'grp': group,
         'lx': lease != null ? base64.decode(lease!) : null,
-        'note': const NoteTransformer().toMessagePack(note),
+        'note': note,
         'rekey': rekeyTo,
       };
 }
