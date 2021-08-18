@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
@@ -55,6 +56,11 @@ class ContractTemplate {
       throw AlgorandException(message: 'Invalid contract detected');
     }
     return data;
+  }
+
+  static String createRandomLease() {
+    var random = Random.secure();
+    return base64Encode(List<int>.generate(32, (i) => random.nextInt(256)));
   }
 }
 
