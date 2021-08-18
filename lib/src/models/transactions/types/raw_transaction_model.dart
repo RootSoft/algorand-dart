@@ -9,6 +9,7 @@ import 'package:algorand_dart/src/utils/serializers/address_serializer.dart';
 import 'package:algorand_dart/src/utils/serializers/base32_serializer.dart';
 import 'package:algorand_dart/src/utils/transformers/address_transformer.dart';
 import 'package:algorand_dart/src/utils/transformers/note_transformer.dart';
+import 'package:algorand_dart/src/utils/utils.dart';
 import 'package:base32/base32.dart';
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart';
@@ -38,7 +39,7 @@ class RawTransaction {
   /// The minimum fee on Algorand is currently 1000 microAlgos.
   /// This field cannot be combined with flat fee.
   @JsonKey(name: 'fee')
-  final int? fee;
+  int? fee;
 
   /// The first round for when the transaction is valid.
   /// If the transaction is sent prior to this round it will be rejected by
@@ -99,7 +100,7 @@ class RawTransaction {
   ///
   /// Leases can also be used to safeguard against unintended duplicate spends.
   @JsonKey(name: 'lx')
-  final String? lease;
+  String? lease;
 
   /// Any data up to 1000 bytes.
   @JsonKey(name: 'note')
@@ -138,6 +139,12 @@ class RawTransaction {
   /// This is used for Atomic Transfers.
   void assignGroupId(Uint8List groupId) {
     group = groupId;
+  }
+
+  /// Sets the transaction fee according to feePerByte * estimateTxSize.
+  Future setFeeByFeePerByte(int feePerByte) async {
+    fee = feePerByte;
+    fee = await FeeCalculator.calculateFeePerByte(this, feePerByte);
   }
 
   /// Sign the transaction with the given account.
@@ -216,7 +223,7 @@ class RawTransaction {
         'type': type,
         'gen': genesisId,
         'grp': group,
-        'lx': lease,
+        'lx': lease != null ? base64.decode(lease!) : null,
         'note': const NoteTransformer().toMessagePack(note),
         'rekey': rekeyTo,
       };

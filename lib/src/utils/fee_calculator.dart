@@ -52,7 +52,12 @@ class FeeCalculator {
       final account = await Account.random();
 
       // Sign the transaction
-      final signedTransaction = await transaction.sign(account);
+      final signature = await account.sign(transaction.getEncodedTransaction());
+      final signedTransaction = SignedTransaction(
+        transaction: transaction,
+        signature: signature,
+      );
+
       return Encoder.encodeMessagePack(signedTransaction.toMessagePack())
           .length;
     } catch (ex) {

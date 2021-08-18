@@ -252,6 +252,9 @@ class LogicSignature extends Equatable implements MessagePackable {
     return copyWith(multiSignature: multiSignature);
   }
 
+  /// Get the base64-encoded representation of the transaction..
+  String toBase64() => base64Encode(Encoder.encodeMessagePack(toMessagePack()));
+
   @override
   Map<String, dynamic> toMessagePack() {
     return {

@@ -105,7 +105,12 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
     }
 
     if (suggestedFeePerByte != null) {
+      // Set the fee to calculate correct estimated transaction size
+      // see setFeeByFeePerByte in Java
+      _fee = suggestedFeePerByte;
+
       final transactionSize = await estimatedTransactionSize();
+
       _fee = await FeeCalculator.calculateTransactionFee(
         transactionSize,
         suggestedFeePerByte,
