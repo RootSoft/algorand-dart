@@ -21,6 +21,29 @@ void main() {
     expect(lsig.toAddress(), sender);
   });
 
+  test('Test logicsig invalid program', () async {
+    final program = Uint8List.fromList(<int>[0x07, 0x20, 0x01, 0x01, 0x22]);
+    expect(
+      () => LogicSignature(logic: program),
+      throwsA((e) => e is AlgorandException),
+    );
+  });
+
+  test('Test logic signature', () async {
+    final program = Uint8List.fromList(<int>[0x01, 0x20, 0x01, 0x01, 0x22]);
+    var lsig = LogicSignature(logic: program);
+    final account = await Account.random();
+    lsig = await lsig.sign(account: account);
+
+    expect(lsig.logic, equals(program));
+    expect(lsig.arguments, isNull);
+    expect(lsig.signature, isNotNull);
+    expect(lsig.multiSignature, isNull);
+
+    final verified = await lsig.verify(account.address);
+    expect(verified, isTrue);
+  });
+
   test('Test logicsig multisignature', () async {
     final program = Uint8List.fromList(<int>[0x01, 0x20, 0x01, 0x01, 0x22]);
     final one = Address.fromAlgorandAddress(
