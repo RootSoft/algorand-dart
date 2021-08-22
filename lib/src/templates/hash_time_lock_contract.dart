@@ -60,10 +60,10 @@ class HashTimeLockContract {
       numInts: 4,
       numByteArrays: 3,
     );
-    final maxFee = data.intBlock[0];
+    //final maxFee = data.intBlock[0];
     final receiver = Address(publicKey: data.byteBlock[0]);
     final hashImage = data.byteBlock[1];
-    final hashFn = contract.program[contract.program.length - 15];
+    //final hashFn = contract.program[contract.program.length - 15];
 
     // Validate hash function
     final computedImage = sha256.convert(base64Decode(preImage));

@@ -56,7 +56,7 @@ class PeriodicPayment {
       numInts: 7,
       numByteArrays: 2,
     );
-    final maxFee = data.intBlock[1];
+    //final maxFee = data.intBlock[1];
     final period = data.intBlock[2];
     final withdrawingWindow = data.intBlock[4];
     final amount = data.intBlock[5];

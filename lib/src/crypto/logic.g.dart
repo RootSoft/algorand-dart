@@ -9,7 +9,7 @@ part of 'logic.dart';
 LangSpec _$LangSpecFromJson(Map<String, dynamic> json) {
   return LangSpec(
     evalMaxVersion: json['EvalMaxVersion'] as int? ?? 0,
-    logicSignVersion: json['LogicSigVersion'] as int? ?? 0,
+    logicSigVersion: json['LogicSigVersion'] as int? ?? 0,
     operations: (json['Ops'] as List<dynamic>?)
             ?.map((e) => Operation.fromJson(e as Map<String, dynamic>))
             .toList() ??
@@ -19,7 +19,7 @@ LangSpec _$LangSpecFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$LangSpecToJson(LangSpec instance) => <String, dynamic>{
       'EvalMaxVersion': instance.evalMaxVersion,
-      'LogicSigVersion': instance.logicSignVersion,
+      'LogicSigVersion': instance.logicSigVersion,
       'Ops': instance.operations,
     };
 

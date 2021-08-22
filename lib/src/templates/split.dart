@@ -69,7 +69,7 @@ class Split {
       numByteArrays: 3,
     );
 
-    final maxFee = data.intBlock[1];
+    //final maxFee = data.intBlock[1];
     final rat1 = data.intBlock[6];
     final rat2 = data.intBlock[5];
     final minTrade = data.intBlock[7];

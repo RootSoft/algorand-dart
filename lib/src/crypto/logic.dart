@@ -124,6 +124,24 @@ class Logic {
     langSpec = LangSpec.fromJson(data);
   }
 
+  /// Retrieves max supported version of TEAL evaluator
+  static int get evalMaxVersion {
+    if (langSpec == null) {
+      loadLangSpec();
+    }
+
+    return langSpec?.evalMaxVersion ?? 0;
+  }
+
+  /// Retrieves TEAL supported version
+  static int get logicSigVersion {
+    if (langSpec == null) {
+      loadLangSpec();
+    }
+
+    return langSpec?.logicSigVersion ?? 0;
+  }
+
   /// Given a varint, get the integer value
   static VarintResult getUVarint(Uint8List buffer, int bufferOffset) {
     var x = 0;
@@ -265,10 +283,11 @@ class Logic {
       );
     }
 
-    final buffer = Uint8List.sublistView(program, pc + size, result.value);
+    final buffer = List.filled(result.value, 0);
+    buffer.setRange(0, result.value, program, pc + size);
     size += result.value;
 
-    return ByteConstBlock(size, [buffer]);
+    return ByteConstBlock(size, [Uint8List.fromList(buffer)]);
   }
 }
 
@@ -278,14 +297,14 @@ class LangSpec {
   final int evalMaxVersion;
 
   @JsonKey(name: 'LogicSigVersion', defaultValue: 0)
-  final int logicSignVersion;
+  final int logicSigVersion;
 
   @JsonKey(name: 'Ops', defaultValue: [])
   final List<Operation> operations;
 
   LangSpec({
     required this.evalMaxVersion,
-    required this.logicSignVersion,
+    required this.logicSigVersion,
     required this.operations,
   });
 
