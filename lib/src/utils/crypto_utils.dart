@@ -1,7 +1,21 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
+
+Uint8List generateRandomBytes([Random? random, int size = 32]) {
+  final r = random ?? Random();
+  return Uint8List.fromList(
+    List<int>.generate(size, (i) => r.nextInt(256)),
+  );
+}
+
+Uint8List fillBytes(int value, [int size = 32]) {
+  return Uint8List.fromList(
+    List<int>.generate(size, (i) => value),
+  );
+}
 
 extension CryptoStringExtension on String {
   Uint8List toBytes() {
