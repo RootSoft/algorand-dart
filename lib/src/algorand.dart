@@ -1,8 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/api/responses.dart';
-import 'package:algorand_dart/src/clients/algod_client.dart';
-import 'package:algorand_dart/src/clients/indexer_client.dart';
+import 'package:algorand_dart/src/clients/clients.dart';
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/indexer/algorand_indexer.dart';
 import 'package:algorand_dart/src/managers/managers.dart';
@@ -10,6 +9,7 @@ import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
+import 'package:algorand_kmd/algorand_kmd.dart';
 
 class Algorand {
   /// The HTTP Client instance to interact with algod.
@@ -17,6 +17,9 @@ class Algorand {
 
   /// The HTTP Client instance to interact with the indexer.
   final IndexerClient indexerClient;
+
+  /// The HTTP Client instance to interact with kmd.
+  final KmdClient? _kmdClient;
 
   late final NodeRepository _nodeRepository;
 
@@ -34,7 +37,11 @@ class Algorand {
 
   late final AlgorandIndexer _indexer;
 
-  Algorand({required this.algodClient, required this.indexerClient}) {
+  Algorand({
+    required this.algodClient,
+    required this.indexerClient,
+    KmdClient? kmdClient,
+  }) : _kmdClient = kmdClient {
     // TODO Provide services
     final transactionService = TransactionService(algodClient.client);
     final nodeService = NodeService(algodClient.client);
@@ -77,6 +84,10 @@ class Algorand {
 
   /// Get the application manager, used to perform application related tasks.
   ApplicationManager get applicationManager => _applicationManager;
+
+  /// Get the key management daemon.
+  DefaultApi get kmd =>
+      _kmdClient?.api.getDefaultApi() ?? AlgorandKmd().getDefaultApi();
 
   /// Get the algorand indexer which lets you search the blockchain.
   AlgorandIndexer indexer() => _indexer;

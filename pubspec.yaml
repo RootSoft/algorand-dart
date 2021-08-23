@@ -2,19 +2,21 @@ name: algorand_dart
 description: Unofficial community SDK to interact with the Algorand network, for Dart & Flutter
 version: 0.0.2-beta.6
 homepage: https://www.algorand.com
+repository: https://github.com/RootSoft/algorand-dart
+issue_tracker: https://github.com/RootSoft/algorand-dart/issues
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   # Ed25519 - nullsafety
-  cryptography: ^2.0.0-nullsafety.2
+  cryptography: ^2.0.2
 
   # SHA512/256 - nullsafety
   crypto: ^3.0.0
 
   # Base32 - nullsafety
-  base32: ^2.0.0-nullsafety.1
+  base32: ^2.0.0
 
   # Convert - nullsafety
   convert: ^3.0.0
@@ -32,11 +34,17 @@ dependencies:
   collection: ^1.15.0
 
   # HTTP & REST (Update to v4 when stable)
-  dio: ^4.0.0-beta7
+  dio: ^4.0.0
   #retrofit: ^1.3.4+1
 
   # Messagepack
   msgpack_dart: ^1.0.0
+
+  # Key Management Daemon API
+  algorand_kmd: ^1.0.0
+
+  built_value: '>=8.0.4 <9.0.0'
+  built_collection: '>=5.0.0 <6.0.0'
 
 dev_dependencies:
   # Testing framework
