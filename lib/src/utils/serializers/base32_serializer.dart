@@ -4,19 +4,25 @@ import 'dart:typed_data';
 import 'package:base32/base32.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-class Base32Serializer implements JsonConverter<Uint8List?, String?> {
+class Base32Serializer implements JsonConverter<Uint8List?, dynamic> {
   const Base32Serializer();
 
   @override
-  Uint8List? fromJson(String? json) {
-    if (json == null) {
+  Uint8List? fromJson(dynamic data) {
+    if (data == null) {
       return null;
     }
 
-    try {
-      return base32.decode(json);
-    } on FormatException {
-      return Uint8List.fromList(utf8.encode(json));
+    if (data is Uint8List) {
+      return data;
+    }
+
+    if (data is String) {
+      try {
+        return base32.decode(data);
+      } on FormatException {
+        return Uint8List.fromList(utf8.encode(data));
+      }
     }
   }
 

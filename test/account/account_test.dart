@@ -163,7 +163,7 @@ void main() {
           ..lastValid = 2063137 + 1000
           ..noteB64 = '8xMCTuLQ810='
           ..genesisId = 'devnet-v1.0'
-          ..genesisHash = 'sC3P7e2SdbqKJK0tbiCdK9tdSpbe6XeCGKdoNzmlj0E='
+          ..genesisHashB64 = 'sC3P7e2SdbqKJK0tbiCdK9tdSpbe6XeCGKdoNzmlj0E='
           ..amount = 2000
           ..receiver = to)
         .build();

@@ -69,7 +69,7 @@ class DynamicFee {
           ..flatFee = 1000
           ..firstValid = firstValid
           ..lastValid = lastValid
-          ..genesisHash = genesisHash
+          ..genesisHashB64 = genesisHash
           ..amount = amount
           ..receiver = receiver
           ..closeRemainderTo = closeTo

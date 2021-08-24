@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:algorand_dart/src/utils/serializers/byte_array_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'transaction_params_model.g.dart';
@@ -19,7 +22,9 @@ class TransactionParams {
   final String genesisId;
 
   /// GenesisHash is the hash of the genesis block.
-  final String genesisHash;
+  @JsonKey(name: 'genesis-hash')
+  @ByteArraySerializer()
+  final Uint8List? genesisHash;
 
   /// LastRound indicates the last round seen
   ///

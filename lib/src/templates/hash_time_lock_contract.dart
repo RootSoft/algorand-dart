@@ -75,7 +75,7 @@ class HashTimeLockContract {
           ..sender = contract.address
           ..firstValid = firstValid
           ..lastValid = lastValid
-          ..genesisHash = genesisHash
+          ..genesisHashB64 = genesisHash
           ..amount = 0
           ..suggestedFeePerByte = feePerByte
           ..closeRemainderTo = receiver)

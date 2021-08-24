@@ -12,8 +12,25 @@ class Encoder {
   }
 
   /// Decodes the messagepack.
-  static dynamic decodeMessagePack(Uint8List bytes) {
-    return deserialize(bytes);
+  /// TODO Array?
+  static Map<String, dynamic> decodeMessagePack(Uint8List bytes) {
+    final decoded = deserialize(bytes);
+    if (decoded is Map<dynamic, dynamic>) {
+      return convertMap(decoded);
+    }
+
+    return <String, dynamic>{};
+  }
+
+  static Map<String, dynamic> convertMap(Map<dynamic, dynamic> data) {
+    return data.map((key, value) {
+      var x = value;
+      if (x is Map<dynamic, dynamic>) {
+        x = convertMap(x);
+      }
+
+      return MapEntry(key.toString(), x);
+    });
   }
 
   /// Prepare the messagepack and sanitize it.

@@ -111,7 +111,7 @@ class Split {
           ..amount = amountReceiverOne
           ..firstValid = firstValid
           ..lastValid = lastValid
-          ..genesisHash = genesisHash)
+          ..genesisHashB64 = genesisHash)
         .build();
 
     final tx2 = await (PaymentTransactionBuilder()
@@ -121,7 +121,7 @@ class Split {
           ..amount = amountReceiverTwo
           ..firstValid = firstValid
           ..lastValid = lastValid
-          ..genesisHash = genesisHash)
+          ..genesisHashB64 = genesisHash)
         .build();
 
     final signature = LogicSignature(logic: contract.program);

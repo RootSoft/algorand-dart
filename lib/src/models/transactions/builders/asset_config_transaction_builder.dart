@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/raw_transaction_builder.dart';
 import 'package:algorand_dart/src/utils/fee_calculator.dart';
@@ -43,7 +46,7 @@ class AssetConfigTransactionBuilder
   /// An example might be the hash of some certificate that acknowledges the
   /// digitized asset as the official representation of a particular real-world
   /// asset.
-  String? metaData;
+  Uint8List? metaData;
 
   /// The address of the account that can manage the configuration of the asset
   /// and destroy it.
@@ -72,6 +75,14 @@ class AssetConfigTransactionBuilder
   bool destroy = false;
 
   AssetConfigTransactionBuilder() : super(TransactionType.ASSET_CONFIG);
+
+  set metadataText(String data) {
+    metaData = Uint8List.fromList(utf8.encode(data));
+  }
+
+  set metadataB64(String data) {
+    metaData = base64Decode(data);
+  }
 
   @override
   Future<int> estimatedTransactionSize() async {

@@ -78,7 +78,7 @@ class PeriodicPayment {
           ..firstValid = firstValid
           ..lastValid = firstValid + withdrawingWindow
           ..amount = amount
-          ..genesisHash = genesisHash
+          ..genesisHashB64 = genesisHash
           ..lease = base64Encode(lease))
         .build();
 

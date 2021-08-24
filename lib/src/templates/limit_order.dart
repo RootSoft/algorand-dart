@@ -101,7 +101,7 @@ class LimitOrder {
           ..suggestedFeePerByte = feePerByte
           ..firstValid = firstValid
           ..lastValid = lastValid
-          ..genesisHash = genesisHash
+          ..genesisHashB64 = genesisHash
           ..amount = microAlgoAmount
           ..receiver = sender.address)
         .build();
@@ -113,7 +113,7 @@ class LimitOrder {
           ..suggestedFeePerByte = feePerByte
           ..firstValid = firstValid
           ..lastValid = lastValid
-          ..genesisHash = genesisHash
+          ..genesisHashB64 = genesisHash
           ..assetId = assetId)
         .build();
 

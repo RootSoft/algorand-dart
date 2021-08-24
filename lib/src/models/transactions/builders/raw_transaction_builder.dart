@@ -30,7 +30,7 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
 
   /// The hash of the genesis block of the network for which the transaction
   /// is valid. See the genesis hash for MainNet, TestNet, and BetaNet.
-  String? genesisHash;
+  Uint8List? genesisHash;
 
   /// The ending round for which the transaction is valid.
   /// After this round, the transaction will be rejected by the network.
@@ -93,6 +93,10 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
 
   set noteB64(String data) {
     note = base64Decode(data);
+  }
+
+  set genesisHashB64(String data) {
+    genesisHash = base64Decode(data);
   }
 
   /// The suggested params to use

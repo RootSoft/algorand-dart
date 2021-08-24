@@ -1,13 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'raw_transaction_model.dart';
+part of 'payment_transaction.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RawTransaction _$RawTransactionFromJson(Map<String, dynamic> json) {
-  return RawTransaction(
+PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) {
+  return PaymentTransaction(
+    receiver: const AddressSerializer().fromJson(json['rcv']),
+    amount: json['amt'] as int?,
+    closeRemainderTo: const AddressSerializer().fromJson(json['close']),
     fee: json['fee'] as int?,
     firstValid: json['fv'] as int?,
     genesisHash: const ByteArraySerializer().fromJson(json['gh']),
@@ -22,7 +25,7 @@ RawTransaction _$RawTransactionFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$RawTransactionToJson(RawTransaction instance) =>
+Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
     <String, dynamic>{
       'fee': instance.fee,
       'fv': instance.firstValid,
@@ -35,4 +38,7 @@ Map<String, dynamic> _$RawTransactionToJson(RawTransaction instance) =>
       'lx': instance.lease,
       'note': const ByteArraySerializer().toJson(instance.note),
       'rekey': instance.rekeyTo,
+      'rcv': const AddressSerializer().toJson(instance.receiver),
+      'amt': instance.amount,
+      'close': const AddressSerializer().toJson(instance.closeRemainderTo),
     };

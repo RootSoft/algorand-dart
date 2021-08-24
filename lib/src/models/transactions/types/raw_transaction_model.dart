@@ -13,6 +13,7 @@ import 'package:algorand_dart/src/utils/utils.dart';
 import 'package:base32/base32.dart';
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'raw_transaction_model.g.dart';
@@ -28,7 +29,7 @@ part 'raw_transaction_model.g.dart';
 ///  4. Every positive number must be encoded as uint
 ///  5. Binary blob should be used for binary data and string for strings
 @JsonSerializable(fieldRename: FieldRename.kebab)
-class RawTransaction {
+class RawTransaction extends Equatable {
   /// The prefix for a transaction.
   static const TX_PREFIX = 'TX';
 
@@ -50,7 +51,8 @@ class RawTransaction {
   /// The hash of the genesis block of the network for which the transaction
   /// is valid. See the genesis hash for MainNet, TestNet, and BetaNet.
   @JsonKey(name: 'gh')
-  final String? genesisHash;
+  @ByteArraySerializer()
+  final Uint8List? genesisHash;
 
   /// The ending round for which the transaction is valid.
   /// After this round, the transaction will be rejected by the network.
@@ -65,7 +67,7 @@ class RawTransaction {
   /// Specifies the type of transaction.
   /// This value is automatically generated using any of the developer tools.
   @JsonKey(name: 'type')
-  final String type;
+  final String? type;
 
   /// The human-readable string that identifies the network for the transaction.
   /// The genesis ID is found in the genesis block.
@@ -218,7 +220,7 @@ class RawTransaction {
   Map<String, dynamic> toMessagePack() => <String, dynamic>{
         'fee': fee,
         'fv': firstValid,
-        'gh': genesisHash != null ? base64.decode(genesisHash!) : null,
+        'gh': genesisHash,
         'lv': lastValid,
         'snd': const AddressTransformer().toMessagePack(sender),
         'type': type,
@@ -228,4 +230,19 @@ class RawTransaction {
         'note': note,
         'rekey': rekeyTo,
       };
+
+  @override
+  List<Object?> get props => [
+        fee,
+        firstValid,
+        genesisHash,
+        lastValid,
+        sender,
+        type,
+        genesisId,
+        group,
+        lease,
+        note,
+        rekeyTo,
+      ];
 }

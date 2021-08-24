@@ -8,6 +8,15 @@ enum TransactionType {
   APPLICATION_CALL,
 }
 
+const TransactionTypeEnumMap = {
+  TransactionType.PAYMENT: 'pay',
+  TransactionType.KEY_REGISTRATION: 'keyreg',
+  TransactionType.ASSET_CONFIG: 'acfg',
+  TransactionType.ASSET_TRANSFER: 'axfer',
+  TransactionType.ASSET_FREEZE: 'afrz',
+  TransactionType.APPLICATION_CALL: 'appl',
+};
+
 extension TransactionTypeExtension on TransactionType {
   String get value {
     switch (this) {

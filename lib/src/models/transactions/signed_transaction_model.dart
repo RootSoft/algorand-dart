@@ -8,20 +8,23 @@ import 'package:algorand_dart/src/utils/encoders/msgpack_encoder.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
 import 'package:algorand_dart/src/utils/serializers/address_serializer.dart';
 import 'package:algorand_dart/src/utils/serializers/signature_serializer.dart';
+import 'package:algorand_dart/src/utils/serializers/transaction_serializer.dart';
 import 'package:algorand_dart/src/utils/transformers/address_transformer.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'signed_transaction_model.g.dart';
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.kebab)
-class SignedTransaction implements MessagePackable {
+class SignedTransaction extends Equatable implements MessagePackable {
   /// The signature of the transaction
-  @JsonKey(name: 'sig', ignore: true)
+  @JsonKey(name: 'sig')
   @SignatureSerializer()
   final Uint8List? signature;
 
   /// The raw data of the transaction
   @JsonKey(name: 'txn')
+  @TransactionSerializer()
   final RawTransaction transaction;
 
   /// Optional auth address when
@@ -75,4 +78,13 @@ class SignedTransaction implements MessagePackable {
       'msig': multiSignature?.toMessagePack(),
     };
   }
+
+  @override
+  List<Object?> get props => [
+        authAddress,
+        signature,
+        transaction,
+        logicSignature,
+        multiSignature,
+      ];
 }
