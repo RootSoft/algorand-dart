@@ -64,7 +64,7 @@ algorand_dart: ^latest-version
 > See the latest version on pub.dev
 
 ## Usage
-Create an ```AlgodClient``` and ```IndexerClient``` and pass them to the ```Algorand``` constructor.
+Create an ```AlgodClient```, ```IndexerClient``` and ```KmdClient``` and pass them to the ```Algorand``` constructor.
 We added extra support for locally hosted nodes & third party services (like PureStake).
 
 ```dart
@@ -80,9 +80,15 @@ final indexerClient = IndexerClient(
     tokenKey: PureStake.API_TOKEN_HEADER,
 );
 
+final kmdClient = KmdClient(
+    apiUrl: '127.0.0.1',
+    apiKey: apiKey,
+);
+
 final algorand = Algorand(
     algodClient: algodClient,
     indexerClient: indexerClient,
+    kmdClient: kmdClient,
 );
 ```
 
@@ -733,6 +739,29 @@ final txId = await algorand.sendTransaction(
 );
 ```
 
+## Key Management Daemon
+
+The Key Management Daemon (kmd) is a low level wallet and key management tool. It works in conjunction with algod and goal to keep secrets safe.
+kmd tries to ensure that secret keys never touch the disk unencrypted.
+
+* kmd has a data directory separate from algod's data directory. By default, however, the kmd data directory is in the kmd subdirectory of algod's data directory.
+* kmd starts an HTTP API server on localhost:7833 by default.
+* You talk to the HTTP API by sending json-serialized request structs from the kmdapi package.
+
+Note: If you are using a third-party API service, this process likely will not be available to you.
+
+```dart
+final request = (CreateWalletRequestBuilder()
+      ..walletName = 'wallet'
+      ..walletPassword = 'test'
+      ..walletDriverName = 'sqlite')
+    .build();
+
+final response = await algorand.kmd.createWallet(createWalletRequest: request);
+```
+
+Learn more [here](https://developer.algorand.org/docs/features/accounts/create/#wallet-derived-kmd) about the Key Management Daemon.
+
 ## Indexer
 Algorand provides a standalone daemon algorand-indexer that reads committed blocks from the Algorand blockchain and
 maintains a local database of transactions and accounts that are searchable and indexed.
@@ -796,12 +825,6 @@ final applications = await algorand
     .limit(5)
     .search();
 ```
-
-## Roadmap
-* Better support for Big Integers
-* KMD
-* Rekeying
-* Tests
 
 ## Changelog
 
