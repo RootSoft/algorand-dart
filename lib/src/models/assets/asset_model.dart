@@ -31,4 +31,15 @@ class Asset {
   factory Asset.fromJson(Map<String, dynamic> json) => _$AssetFromJson(json);
 
   Map<String, dynamic> toJson() => _$AssetToJson(this);
+
+  @override
+  String toString() {
+    return 'Asset{'
+        'index: $index, '
+        'params: $params, '
+        'createdAtRound: $createdAtRound, '
+        'deleted: $deleted, '
+        'destroyedAtRound: $destroyedAtRound'
+        '}';
+  }
 }

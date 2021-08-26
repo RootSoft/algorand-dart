@@ -78,4 +78,22 @@ class AssetParameters {
       _$AssetParametersFromJson(json);
 
   Map<String, dynamic> toJson() => _$AssetParametersToJson(this);
+
+  @override
+  String toString() {
+    return 'AssetParameters{'
+        'total: $total, '
+        'decimals: $decimals, '
+        'creator: $creator, '
+        'clawback: $clawback, '
+        'defaultFrozen: $defaultFrozen, '
+        'freeze: $freeze, '
+        'manager: $manager, '
+        'name: $name, '
+        'reserve: $reserve, '
+        'unitName: $unitName, '
+        'url: $url, '
+        'metadataHash: $metadataHash'
+        '}';
+  }
 }

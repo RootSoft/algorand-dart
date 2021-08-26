@@ -10,6 +10,7 @@ export 'applications/application_params_model.dart';
 export 'applications/application_state_schema_model.dart';
 export 'applications/eval_delta_key_value_model.dart';
 export 'applications/eval_delta_model.dart';
+export 'applications/state_schema_model.dart';
 export 'applications/teal_key_value_model.dart';
 export 'applications/teal_program_model.dart';
 export 'applications/teal_value_model.dart';

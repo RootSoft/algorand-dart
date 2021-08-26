@@ -43,4 +43,17 @@ class AssetHolding {
       _$AssetHoldingFromJson(json);
 
   Map<String, dynamic> toJson() => _$AssetHoldingToJson(this);
+
+  @override
+  String toString() {
+    return 'AssetHolding{'
+        'amount: $amount, '
+        'assetId: $assetId, '
+        'creator: $creator, '
+        'deleted: $deleted, '
+        'isFrozen: $isFrozen, '
+        'optedInAtRound: $optedInAtRound, '
+        'optedOutAtRound: $optedOutAtRound'
+        '}';
+  }
 }

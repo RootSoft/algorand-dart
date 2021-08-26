@@ -13,10 +13,10 @@ import 'package:algorand_kmd/algorand_kmd.dart';
 
 class Algorand {
   /// The HTTP Client instance to interact with algod.
-  final AlgodClient algodClient;
+  final AlgodClient _algodClient;
 
   /// The HTTP Client instance to interact with the indexer.
-  final IndexerClient indexerClient;
+  final IndexerClient _indexerClient;
 
   /// The HTTP Client instance to interact with kmd.
   final KmdClient? _kmdClient;
@@ -38,13 +38,15 @@ class Algorand {
   late final AlgorandIndexer _indexer;
 
   Algorand({
-    required this.algodClient,
-    required this.indexerClient,
+    AlgodClient? algodClient,
+    IndexerClient? indexerClient,
     KmdClient? kmdClient,
-  }) : _kmdClient = kmdClient {
+  })  : _algodClient = algodClient ?? AlgodClient(apiUrl: ''),
+        _indexerClient = indexerClient ?? IndexerClient(apiUrl: ''),
+        _kmdClient = kmdClient {
     // TODO Provide services
-    final transactionService = TransactionService(algodClient.client);
-    final nodeService = NodeService(algodClient.client);
+    final transactionService = TransactionService(_algodClient.client);
+    final nodeService = NodeService(_algodClient.client);
 
     // TODO Inject Repositories
     _nodeRepository = NodeRepository(service: nodeService);
@@ -54,11 +56,11 @@ class Algorand {
     );
 
     _accountRepository = AccountRepository(
-      accountService: AccountService(algodClient.client),
+      accountService: AccountService(_algodClient.client),
     );
 
     _applicationRepository = ApplicationRepository(
-      applicationService: ApplicationService(algodClient.client),
+      applicationService: ApplicationService(_algodClient.client),
     );
 
     // TODO Inject Managers
@@ -71,10 +73,10 @@ class Algorand {
     // TODO Inject and provide the Algorand Indexer
     _indexer = AlgorandIndexer(
       indexerRepository: IndexerRepository(
-        indexerService: IndexerService(indexerClient.client),
-        accountService: AccountService(indexerClient.client),
-        assetService: AssetService(indexerClient.client),
-        applicationService: ApplicationService(indexerClient.client),
+        indexerService: IndexerService(_indexerClient.client),
+        accountService: AccountService(_indexerClient.client),
+        assetService: AssetService(_indexerClient.client),
+        applicationService: ApplicationService(_indexerClient.client),
       ),
     );
   }
