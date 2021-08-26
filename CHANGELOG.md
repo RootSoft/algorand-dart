@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.2-beta.7 - 2021-08-26
+
+- Rekeying
+- MessagePack decoding
+- Added support for contract templates
+- Added support for KMD
+- Implementation tests
+
 ## 0.0.2-beta.6 - 2021-07-24
 
 - Added support for smart contracts

@@ -41,6 +41,7 @@ algorand.assetManager.createAsset(
 ## Features
 * Algod
 * Indexer
+* KMD
 * Transactions
 * Key registration
 * Authorization
@@ -760,7 +761,7 @@ final request = (CreateWalletRequestBuilder()
 final response = await algorand.kmd.createWallet(createWalletRequest: request);
 ```
 
-Learn more [here](https://developer.algorand.org/docs/features/accounts/create/#wallet-derived-kmd) about the Key Management Daemon.
+Check out the [Algorand Developer documentation ](https://developer.algorand.org/docs/features/accounts/create/#wallet-derived-kmd) to learn more about the Key Management Daemon.
 
 ## Indexer
 Algorand provides a standalone daemon algorand-indexer that reads committed blocks from the Algorand blockchain and
