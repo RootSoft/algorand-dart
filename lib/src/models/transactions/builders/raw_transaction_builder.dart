@@ -72,7 +72,7 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
   /// leases.
   ///
   /// Leases can also be used to safeguard against unintended duplicate spends.
-  String? lease;
+  Uint8List? lease;
 
   /// Any data up to 1000 bytes.
   Uint8List? note;
@@ -97,6 +97,10 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
 
   set genesisHashB64(String data) {
     genesisHash = base64Decode(data);
+  }
+
+  set leaseB64(String data) {
+    lease = base64Decode(data);
   }
 
   /// The suggested params to use

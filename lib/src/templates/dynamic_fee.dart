@@ -73,7 +73,7 @@ class DynamicFee {
           ..amount = amount
           ..receiver = receiver
           ..closeRemainderTo = closeTo
-          ..lease = base64Encode(lease))
+          ..lease = lease)
         .build();
 
     final lsig = LogicSignature(logic: contract.program);

@@ -1,16 +1,56 @@
+import 'dart:typed_data';
+
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:algorand_dart/src/utils/transformers/address_transformer.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'asset_freeze_transaction.g.dart';
+
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class AssetFreezeTransaction extends RawTransaction {
   /// The address of the account whose asset is being frozen or unfrozen.
+  @JsonKey(name: 'fadd')
+  @AddressSerializer()
   final Address? freezeAddress;
 
   /// The ID of the asset being frozen or unfrozen.
+  @JsonKey(name: 'faid')
   final int? assetId;
 
   /// True to freeze the asset.
+  @JsonKey(name: 'afrz')
   final bool? freeze;
+
+  AssetFreezeTransaction({
+    this.freezeAddress,
+    this.assetId,
+    this.freeze,
+    int? fee,
+    int? firstValid,
+    Uint8List? genesisHash,
+    int? lastValid,
+    Address? sender,
+    String? type,
+    String? genesisId,
+    Uint8List? group,
+    Uint8List? lease,
+    Uint8List? note,
+    String? rekeyTo,
+  }) : super(
+          type: type,
+          fee: fee,
+          firstValid: firstValid,
+          genesisHash: genesisHash,
+          lastValid: lastValid,
+          sender: sender,
+          genesisId: genesisId,
+          group: group,
+          lease: lease,
+          note: note,
+          rekeyTo: rekeyTo,
+        );
 
   AssetFreezeTransaction.builder(AssetFreezeTransactionBuilder builder)
       : freezeAddress = builder.freezeTarget,
@@ -38,4 +78,19 @@ class AssetFreezeTransaction extends RawTransaction {
     fields['afrz'] = freeze;
     return fields;
   }
+
+  factory AssetFreezeTransaction.fromJson(Map<String, dynamic> json) =>
+      _$AssetFreezeTransactionFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$AssetFreezeTransactionToJson(this);
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        assetId,
+        freezeAddress,
+        assetId,
+        freeze,
+      ];
 }

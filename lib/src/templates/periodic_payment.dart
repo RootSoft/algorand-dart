@@ -79,7 +79,7 @@ class PeriodicPayment {
           ..lastValid = firstValid + withdrawingWindow
           ..amount = amount
           ..genesisHashB64 = genesisHash
-          ..lease = base64Encode(lease))
+          ..lease = lease)
         .build();
 
     return lsig.signTransaction(transaction: tx);

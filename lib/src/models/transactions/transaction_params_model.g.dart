@@ -11,7 +11,8 @@ TransactionParams _$TransactionParamsFromJson(Map<String, dynamic> json) {
     consensusVersion: json['consensus-version'] as String,
     fee: json['fee'] as int,
     genesisId: json['genesis-id'] as String,
-    genesisHash: const ByteArraySerializer().fromJson(json['genesis-hash']),
+    genesisHash:
+        const NullableByteArraySerializer().fromJson(json['genesis-hash']),
     lastRound: json['last-round'] as int,
     minFee: json['min-fee'] as int,
   );
@@ -22,7 +23,8 @@ Map<String, dynamic> _$TransactionParamsToJson(TransactionParams instance) =>
       'consensus-version': instance.consensusVersion,
       'fee': instance.fee,
       'genesis-id': instance.genesisId,
-      'genesis-hash': const ByteArraySerializer().toJson(instance.genesisHash),
+      'genesis-hash':
+          const NullableByteArraySerializer().toJson(instance.genesisHash),
       'last-round': instance.lastRound,
       'min-fee': instance.minFee,
     };

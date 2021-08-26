@@ -5,10 +5,15 @@ import 'package:algorand_dart/src/crypto/crypto.dart';
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
+import 'package:algorand_dart/src/utils/serializers/byte_array_serializer.dart';
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:algorand_dart/src/utils/utils.dart';
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart' as crypto;
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'logic_signature.g.dart';
 
 /// Most Algorand transactions are authorized by a signature from a single
 /// account or a multisignature account.
@@ -23,12 +28,24 @@ import 'package:equatable/equatable.dart';
 ///
 /// More information, see
 /// https://developer.algorand.org/docs/features/asc1/stateless/sdks/
+
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class LogicSignature extends Equatable implements MessagePackable {
   static const LOGIC_PREFIX = 'Program';
 
+  @JsonKey(name: 'l')
+  @ByteArraySerializer()
   final Uint8List logic;
+
+  @JsonKey(name: 'arg')
+  @ListByteArraySerializer()
   final List<Uint8List>? arguments;
+
+  @JsonKey(name: 'sig')
+  @SignatureSerializer()
   final Signature? signature;
+
+  @JsonKey(name: 'msig', ignore: true)
   final MultiSignature? multiSignature;
 
   /// Create a new logic signature.
@@ -264,9 +281,15 @@ class LogicSignature extends Equatable implements MessagePackable {
     };
   }
 
+  factory LogicSignature.fromJson(Map<String, dynamic> json) =>
+      _$LogicSignatureFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LogicSignatureToJson(this);
+
   @override
   List<Object?> get props => [
         ...logic,
+        ...arguments ?? [],
         signature,
         multiSignature,
       ];

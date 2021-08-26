@@ -51,7 +51,7 @@ class RawTransaction extends Equatable {
   /// The hash of the genesis block of the network for which the transaction
   /// is valid. See the genesis hash for MainNet, TestNet, and BetaNet.
   @JsonKey(name: 'gh')
-  @ByteArraySerializer()
+  @NullableByteArraySerializer()
   final Uint8List? genesisHash;
 
   /// The ending round for which the transaction is valid.
@@ -102,11 +102,12 @@ class RawTransaction extends Equatable {
   ///
   /// Leases can also be used to safeguard against unintended duplicate spends.
   @JsonKey(name: 'lx')
-  String? lease;
+  @NullableByteArraySerializer()
+  Uint8List? lease;
 
   /// Any data up to 1000 bytes.
   @JsonKey(name: 'note')
-  @ByteArraySerializer()
+  @NullableByteArraySerializer()
   final Uint8List? note;
 
   /// Specifies the authorized address.
@@ -226,7 +227,7 @@ class RawTransaction extends Equatable {
         'type': type,
         'gen': genesisId,
         'grp': group,
-        'lx': lease != null ? base64.decode(lease!) : null,
+        'lx': lease,
         'note': note,
         'rekey': rekeyTo,
       };

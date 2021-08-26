@@ -48,7 +48,7 @@ class PaymentTransaction extends RawTransaction {
     String? type,
     String? genesisId,
     Uint8List? group,
-    String? lease,
+    Uint8List? lease,
     Uint8List? note,
     String? rekeyTo,
   }) : super(

@@ -1,8 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
+import 'package:equatable/equatable.dart';
 
-class VRFPublicKey {
+class VRFPublicKey extends Equatable {
   /// The length of the public key
   static const PUBLIC_KEY_LENGTH = 32;
 
@@ -18,4 +19,7 @@ class VRFPublicKey {
   }
 
   Uint8List get bytes => _bytes;
+
+  @override
+  List<Object?> get props => [..._bytes];
 }

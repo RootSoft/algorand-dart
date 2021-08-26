@@ -16,6 +16,14 @@ class TransactionSerializer
         data.addAll(data['apar'] as Map<String, dynamic>);
 
         return AssetConfigTransaction.fromJson(data);
+      case 'axfer':
+        return AssetTransferTransaction.fromJson(data);
+      case 'afrz':
+        return AssetFreezeTransaction.fromJson(data);
+      case 'keyreg':
+        return KeyRegistrationTransaction.fromJson(data);
+      case 'appl':
+        return RawTransaction.fromJson(data);
     }
 
     return RawTransaction.fromJson(data);

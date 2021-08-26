@@ -23,7 +23,7 @@ class TransactionParams {
 
   /// GenesisHash is the hash of the genesis block.
   @JsonKey(name: 'genesis-hash')
-  @ByteArraySerializer()
+  @NullableByteArraySerializer()
   final Uint8List? genesisHash;
 
   /// LastRound indicates the last round seen

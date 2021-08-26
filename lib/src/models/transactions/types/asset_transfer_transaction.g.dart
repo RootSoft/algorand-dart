@@ -1,16 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'payment_transaction.dart';
+part of 'asset_transfer_transaction.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) {
-  return PaymentTransaction(
-    receiver: const AddressSerializer().fromJson(json['rcv']),
-    amount: json['amt'] as int?,
-    closeRemainderTo: const AddressSerializer().fromJson(json['close']),
+AssetTransferTransaction _$AssetTransferTransactionFromJson(
+    Map<String, dynamic> json) {
+  return AssetTransferTransaction(
+    assetId: json['xaid'] as int?,
+    amount: json['aamt'] as int?,
+    assetSender: const AddressSerializer().fromJson(json['asnd']),
+    receiver: const AddressSerializer().fromJson(json['arcv']),
+    closeTo: const AddressSerializer().fromJson(json['aclose']),
     fee: json['fee'] as int?,
     firstValid: json['fv'] as int?,
     genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
@@ -25,7 +28,8 @@ PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
+Map<String, dynamic> _$AssetTransferTransactionToJson(
+        AssetTransferTransaction instance) =>
     <String, dynamic>{
       'fee': instance.fee,
       'fv': instance.firstValid,
@@ -38,7 +42,9 @@ Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
       'lx': const NullableByteArraySerializer().toJson(instance.lease),
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': instance.rekeyTo,
-      'rcv': const AddressSerializer().toJson(instance.receiver),
-      'amt': instance.amount,
-      'close': const AddressSerializer().toJson(instance.closeRemainderTo),
+      'xaid': instance.assetId,
+      'aamt': instance.amount,
+      'asnd': const AddressSerializer().toJson(instance.assetSender),
+      'arcv': const AddressSerializer().toJson(instance.receiver),
+      'aclose': const AddressSerializer().toJson(instance.closeTo),
     };

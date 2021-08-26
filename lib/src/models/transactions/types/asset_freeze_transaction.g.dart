@@ -1,16 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'payment_transaction.dart';
+part of 'asset_freeze_transaction.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) {
-  return PaymentTransaction(
-    receiver: const AddressSerializer().fromJson(json['rcv']),
-    amount: json['amt'] as int?,
-    closeRemainderTo: const AddressSerializer().fromJson(json['close']),
+AssetFreezeTransaction _$AssetFreezeTransactionFromJson(
+    Map<String, dynamic> json) {
+  return AssetFreezeTransaction(
+    freezeAddress: const AddressSerializer().fromJson(json['fadd']),
+    assetId: json['faid'] as int?,
+    freeze: json['afrz'] as bool?,
     fee: json['fee'] as int?,
     firstValid: json['fv'] as int?,
     genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
@@ -25,7 +26,8 @@ PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
+Map<String, dynamic> _$AssetFreezeTransactionToJson(
+        AssetFreezeTransaction instance) =>
     <String, dynamic>{
       'fee': instance.fee,
       'fv': instance.firstValid,
@@ -38,7 +40,7 @@ Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
       'lx': const NullableByteArraySerializer().toJson(instance.lease),
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': instance.rekeyTo,
-      'rcv': const AddressSerializer().toJson(instance.receiver),
-      'amt': instance.amount,
-      'close': const AddressSerializer().toJson(instance.closeRemainderTo),
+      'fadd': const AddressSerializer().toJson(instance.freezeAddress),
+      'faid': instance.assetId,
+      'afrz': instance.freeze,
     };

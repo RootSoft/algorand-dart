@@ -1,26 +1,28 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/crypto/crypto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-class SignatureSerializer implements JsonConverter<Uint8List?, dynamic> {
+class SignatureSerializer implements JsonConverter<Signature?, dynamic> {
   const SignatureSerializer();
 
   @override
-  Uint8List? fromJson(dynamic data) {
+  Signature? fromJson(dynamic data) {
     if (data == null) return null;
 
     if (data is Uint8List) {
-      return data;
+      return Signature(bytes: data);
     }
 
     if (data is String) {
-      return base64Decode(data);
+      return Signature(bytes: base64Decode(data));
     }
 
     return null;
   }
 
   @override
-  dynamic toJson(Uint8List? data) => data != null ? base64.encode(data) : null;
+  dynamic toJson(Signature? data) =>
+      data != null ? base64.encode(data.bytes) : null;
 }

@@ -10,13 +10,17 @@ SignedTransaction _$SignedTransactionFromJson(Map<String, dynamic> json) {
   return SignedTransaction(
     transaction: const TransactionSerializer()
         .fromJson(json['txn'] as Map<String, dynamic>),
-    signature: const SignatureSerializer().fromJson(json['sig']),
+    signature: const NullableByteArraySerializer().fromJson(json['sig']),
+    logicSignature: json['lsig'] == null
+        ? null
+        : LogicSignature.fromJson(json['lsig'] as Map<String, dynamic>),
   )..authAddress = const AddressSerializer().fromJson(json['sgnr']);
 }
 
 Map<String, dynamic> _$SignedTransactionToJson(SignedTransaction instance) =>
     <String, dynamic>{
-      'sig': const SignatureSerializer().toJson(instance.signature),
+      'sig': const NullableByteArraySerializer().toJson(instance.signature),
       'txn': const TransactionSerializer().toJson(instance.transaction),
       'sgnr': const AddressSerializer().toJson(instance.authAddress),
+      'lsig': instance.logicSignature?.toJson(),
     };

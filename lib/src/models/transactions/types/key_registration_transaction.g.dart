@@ -1,16 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'payment_transaction.dart';
+part of 'key_registration_transaction.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) {
-  return PaymentTransaction(
-    receiver: const AddressSerializer().fromJson(json['rcv']),
-    amount: json['amt'] as int?,
-    closeRemainderTo: const AddressSerializer().fromJson(json['close']),
+KeyRegistrationTransaction _$KeyRegistrationTransactionFromJson(
+    Map<String, dynamic> json) {
+  return KeyRegistrationTransaction(
+    votePK: const ParticipationKeySerializer().fromJson(json['votekey']),
+    selectionPK: const VRFKeySerializer().fromJson(json['selkey']),
+    voteFirst: json['votefst'] as int?,
+    voteLast: json['votelst'] as int?,
+    voteKeyDilution: json['votekd'] as int?,
     fee: json['fee'] as int?,
     firstValid: json['fv'] as int?,
     genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
@@ -25,7 +28,8 @@ PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
+Map<String, dynamic> _$KeyRegistrationTransactionToJson(
+        KeyRegistrationTransaction instance) =>
     <String, dynamic>{
       'fee': instance.fee,
       'fv': instance.firstValid,
@@ -38,7 +42,9 @@ Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
       'lx': const NullableByteArraySerializer().toJson(instance.lease),
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': instance.rekeyTo,
-      'rcv': const AddressSerializer().toJson(instance.receiver),
-      'amt': instance.amount,
-      'close': const AddressSerializer().toJson(instance.closeRemainderTo),
+      'votekey': const ParticipationKeySerializer().toJson(instance.votePK),
+      'selkey': const VRFKeySerializer().toJson(instance.selectionPK),
+      'votefst': instance.voteFirst,
+      'votelst': instance.voteLast,
+      'votekd': instance.voteKeyDilution,
     };
