@@ -9,7 +9,7 @@ Unofficial community SDK to interact with the Algorand network, in Dart & Flutte
 You can install the package via pub.dev:
 
 ```bash
-algorand_dart: ^0.0.1-dev.1
+algorand_dart: ^latest-version
 ```
 
 > **Note**: Algorand-dart requires Dart >=2.12.0 & null safety
