@@ -11,7 +11,7 @@ void main() {
     final zeroKeys = fillBytes(0);
     final expectedMnemonic =
         // ignore: lines_longer_than_80_chars
-        'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon invest';
+        'abando abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon invest';
     final mnemonic = await Mnemonic.generate(zeroKeys);
     expect(mnemonic.join(' '), equals(expectedMnemonic));
     final seed = await Mnemonic.seed(mnemonic);
