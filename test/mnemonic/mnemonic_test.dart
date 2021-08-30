@@ -21,7 +21,7 @@ void main() {
   test('test word not in list', () async {
     final mnemonic =
         // ignore: lines_longer_than_80_chars
-        'bad abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon zzz invest';
+        'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon zzz invest';
     expect(
       () async => await Mnemonic.seed(mnemonic.split(' ')),
       throwsA((e) => e is MnemonicException),
