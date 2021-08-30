@@ -72,7 +72,7 @@ class Address extends Equatable {
     final addressBytes = base32.decode(address);
 
     // Sanity length check
-    if (addressBytes.length != PUBLIC_KEY_LENGTH) {
+    if (addressBytes.length != PUBLIC_KEY_LENGTH + CHECKSUM_BYTE_LENGTH) {
       throw AlgorandException(
           message: 'Input string is an invalid address. Wrong length');
     }
