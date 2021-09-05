@@ -93,6 +93,7 @@ Future<bool> optIn({
 
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
+  print(response);
 
   return Future.value(true);
 }
@@ -117,6 +118,7 @@ Future<bool> callApp({
 
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
+  print(response);
 
   return Future.value(true);
 }
@@ -173,6 +175,7 @@ Future<bool> closeOutApp({
 
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
+  print(response);
 
   return Future.value(true);
 }
@@ -195,6 +198,7 @@ Future<bool> deleteApp({
 
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
+  print(response);
 
   return Future.value(true);
 }
@@ -217,6 +221,7 @@ Future<bool> clearApp({
 
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
+  print(response);
 
   return Future.value(true);
 }

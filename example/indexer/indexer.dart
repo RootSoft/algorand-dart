@@ -387,10 +387,6 @@ Future searchTransactionWithType({
   required Account account,
 }) async {
   try {
-    final address = Address.fromAlgorandAddress(
-      address: 'RBSTLLHK2NJDL3ZH66MKSEX3BE2OWQ43EUM7S7YRVBJ2PRDRCKBSDD3YD4',
-    );
-
     final response = await algorand
         .indexer()
         .transactions()
