@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.2-beta.7 - 2021-09-05
+
+- Clean up and refactoring
+- Optional Algorand Constructors
+- Added examples
+- Set up CI for Pull Requests
+- Add support for Address in toApplicationArguments
+
 ## 0.0.2-beta.7 - 2021-08-26
 
 - Rekeying
