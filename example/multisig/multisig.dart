@@ -58,4 +58,5 @@ void main() async {
   final txId = await algorand.sendTransaction(completeTx);
   final response = await algorand.waitForConfirmation(txId);
   print(txId);
+  print(response);
 }

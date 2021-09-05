@@ -26,6 +26,8 @@ void main() async {
     fileName: fileName,
   );
 
+  print(file.path);
+
   // Import the signed transaction
   final signedTx = await importSignedTransaction(fileName: fileName);
 
@@ -33,6 +35,7 @@ void main() async {
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
   print(txId);
+  print(response);
 }
 
 Future<File> exportSignedTransaction({

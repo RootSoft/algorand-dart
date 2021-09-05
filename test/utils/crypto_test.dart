@@ -4,14 +4,7 @@ import 'package:algorand_dart/algorand_dart.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late Account account;
-
-  setUp(() async {
-    final words =
-        // ignore: lines_longer_than_80_chars
-        'awful drop leaf tennis indoor begin mandate discover uncle seven only coil atom any hospital uncover make any climb actor armed measure need above hundred';
-    account = await Account.fromSeedPhrase(words.split(' '));
-  });
+  setUp(() async {});
 
   test('Test to application arguments', () async {
     final goldenAddress = '/ryguxRKWk6ntDikaBrIDmyhBby2B/xWUyXJVpX2ohM=';

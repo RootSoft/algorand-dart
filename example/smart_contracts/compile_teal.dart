@@ -9,11 +9,6 @@ void main() async {
 
   final algorand = Algorand(algodClient: algodClient);
 
-  final words =
-      // ignore: lines_longer_than_80_chars
-      'chronic reason target blood lend major world lottery border top quantum turtle fiber debate impose meadow sport exclude nut window awesome want myself ability chief';
-  final account = await Account.fromSeedPhrase(words.split(' '));
-
   final arguments = <Uint8List>[];
   arguments.add(Uint8List.fromList([123]));
 

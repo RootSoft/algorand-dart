@@ -126,6 +126,7 @@ Future changeManager({
   // Broadcast the transaction
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
+  print(response);
 
   // Print created asset
   printCreatedAsset(algorand: algorand, account: manager, assetId: assetId);
@@ -157,6 +158,7 @@ Future optIn({
   // Broadcast the transaction
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
+  print(response);
 
   // Print created asset
   printAssetHolding(algorand: algorand, account: account, assetId: assetId);
@@ -191,6 +193,7 @@ Future<bool> transfer({
   // Broadcast the transaction
   final txId = await algorand.sendTransaction(signedTx);
   final response = await algorand.waitForConfirmation(txId);
+  print(response);
 
   // Print created asset
   printAssetHolding(algorand: algorand, account: receiver, assetId: assetId);
