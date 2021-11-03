@@ -120,7 +120,10 @@ class Logic {
       return;
     }
 
-    final data = jsonDecode(LANG_SPEC) as Map<String, dynamic>;
+    // Clean up the JSON
+    final json = LANG_SPEC.replaceAll('\n', '\\n');
+
+    final data = jsonDecode(json) as Map<String, dynamic>;
     langSpec = LangSpec.fromJson(data);
   }
 
