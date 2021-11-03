@@ -36,6 +36,9 @@ DryRunTxResult _$DryRunTxResultFromJson(Map<String, dynamic> json) {
             ?.map((e) => DryRunState.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [],
+    logs: (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+        [],
+    cost: json['cost'] as int?,
   );
 }
 
@@ -43,9 +46,11 @@ Map<String, dynamic> _$DryRunTxResultToJson(DryRunTxResult instance) =>
     <String, dynamic>{
       'app-call-messages': instance.appCallMessages,
       'app-call-trace': instance.appCallTrace,
+      'cost': instance.cost,
       'disassembly': instance.disassembly,
       'global-delta': instance.globalDelta,
       'local-deltas': instance.localDeltas,
       'logic-sig-messages': instance.logicSigMessages,
       'logic-sig-trace': instance.logicSigTrace,
+      'logs': instance.logs,
     };
