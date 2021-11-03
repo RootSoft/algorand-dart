@@ -19,6 +19,11 @@ class PendingTransaction {
   /// application.
   final int? applicationIndex;
 
+  /// The number of the asset's unit that were transferred to the close-to
+  /// address.
+  @JsonKey(name: 'asset-closing-amount')
+  final int? assetClosingAmount;
+
   /// The asset index if the transaction was found and it created an asset.
   final int? assetIndex;
 
@@ -31,19 +36,30 @@ class PendingTransaction {
   /// The round where this transaction was confirmed, if present.
   final int? confirmedRound;
 
-  /// Global state key/value changes for the application being executed by this transaction.
+  /// Global state key/value changes for the application being executed by this
+  /// transaction.
   @JsonKey(name: 'global-state-delta', defaultValue: [])
   final List<EvalDeltaKeyValue> globalStateDelta;
 
-  /// Local state key/value changes for the application being executed by this transaction.
+  /// Inner transactions produced by application execution.
+  @JsonKey(name: 'inner-txns', defaultValue: [])
+  final List<PendingTransaction> innerTxns;
+
+  /// Local state key/value changes for the application being executed by this
+  /// transaction.
   @JsonKey(name: 'local-state-delta', defaultValue: [])
   final List<AccountStateDelta> localStateDelta;
+
+  ///  Logs for the application being executed by this transaction.
+  @JsonKey(name: 'logs', defaultValue: [])
+  final List<String> logs;
 
   /// Indicates that the transaction was kicked out of this node's
   /// transaction pool  (and specifies why that happened).
   ///
   /// An empty string indicates the transaction wasn't kicked out of this
   /// node's txpool due to an error.
+  @JsonKey(name: 'pool-error', defaultValue: '')
   final String poolError;
 
   /// Rewards in microalgos applied to the receiver account.
@@ -61,6 +77,8 @@ class PendingTransaction {
     required this.poolError,
     required this.globalStateDelta,
     required this.localStateDelta,
+    required this.innerTxns,
+    required this.logs,
     this.applicationIndex,
     this.assetIndex,
     this.closeRewards,
@@ -68,6 +86,7 @@ class PendingTransaction {
     this.confirmedRound,
     this.receiverRewards,
     this.senderRewards,
+    this.assetClosingAmount,
   });
 
   factory PendingTransaction.fromJson(Map<String, dynamic> json) =>
