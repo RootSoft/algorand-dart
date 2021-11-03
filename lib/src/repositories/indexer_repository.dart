@@ -1,4 +1,5 @@
 import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/exceptions/algorand_exception.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
 import 'package:algorand_dart/src/indexer/indexer_health.dart';
@@ -180,6 +181,24 @@ class IndexerRepository {
   Future<ApplicationResponse> getApplicationById(int applicationId) async {
     try {
       return await applicationService.getApplicationById(applicationId);
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
+  /// Lookup application logs by a given application id.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the application logs for the given application id.
+  Future<ApplicationLogsResponse> getApplicationLogsById(
+    int applicationId, {
+    required Map<String, dynamic> queryParameters,
+  }) async {
+    try {
+      return await applicationService.getApplicationLogsById(
+        applicationId,
+        queryParameters: queryParameters,
+      );
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }

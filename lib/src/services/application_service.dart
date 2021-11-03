@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/services/api_service.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -28,4 +29,10 @@ abstract class ApplicationService extends ApiService {
   //@GET("/v2/applications/{applicationId}")
   Future<ApplicationResponse> getApplicationById(
       /*@Path('applicationId')*/ int applicationId);
+
+  //@GET("/v2/applications/{applicationId}")
+  Future<ApplicationLogsResponse> getApplicationLogsById(
+    /*@Path('applicationId')*/ int applicationId, {
+    required Map<String, dynamic> queryParameters,
+  });
 }

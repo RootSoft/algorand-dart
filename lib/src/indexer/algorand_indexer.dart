@@ -1,4 +1,5 @@
 import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/indexer/builders/application_query_builder.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
 import 'package:algorand_dart/src/indexer/indexer_health.dart';
@@ -85,6 +86,20 @@ class AlgorandIndexer {
   /// Returns the application information for the given application id.
   Future<ApplicationResponse> getApplicationById(int applicationId) async {
     return _indexerRepository.getApplicationById(applicationId);
+  }
+
+  /// Lookup application information by a given id.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the application information for the given application id.
+  Future<ApplicationLogsResponse> getApplicationLogsById(
+    int applicationId, {
+    Map<String, dynamic> queryParameters = const {},
+  }) async {
+    return _indexerRepository.getApplicationLogsById(
+      applicationId,
+      queryParameters: queryParameters,
+    );
   }
 
   /// Lookup transaction information by a given transaction id.
