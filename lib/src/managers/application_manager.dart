@@ -158,7 +158,7 @@ class ApplicationManager {
   Future<String> call({
     required Account account,
     required int applicationId,
-    required String arguments,
+    String? arguments,
   }) async {
     // Fetch the suggested transaction params
     final params = await transactionRepository.getSuggestedTransactionParams();
@@ -166,7 +166,7 @@ class ApplicationManager {
     final transaction = await (ApplicationCallTransactionBuilder()
           ..sender = account.address
           ..applicationId = applicationId
-          ..arguments = arguments.toApplicationArguments()
+          ..arguments = arguments?.toApplicationArguments()
           ..suggestedParams = params)
         .build();
 
