@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 
 class BigIntEncoder {
-  final _byteMask = BigInt.from(0xff);
-
   static final BigInt MAX_UINT64 = BigInt.parse('FFFFFFFFFFFFFFFF', radix: 16);
   static const UINT64_LENGTH = 8;
 
@@ -21,8 +19,10 @@ class BigIntEncoder {
       encodedValue = encodedValue.sublist(1, encodedValue.length);
     }
 
-    fixedLengthEncoding.setRange(UINT64_LENGTH - encodedValue.length,
-        encodedValue.length, encodedValue, 0);
+    final start = UINT64_LENGTH - encodedValue.length;
+    final end = start + encodedValue.length;
+
+    fixedLengthEncoding.setRange(start, end, encodedValue);
 
     return fixedLengthEncoding;
   }
@@ -35,18 +35,6 @@ class BigIntEncoder {
     var result = BigInt.from(0);
     for (var i = 0; i < encoded.length; i++) {
       result += BigInt.from(encoded[encoded.length - i - 1]) << (8 * i);
-    }
-    return result;
-  }
-
-  /// Encode a BigInt into bytes using big-endian encoding.
-  Uint8List encodeBigInt(BigInt number) {
-    // Not handling negative numbers. Decide how you want to do that.
-    var size = (number.bitLength + 7) >> 3;
-    var result = Uint8List(size);
-    for (var i = 0; i < size; i++) {
-      result[size - i - 1] = (number & _byteMask).toInt();
-      number = number >> 8;
     }
     return result;
   }
