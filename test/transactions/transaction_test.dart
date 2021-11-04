@@ -536,4 +536,95 @@ void main() {
           e is AlgorandException && e.message == 'Empty transaction list'),
     );
   });
+
+  /// Test that the following 3 builder methods returns the same transaction
+  ///    metadataHash, metadataHashUTF8, and metadataHashB64
+  /// when given as input the same metadata hash
+  /// and that it is different when the input is different
+  test('Test meta data hash builder methods', () async {
+    final metadataHashUTF8 = 'Hello! This is the metadata hash';
+    final metadataHashUTF8Different = 'Hi! I am another metadata hash..';
+    final metadataHashBytes = Uint8List.fromList(utf8.encode(metadataHashUTF8));
+    final metadataHashB64 = 'SGVsbG8hIFRoaXMgaXMgdGhlIG1ldGFkYXRhIGhhc2g=';
+
+    final address = Address.fromAlgorandAddress(
+      address: 'BH55E5RMBD4GYWXGX5W5PJ5JAHPGM5OXKDQH5DC4O2MGI7NW4H6VOE4CP4',
+    );
+
+    final txBytes = await (AssetConfigTransactionBuilder()
+          ..sender = address
+          ..flatFee = 10
+          ..firstValid = 322575
+          ..lastValid = 323575
+          ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
+          ..totalAssetsToCreate = 100
+          ..decimals = 5
+          ..unitName = 'tst'
+          ..assetName = 'testcoin'
+          ..url = 'https://example.com'
+          ..metaData = metadataHashBytes
+          ..managerAddress = address
+          ..reserveAddress = address
+          ..freezeAddress = address
+          ..clawbackAddress = address)
+        .build();
+
+    final txUTF8 = await (AssetConfigTransactionBuilder()
+          ..sender = address
+          ..flatFee = 10
+          ..firstValid = 322575
+          ..lastValid = 323575
+          ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
+          ..totalAssetsToCreate = 100
+          ..decimals = 5
+          ..unitName = 'tst'
+          ..assetName = 'testcoin'
+          ..url = 'https://example.com'
+          ..metadataText = metadataHashUTF8
+          ..managerAddress = address
+          ..reserveAddress = address
+          ..freezeAddress = address
+          ..clawbackAddress = address)
+        .build();
+
+    final txUTF8Different = await (AssetConfigTransactionBuilder()
+          ..sender = address
+          ..flatFee = 10
+          ..firstValid = 322575
+          ..lastValid = 323575
+          ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
+          ..totalAssetsToCreate = 100
+          ..decimals = 5
+          ..unitName = 'tst'
+          ..assetName = 'testcoin'
+          ..url = 'https://example.com'
+          ..metadataText = metadataHashUTF8Different
+          ..managerAddress = address
+          ..reserveAddress = address
+          ..freezeAddress = address
+          ..clawbackAddress = address)
+        .build();
+
+    final txB64 = await (AssetConfigTransactionBuilder()
+          ..sender = address
+          ..flatFee = 10
+          ..firstValid = 322575
+          ..lastValid = 323575
+          ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
+          ..totalAssetsToCreate = 100
+          ..decimals = 5
+          ..unitName = 'tst'
+          ..assetName = 'testcoin'
+          ..url = 'https://example.com'
+          ..metadataB64 = metadataHashB64
+          ..managerAddress = address
+          ..reserveAddress = address
+          ..freezeAddress = address
+          ..clawbackAddress = address)
+        .build();
+
+    expect(txUTF8.toBytes(), equals(txBytes.toBytes()));
+    expect(txUTF8.toBytes(), equals(txB64.toBytes()));
+    expect(txUTF8.toBytes(), isNot(equals(txUTF8Different.toBytes())));
+  });
 }
