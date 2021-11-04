@@ -113,15 +113,24 @@ class TransactionRepository {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the id of the transaction.
-  Future<String> sendTransactions(List<SignedTransaction> transactions) async {
+  Future<String> sendTransactions(
+    List<SignedTransaction> transactions, {
+    bool waitForConfirmation = false,
+    int timeout = 5,
+  }) async {
     final txWriter = ByteDataWriter();
     for (var transaction in transactions) {
       txWriter.write(Encoder.encodeMessagePack(transaction.toMessagePack()));
     }
 
     try {
-      final response =
-          await transactionService.sendTransaction(txWriter.toBytes());
+      final data = txWriter.toBytes();
+      final response = await transactionService.sendTransaction(data);
+      if (!waitForConfirmation) return response.transactionId;
+
+      // Wait for confirmation
+      await this.waitForConfirmation(response.transactionId, timeout: timeout);
+
       return response.transactionId;
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);

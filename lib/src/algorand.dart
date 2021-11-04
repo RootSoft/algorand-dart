@@ -229,8 +229,16 @@ class Algorand {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the id of the transaction.
-  Future<String> sendTransactions(List<SignedTransaction> transactions) async {
-    return await _transactionRepository.sendTransactions(transactions);
+  Future<String> sendTransactions(
+    List<SignedTransaction> transactions, {
+    bool waitForConfirmation = false,
+    int timeout = 5,
+  }) async {
+    return await _transactionRepository.sendTransactions(
+      transactions,
+      waitForConfirmation: waitForConfirmation,
+      timeout: timeout,
+    );
   }
 
   /// Send a payment to the given recipient with the recommended transaction
