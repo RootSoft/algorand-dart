@@ -63,6 +63,10 @@ class SignedTransaction extends Equatable implements MessagePackable {
   /// Get the base64-encoded representation of the transaction..
   String toBase64() => base64Encode(Encoder.encodeMessagePack(toMessagePack()));
 
+  /// Get the bytes of this signed transaction.
+  Uint8List toBytes() =>
+      Uint8List.fromList(Encoder.encodeMessagePack(toMessagePack()));
+
   factory SignedTransaction.fromJson(Map<String, dynamic> json) =>
       _$SignedTransactionFromJson(json);
 
