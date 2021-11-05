@@ -72,6 +72,8 @@ class Encoder {
       (key, value) =>
           value == null ||
           value == false ||
+          (value is Map && value.isEmpty) ||
+          (value is List && value.isEmpty) ||
           (value is String && value.isEmpty || (value is int && value == 0)),
     );
 
