@@ -1,6 +1,14 @@
 # Changelog
 
-## 0.0.2-beta.7 - 2021-09-05
+## 1.0.0 - 2021-11-05
+
+- Support AVM 1.0 & TEAL v5
+- Bugfixes
+- Utility methods
+- Updated dependencies
+- Added AVM examples
+
+## 0.0.2-beta.8 - 2021-09-05
 
 - Clean up and refactoring
 - Optional Algorand Constructors
