@@ -6,49 +6,49 @@ part of 'account_information_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) {
-  return AccountInformation(
-    address: json['address'] as String,
-    amount: json['amount'] as int,
-    amountWithoutPendingRewards: json['amount-without-pending-rewards'] as int,
-    pendingRewards: json['pending-rewards'] as int,
-    rewards: json['rewards'] as int,
-    round: json['round'] as int,
-    status: json['status'] as String,
-    deleted: json['deleted'] as bool? ?? false,
-    assets: (json['assets'] as List<dynamic>?)
-            ?.map((e) => AssetHolding.fromJson(e as Map<String, dynamic>))
-            .toList() ??
-        [],
-    appsLocalState: (json['apps-local-state'] as List<dynamic>?)
-            ?.map((e) =>
-                ApplicationLocalState.fromJson(e as Map<String, dynamic>))
-            .toList() ??
-        [],
-    createdApps: (json['created-apps'] as List<dynamic>?)
-            ?.map((e) => Application.fromJson(e as Map<String, dynamic>))
-            .toList() ??
-        [],
-    createdAssets: (json['created-assets'] as List<dynamic>?)
-            ?.map((e) => Asset.fromJson(e as Map<String, dynamic>))
-            .toList() ??
-        [],
-    createdAtRound: json['created-at-round'] as int?,
-    participation: json['participation'] == null
-        ? null
-        : AccountParticipation.fromJson(
-            json['participation'] as Map<String, dynamic>),
-    rewardBase: json['reward-base'] as int?,
-    closedAtRound: json['closed-at-round'] as int?,
-    signatureType:
-        _$enumDecodeNullable(_$SignatureTypeEnumMap, json['sig-type']),
-    authAddress: json['auth-addr'] as String?,
-    appsTotalSchema: json['apps-total-schema'] == null
-        ? null
-        : ApplicationStateSchema.fromJson(
-            json['apps-total-schema'] as Map<String, dynamic>),
-  );
-}
+AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) =>
+    AccountInformation(
+      address: json['address'] as String,
+      amount: json['amount'] as int,
+      amountWithoutPendingRewards:
+          json['amount-without-pending-rewards'] as int,
+      pendingRewards: json['pending-rewards'] as int,
+      rewards: json['rewards'] as int,
+      round: json['round'] as int,
+      status: json['status'] as String,
+      deleted: json['deleted'] as bool? ?? false,
+      assets: (json['assets'] as List<dynamic>?)
+              ?.map((e) => AssetHolding.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      appsLocalState: (json['apps-local-state'] as List<dynamic>?)
+              ?.map((e) =>
+                  ApplicationLocalState.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdApps: (json['created-apps'] as List<dynamic>?)
+              ?.map((e) => Application.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdAssets: (json['created-assets'] as List<dynamic>?)
+              ?.map((e) => Asset.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdAtRound: json['created-at-round'] as int?,
+      participation: json['participation'] == null
+          ? null
+          : AccountParticipation.fromJson(
+              json['participation'] as Map<String, dynamic>),
+      rewardBase: json['reward-base'] as int?,
+      closedAtRound: json['closed-at-round'] as int?,
+      signatureType:
+          $enumDecodeNullable(_$SignatureTypeEnumMap, json['sig-type']),
+      authAddress: json['auth-addr'] as String?,
+      appsTotalSchema: json['apps-total-schema'] == null
+          ? null
+          : ApplicationStateSchema.fromJson(
+              json['apps-total-schema'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
     <String, dynamic>{
@@ -72,43 +72,6 @@ Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
       'created-assets': instance.createdAssets,
       'participation': instance.participation,
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
-}
 
 const _$SignatureTypeEnumMap = {
   SignatureType.STANDARD: 'sig',

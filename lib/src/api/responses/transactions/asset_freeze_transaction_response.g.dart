@@ -7,13 +7,12 @@ part of 'asset_freeze_transaction_response.dart';
 // **************************************************************************
 
 AssetFreezeTransactionResponse _$AssetFreezeTransactionResponseFromJson(
-    Map<String, dynamic> json) {
-  return AssetFreezeTransactionResponse(
-    address: json['address'] as String? ?? '',
-    assetId: json['asset-id'] as int? ?? 0,
-    newFreezeStatus: json['new-freeze-status'] as bool? ?? false,
-  );
-}
+        Map<String, dynamic> json) =>
+    AssetFreezeTransactionResponse(
+      address: json['address'] as String? ?? '',
+      assetId: json['asset-id'] as int? ?? 0,
+      newFreezeStatus: json['new-freeze-status'] as bool? ?? false,
+    );
 
 Map<String, dynamic> _$AssetFreezeTransactionResponseToJson(
         AssetFreezeTransactionResponse instance) =>

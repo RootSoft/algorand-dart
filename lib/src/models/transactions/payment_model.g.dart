@@ -6,14 +6,12 @@ part of 'payment_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Payment _$PaymentFromJson(Map<String, dynamic> json) {
-  return Payment(
-    receiver: json['receiver'] as String,
-    amount: json['amount'] as int,
-    closeAmount: json['close-amount'] as int?,
-    closeRemainderTo: json['close-remainder-to'] as String?,
-  );
-}
+Payment _$PaymentFromJson(Map<String, dynamic> json) => Payment(
+      receiver: json['receiver'] as String,
+      amount: json['amount'] as int,
+      closeAmount: json['close-amount'] as int?,
+      closeRemainderTo: json['close-remainder-to'] as String?,
+    );
 
 Map<String, dynamic> _$PaymentToJson(Payment instance) => <String, dynamic>{
       'receiver': instance.receiver,

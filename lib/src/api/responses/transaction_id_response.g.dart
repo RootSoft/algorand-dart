@@ -7,11 +7,10 @@ part of 'transaction_id_response.dart';
 // **************************************************************************
 
 TransactionIdResponse _$TransactionIdResponseFromJson(
-    Map<String, dynamic> json) {
-  return TransactionIdResponse(
-    transactionId: json['txId'] as String,
-  );
-}
+        Map<String, dynamic> json) =>
+    TransactionIdResponse(
+      transactionId: json['txId'] as String,
+    );
 
 Map<String, dynamic> _$TransactionIdResponseToJson(
         TransactionIdResponse instance) =>

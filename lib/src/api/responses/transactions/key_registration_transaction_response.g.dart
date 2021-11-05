@@ -7,16 +7,15 @@ part of 'key_registration_transaction_response.dart';
 // **************************************************************************
 
 KeyRegistrationTransactionResponse _$KeyRegistrationTransactionResponseFromJson(
-    Map<String, dynamic> json) {
-  return KeyRegistrationTransactionResponse(
-    nonParticipation: json['non-participation'] as bool?,
-    selectionParticipationKey: json['selection-participation-key'] as String?,
-    voteFirstValid: json['vote-first-valid'] as int?,
-    voteLastValid: json['vote-last-valid'] as int?,
-    voteKeyDilution: json['vote-key-dilution'] as int?,
-    voteParticipationKey: json['vote-participation-key'] as String?,
-  );
-}
+        Map<String, dynamic> json) =>
+    KeyRegistrationTransactionResponse(
+      nonParticipation: json['non-participation'] as bool?,
+      selectionParticipationKey: json['selection-participation-key'] as String?,
+      voteFirstValid: json['vote-first-valid'] as int?,
+      voteLastValid: json['vote-last-valid'] as int?,
+      voteKeyDilution: json['vote-key-dilution'] as int?,
+      voteParticipationKey: json['vote-participation-key'] as String?,
+    );
 
 Map<String, dynamic> _$KeyRegistrationTransactionResponseToJson(
         KeyRegistrationTransactionResponse instance) =>

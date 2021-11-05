@@ -6,33 +6,31 @@ part of 'block_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Block _$BlockFromJson(Map<String, dynamic> json) {
-  return Block(
-    genesisHash: json['genesis-hash'] as String,
-    genesisId: json['genesis-id'] as String,
-    previousBlockHash: json['previous-block-hash'] as String,
-    round: json['round'] as int,
-    seed: json['seed'] as String,
-    timestamp: json['timestamp'] as int,
-    transactions: (json['transactions'] as List<dynamic>?)
-            ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
-            .toList() ??
-        [],
-    transactionsRoot: json['transactions-root'] as String,
-    rewards: json['rewards'] == null
-        ? null
-        : BlockRewards.fromJson(json['rewards'] as Map<String, dynamic>),
-    txnCounter: json['txn-counter'] as int?,
-    upgradeState: json['upgrade-state'] == null
-        ? null
-        : BlockUpgradeState.fromJson(
-            json['upgrade-state'] as Map<String, dynamic>),
-    upgradeVote: json['upgrade-vote'] == null
-        ? null
-        : BlockUpgradeVote.fromJson(
-            json['upgrade-vote'] as Map<String, dynamic>),
-  );
-}
+Block _$BlockFromJson(Map<String, dynamic> json) => Block(
+      genesisHash: json['genesis-hash'] as String,
+      genesisId: json['genesis-id'] as String,
+      previousBlockHash: json['previous-block-hash'] as String,
+      round: json['round'] as int,
+      seed: json['seed'] as String,
+      timestamp: json['timestamp'] as int,
+      transactions: (json['transactions'] as List<dynamic>?)
+              ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      transactionsRoot: json['transactions-root'] as String,
+      rewards: json['rewards'] == null
+          ? null
+          : BlockRewards.fromJson(json['rewards'] as Map<String, dynamic>),
+      txnCounter: json['txn-counter'] as int?,
+      upgradeState: json['upgrade-state'] == null
+          ? null
+          : BlockUpgradeState.fromJson(
+              json['upgrade-state'] as Map<String, dynamic>),
+      upgradeVote: json['upgrade-vote'] == null
+          ? null
+          : BlockUpgradeVote.fromJson(
+              json['upgrade-vote'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$BlockToJson(Block instance) => <String, dynamic>{
       'genesis-hash': instance.genesisHash,

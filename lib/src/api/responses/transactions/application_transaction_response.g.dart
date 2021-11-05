@@ -7,40 +7,39 @@ part of 'application_transaction_response.dart';
 // **************************************************************************
 
 ApplicationTransactionResponse _$ApplicationTransactionResponseFromJson(
-    Map<String, dynamic> json) {
-  return ApplicationTransactionResponse(
-    applicationId: json['application-id'] as int,
-    onCompletion: _$enumDecode(_$OnCompletionEnumMap, json['on-completion'],
-        unknownValue: OnCompletion.NO_OP_OC),
-    accounts: (json['accounts'] as List<dynamic>?)
-            ?.map((e) => e as String)
-            .toList() ??
-        [],
-    applicationArguments: (json['application-args'] as List<dynamic>?)
-            ?.map((e) => e as String)
-            .toList() ??
-        [],
-    foreignApps: (json['foreign-apps'] as List<dynamic>?)
-            ?.map((e) => e as int)
-            .toList() ??
-        [],
-    foreignAssets: (json['foreign-assets'] as List<dynamic>?)
-            ?.map((e) => e as int)
-            .toList() ??
-        [],
-    extraProgramPages: json['extra-program-pages'] as int? ?? 0,
-    approvalProgram: json['approval-program'] as String?,
-    clearStateProgram: json['clear-state-program'] as String?,
-    globalStateSchema: json['global-state-schema'] == null
-        ? null
-        : StateSchema.fromJson(
-            json['global-state-schema'] as Map<String, dynamic>),
-    localStateSchema: json['local-state-schema'] == null
-        ? null
-        : StateSchema.fromJson(
-            json['local-state-schema'] as Map<String, dynamic>),
-  );
-}
+        Map<String, dynamic> json) =>
+    ApplicationTransactionResponse(
+      applicationId: json['application-id'] as int,
+      onCompletion: $enumDecode(_$OnCompletionEnumMap, json['on-completion'],
+          unknownValue: OnCompletion.NO_OP_OC),
+      accounts: (json['accounts'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      applicationArguments: (json['application-args'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      foreignApps: (json['foreign-apps'] as List<dynamic>?)
+              ?.map((e) => e as int)
+              .toList() ??
+          [],
+      foreignAssets: (json['foreign-assets'] as List<dynamic>?)
+              ?.map((e) => e as int)
+              .toList() ??
+          [],
+      extraProgramPages: json['extra-program-pages'] as int? ?? 0,
+      approvalProgram: json['approval-program'] as String?,
+      clearStateProgram: json['clear-state-program'] as String?,
+      globalStateSchema: json['global-state-schema'] == null
+          ? null
+          : StateSchema.fromJson(
+              json['global-state-schema'] as Map<String, dynamic>),
+      localStateSchema: json['local-state-schema'] == null
+          ? null
+          : StateSchema.fromJson(
+              json['local-state-schema'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$ApplicationTransactionResponseToJson(
         ApplicationTransactionResponse instance) =>
@@ -57,32 +56,6 @@ Map<String, dynamic> _$ApplicationTransactionResponseToJson(
       'local-state-schema': instance.localStateSchema,
       'on-completion': _$OnCompletionEnumMap[instance.onCompletion],
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
 
 const _$OnCompletionEnumMap = {
   OnCompletion.NO_OP_OC: 'noop',

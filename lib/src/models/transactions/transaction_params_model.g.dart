@@ -6,17 +6,16 @@ part of 'transaction_params_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TransactionParams _$TransactionParamsFromJson(Map<String, dynamic> json) {
-  return TransactionParams(
-    consensusVersion: json['consensus-version'] as String,
-    fee: json['fee'] as int,
-    genesisId: json['genesis-id'] as String,
-    genesisHash:
-        const NullableByteArraySerializer().fromJson(json['genesis-hash']),
-    lastRound: json['last-round'] as int,
-    minFee: json['min-fee'] as int,
-  );
-}
+TransactionParams _$TransactionParamsFromJson(Map<String, dynamic> json) =>
+    TransactionParams(
+      consensusVersion: json['consensus-version'] as String,
+      fee: json['fee'] as int,
+      genesisId: json['genesis-id'] as String,
+      genesisHash:
+          const NullableByteArraySerializer().fromJson(json['genesis-hash']),
+      lastRound: json['last-round'] as int,
+      minFee: json['min-fee'] as int,
+    );
 
 Map<String, dynamic> _$TransactionParamsToJson(TransactionParams instance) =>
     <String, dynamic>{

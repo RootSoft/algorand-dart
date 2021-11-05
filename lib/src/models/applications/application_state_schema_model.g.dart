@@ -7,12 +7,11 @@ part of 'application_state_schema_model.dart';
 // **************************************************************************
 
 ApplicationStateSchema _$ApplicationStateSchemaFromJson(
-    Map<String, dynamic> json) {
-  return ApplicationStateSchema(
-    numByteSlice: json['num-byte-slice'] as int,
-    numUint: json['num-uint'] as int,
-  );
-}
+        Map<String, dynamic> json) =>
+    ApplicationStateSchema(
+      numByteSlice: json['num-byte-slice'] as int,
+      numUint: json['num-uint'] as int,
+    );
 
 Map<String, dynamic> _$ApplicationStateSchemaToJson(
         ApplicationStateSchema instance) =>

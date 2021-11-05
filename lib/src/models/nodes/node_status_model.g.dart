@@ -6,25 +6,24 @@ part of 'node_status_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-NodeStatus _$NodeStatusFromJson(Map<String, dynamic> json) {
-  return NodeStatus(
-    catchupTime: json['catchup-time'] as int,
-    lastRound: json['last-round'] as int,
-    lastVersion: json['last-version'] as String,
-    nextVersion: json['next-version'] as String,
-    nextVersionRound: json['next-version-round'] as int,
-    nextVersionSupported: json['next-version-supported'] as bool,
-    stoppedAtUnsupportedRound: json['stopped-at-unsupported-round'] as bool,
-    timeSinceLastRound: json['time-since-last-round'] as int,
-    catchpoint: json['catchpoint'] as String?,
-    catchpointAcquiredBlocks: json['catchpoint-acquired-blocks'] as int?,
-    catchpointProcessedAccounts: json['catchpoint-processed-accounts'] as int?,
-    catchpointTotalAccounts: json['catchpoint-total-accounts'] as int?,
-    catchpointTotalBlocks: json['catchpoint-total-blocks'] as int?,
-    catchpointVerifiedAccounts: json['catchpoint-verified-accounts'] as int?,
-    lastCatchpoint: json['last-catchpoint'] as String?,
-  );
-}
+NodeStatus _$NodeStatusFromJson(Map<String, dynamic> json) => NodeStatus(
+      catchupTime: json['catchup-time'] as int,
+      lastRound: json['last-round'] as int,
+      lastVersion: json['last-version'] as String,
+      nextVersion: json['next-version'] as String,
+      nextVersionRound: json['next-version-round'] as int,
+      nextVersionSupported: json['next-version-supported'] as bool,
+      stoppedAtUnsupportedRound: json['stopped-at-unsupported-round'] as bool,
+      timeSinceLastRound: json['time-since-last-round'] as int,
+      catchpoint: json['catchpoint'] as String?,
+      catchpointAcquiredBlocks: json['catchpoint-acquired-blocks'] as int?,
+      catchpointProcessedAccounts:
+          json['catchpoint-processed-accounts'] as int?,
+      catchpointTotalAccounts: json['catchpoint-total-accounts'] as int?,
+      catchpointTotalBlocks: json['catchpoint-total-blocks'] as int?,
+      catchpointVerifiedAccounts: json['catchpoint-verified-accounts'] as int?,
+      lastCatchpoint: json['last-catchpoint'] as String?,
+    );
 
 Map<String, dynamic> _$NodeStatusToJson(NodeStatus instance) =>
     <String, dynamic>{

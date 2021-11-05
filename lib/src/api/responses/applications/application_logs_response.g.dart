@@ -7,17 +7,17 @@ part of 'application_logs_response.dart';
 // **************************************************************************
 
 ApplicationLogsResponse _$ApplicationLogsResponseFromJson(
-    Map<String, dynamic> json) {
-  return ApplicationLogsResponse(
-    logData: (json['log-data'] as List<dynamic>?)
-            ?.map((e) => ApplicationLogData.fromJson(e as Map<String, dynamic>))
-            .toList() ??
-        [],
-    applicationId: json['application-id'] as int?,
-    currentRound: json['current-round'] as int?,
-    nextToken: json['next-token'] as String?,
-  );
-}
+        Map<String, dynamic> json) =>
+    ApplicationLogsResponse(
+      logData: (json['log-data'] as List<dynamic>?)
+              ?.map(
+                  (e) => ApplicationLogData.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      applicationId: json['application-id'] as int?,
+      currentRound: json['current-round'] as int?,
+      nextToken: json['next-token'] as String?,
+    );
 
 Map<String, dynamic> _$ApplicationLogsResponseToJson(
         ApplicationLogsResponse instance) =>
