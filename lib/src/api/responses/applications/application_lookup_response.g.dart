@@ -6,14 +6,13 @@ part of 'application_lookup_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApplicationResponse _$ApplicationResponseFromJson(Map<String, dynamic> json) {
-  return ApplicationResponse(
-    currentRound: json['current-round'] as int,
-    application: json['application'] == null
-        ? null
-        : Application.fromJson(json['application'] as Map<String, dynamic>),
-  );
-}
+ApplicationResponse _$ApplicationResponseFromJson(Map<String, dynamic> json) =>
+    ApplicationResponse(
+      currentRound: json['current-round'] as int,
+      application: json['application'] == null
+          ? null
+          : Application.fromJson(json['application'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$ApplicationResponseToJson(
         ApplicationResponse instance) =>

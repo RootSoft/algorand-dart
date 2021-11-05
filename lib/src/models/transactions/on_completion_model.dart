@@ -1,9 +1,17 @@
+import 'package:json_annotation/json_annotation.dart';
+
 enum OnCompletion {
+  @JsonValue('noop')
   NO_OP_OC,
+  @JsonValue('optin')
   OPT_IN_OC,
+  @JsonValue('closeout')
   CLOSE_OUT_OC,
+  @JsonValue('clear')
   CLEAR_STATE_OC,
+  @JsonValue('update')
   UPDATE_APPLICATION_OC,
+  @JsonValue('delete')
   DELETE_APPLICATION_OC,
 }
 

@@ -7,33 +7,32 @@ part of 'asset_config_transaction.dart';
 // **************************************************************************
 
 AssetConfigTransaction _$AssetConfigTransactionFromJson(
-    Map<String, dynamic> json) {
-  return AssetConfigTransaction(
-    assetId: json['caid'] as int?,
-    total: json['t'] as int?,
-    decimals: json['dc'] as int? ?? 0,
-    defaultFrozen: json['df'] as bool?,
-    unitName: json['un'] as String?,
-    assetName: json['an'] as String?,
-    url: json['au'] as String?,
-    metaData: const Base64Serializer().fromJson(json['am']),
-    managerAddress: const AddressSerializer().fromJson(json['m']),
-    reserveAddress: const AddressSerializer().fromJson(json['r']),
-    freezeAddress: const AddressSerializer().fromJson(json['f']),
-    clawbackAddress: const AddressSerializer().fromJson(json['c']),
-    fee: json['fee'] as int?,
-    firstValid: json['fv'] as int?,
-    genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
-    lastValid: json['lv'] as int?,
-    sender: const AddressSerializer().fromJson(json['snd']),
-    type: json['type'] as String?,
-    genesisId: json['gen'] as String?,
-    group: const Base32Serializer().fromJson(json['grp']),
-    lease: const NullableByteArraySerializer().fromJson(json['lx']),
-    note: const NullableByteArraySerializer().fromJson(json['note']),
-    rekeyTo: json['rekey'] as String?,
-  );
-}
+        Map<String, dynamic> json) =>
+    AssetConfigTransaction(
+      assetId: json['caid'] as int?,
+      total: json['t'] as int?,
+      decimals: json['dc'] as int? ?? 0,
+      defaultFrozen: json['df'] as bool?,
+      unitName: json['un'] as String?,
+      assetName: json['an'] as String?,
+      url: json['au'] as String?,
+      metaData: const Base64Serializer().fromJson(json['am']),
+      managerAddress: const AddressSerializer().fromJson(json['m']),
+      reserveAddress: const AddressSerializer().fromJson(json['r']),
+      freezeAddress: const AddressSerializer().fromJson(json['f']),
+      clawbackAddress: const AddressSerializer().fromJson(json['c']),
+      fee: json['fee'] as int?,
+      firstValid: json['fv'] as int?,
+      genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
+      lastValid: json['lv'] as int?,
+      sender: const AddressSerializer().fromJson(json['snd']),
+      type: json['type'] as String?,
+      genesisId: json['gen'] as String?,
+      group: const Base32Serializer().fromJson(json['grp']),
+      lease: const NullableByteArraySerializer().fromJson(json['lx']),
+      note: const NullableByteArraySerializer().fromJson(json['note']),
+      rekeyTo: json['rekey'] as String?,
+    );
 
 Map<String, dynamic> _$AssetConfigTransactionToJson(
         AssetConfigTransaction instance) =>

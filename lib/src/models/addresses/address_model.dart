@@ -5,6 +5,7 @@ import 'package:algorand_dart/src/crypto/crypto.dart' as crypto;
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/crypto_utils.dart';
+import 'package:algorand_dart/src/utils/utils.dart';
 import 'package:base32/base32.dart';
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
@@ -23,6 +24,9 @@ class Address extends Equatable {
 
   /// Prefix for signing bytes
   static const BYTES_SIGN_PREFIX = 'MX';
+
+  /// Prefix for hashing application ID
+  static const APP_ID_PREFIX = 'appID';
 
   /// The public key, in bytes
   final Uint8List publicKey;
@@ -94,6 +98,23 @@ class Address extends Equatable {
     }
 
     return publicKey;
+  }
+
+  /// Get the escrow address of an application.
+  /// Returns the address corresponding to that application's escrow account.
+  static Address forApplication(int applicationId) {
+    // Prepend the prefix
+    final prefix = utf8.encode(APP_ID_PREFIX);
+
+    // Merge the byte arrays
+    final buffer = Uint8List.fromList([
+      ...prefix,
+      ...BigIntEncoder.encodeUint64(BigInt.from(applicationId)),
+    ]);
+
+    final digest = sha512256.convert(buffer);
+
+    return Address(publicKey: Uint8List.fromList(digest.bytes));
   }
 
   /// Check if the given address is a valid Algorand address.

@@ -12,7 +12,6 @@
 Algorand is a public blockchain and protocol that aims to deliver decentralization, scale and security for all participants.
 Their PURE PROOF OF STAKE™ consensus mechanism ensures full participation, protection, and speed within a truly decentralized network. With blocks finalized in seconds, Algorand’s transaction throughput is on par with large payment and financial networks. And Algorand is the first blockchain to provide immediate transaction finality. No forking. No uncertainty.
 
-
 ## Introduction
 Algorand-dart is a community SDK with an elegant approach to connect your Dart & Flutter applications to the Algorand blockchain, send transactions, create assets and query the indexer with just a few lines of code.
 
@@ -42,8 +41,8 @@ algorand.assetManager.createAsset(
 * Algod
 * Indexer
 * KMD
+* AVM 1.0 & TEAL v5 support
 * Transactions
-* Key registration
 * Authorization
 * Atomic Transfers
 * Account management
@@ -92,6 +91,12 @@ final algorand = Algorand(
     kmdClient: kmdClient,
 );
 ```
+
+## Ecosystem integrations
+
+* [AlgoSigner](https://pub.dev/packages/flutter_algosigner) - A Flutter web plugin to approve or deny Algorand transactions from within your browser using AlgoSigner.
+* [MyAlgo Connect](https://pub.dev/packages/flutter_myalgo_connect) - A Flutter web plugin to approve or deny Algorand transactions using MyAlgo Connect.
+* [WalletConnect](https://pub.dev/packages/walletconnect_dart) - Open protocol for connecting decentralised applications to mobile wallets with QR code scanning or deep linking.
 
 ## Account Management
 Accounts are entities on the Algorand blockchain associated with specific onchain data, like a balance. An Algorand Address is the identifier for an Algorand account.

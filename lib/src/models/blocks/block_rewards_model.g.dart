@@ -6,16 +6,14 @@ part of 'block_rewards_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BlockRewards _$BlockRewardsFromJson(Map<String, dynamic> json) {
-  return BlockRewards(
-    feeSink: json['fee-sink'] as String,
-    rewardsCalculationRound: json['rewards-calculation-round'] as int,
-    rewardsLevel: json['rewards-level'] as int,
-    rewardsPool: json['rewards-pool'] as String,
-    rewardsRate: json['rewards-rate'] as int,
-    rewardsResidue: json['rewards-residue'] as int,
-  );
-}
+BlockRewards _$BlockRewardsFromJson(Map<String, dynamic> json) => BlockRewards(
+      feeSink: json['fee-sink'] as String,
+      rewardsCalculationRound: json['rewards-calculation-round'] as int,
+      rewardsLevel: json['rewards-level'] as int,
+      rewardsPool: json['rewards-pool'] as String,
+      rewardsRate: json['rewards-rate'] as int,
+      rewardsResidue: json['rewards-residue'] as int,
+    );
 
 Map<String, dynamic> _$BlockRewardsToJson(BlockRewards instance) =>
     <String, dynamic>{

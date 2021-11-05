@@ -14,6 +14,10 @@ class DryRunTxResult {
   @JsonKey(name: 'app-call-trace', defaultValue: [])
   final List<DryRunState> appCallTrace;
 
+  /// Execution cost of app call transaction
+  @JsonKey(name: 'cost')
+  final int? cost;
+
   @JsonKey(name: 'disassembly', defaultValue: [])
   final List<String> disassembly;
 
@@ -29,6 +33,9 @@ class DryRunTxResult {
   @JsonKey(name: 'logic-sig-trace', defaultValue: [])
   final List<DryRunState> logicSigTrace;
 
+  @JsonKey(name: 'logs', defaultValue: [])
+  final List<String> logs;
+
   DryRunTxResult({
     required this.appCallMessages,
     required this.appCallTrace,
@@ -37,6 +44,8 @@ class DryRunTxResult {
     required this.localDeltas,
     required this.logicSigMessages,
     required this.logicSigTrace,
+    required this.logs,
+    this.cost,
   });
 
   factory DryRunTxResult.fromJson(Map<String, dynamic> json) =>

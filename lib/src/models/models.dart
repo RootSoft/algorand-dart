@@ -5,6 +5,7 @@ export 'addresses/address_model.dart';
 export 'addresses/address_role.dart';
 export 'applications/account_state_delta_model.dart';
 export 'applications/application_local_state_model.dart';
+export 'applications/application_log_data_model.dart';
 export 'applications/application_model.dart';
 export 'applications/application_params_model.dart';
 export 'applications/application_state_schema_model.dart';

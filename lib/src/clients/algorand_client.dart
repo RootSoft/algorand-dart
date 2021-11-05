@@ -1,22 +1,13 @@
 import 'package:dio/dio.dart';
 
 abstract class AlgorandClient {
-  /// The API rest endpoint
-  final String apiUrl;
-
-  /// The API key
-  final String apiKey;
-
-  /// The token header key
-  final String tokenKey;
-
   /// The http client
   late final Dio client;
 
   AlgorandClient({
-    required this.apiUrl,
-    required this.apiKey,
-    required this.tokenKey,
+    required String apiUrl,
+    required String apiKey,
+    required String tokenKey,
     bool debug = false,
   }) {
     final options = BaseOptions(
@@ -33,4 +24,7 @@ abstract class AlgorandClient {
       client.interceptors.add(LogInterceptor());
     }
   }
+
+  /// Create a new Algorand Client with the given Dio instance.
+  AlgorandClient.dio(Dio dio) : client = dio;
 }

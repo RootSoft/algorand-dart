@@ -20,4 +20,14 @@ void main() {
     final address = Address(publicKey: b);
     expect(address.encodedAddress, equals(golden));
   });
+
+  test('Test address for application', () async {
+    final applicationId = 77;
+
+    final actual = Address.forApplication(applicationId);
+    final expected = Address.fromAlgorandAddress(
+      address: 'PCYUFPA2ZTOYWTP43MX2MOX2OWAIAXUDNC2WFCXAGMRUZ3DYD6BWFDL5YM',
+    );
+    expect(actual, equals(expected));
+  });
 }

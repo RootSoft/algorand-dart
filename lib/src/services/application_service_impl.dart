@@ -84,4 +84,26 @@ class _ApplicationService implements ApplicationService {
     final value = ApplicationResponse.fromJson(_result.data!);
     return value;
   }
+
+  @override
+  Future<ApplicationLogsResponse> getApplicationLogsById(
+    int applicationId, {
+    Map<String, dynamic> queryParameters = const {},
+  }) async {
+    const _extra = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+      '/v2/applications/$applicationId/logs',
+      queryParameters: queryParameters,
+      options: dio.Options(
+        method: 'GET',
+        headers: <String, dynamic>{},
+        extra: _extra,
+      ),
+      data: _data,
+    );
+    final value = ApplicationLogsResponse.fromJson(_result.data!);
+    return value;
+  }
 }

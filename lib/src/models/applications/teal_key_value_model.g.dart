@@ -6,12 +6,10 @@ part of 'teal_key_value_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TealKeyValue _$TealKeyValueFromJson(Map<String, dynamic> json) {
-  return TealKeyValue(
-    key: json['key'] as String,
-    value: TealValue.fromJson(json['value'] as Map<String, dynamic>),
-  );
-}
+TealKeyValue _$TealKeyValueFromJson(Map<String, dynamic> json) => TealKeyValue(
+      key: json['key'] as String,
+      value: TealValue.fromJson(json['value'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$TealKeyValueToJson(TealKeyValue instance) =>
     <String, dynamic>{

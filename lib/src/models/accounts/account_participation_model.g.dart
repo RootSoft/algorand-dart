@@ -6,15 +6,15 @@ part of 'account_participation_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AccountParticipation _$AccountParticipationFromJson(Map<String, dynamic> json) {
-  return AccountParticipation(
-    selectionParticipationKey: json['selection-participation-key'] as String,
-    voteFirstValid: json['vote-first-valid'] as int,
-    voteKeyDilution: json['vote-key-dilution'] as int,
-    voteLastValid: json['vote-last-valid'] as int,
-    voteParticipationKey: json['vote-participation-key'] as String,
-  );
-}
+AccountParticipation _$AccountParticipationFromJson(
+        Map<String, dynamic> json) =>
+    AccountParticipation(
+      selectionParticipationKey: json['selection-participation-key'] as String,
+      voteFirstValid: json['vote-first-valid'] as int,
+      voteKeyDilution: json['vote-key-dilution'] as int,
+      voteLastValid: json['vote-last-valid'] as int,
+      voteParticipationKey: json['vote-participation-key'] as String,
+    );
 
 Map<String, dynamic> _$AccountParticipationToJson(
         AccountParticipation instance) =>

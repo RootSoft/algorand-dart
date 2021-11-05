@@ -216,6 +216,10 @@ class RawTransaction extends Equatable {
   /// Get the base64-encoded representation of the transaction..
   String toBase64() => base64Encode(Encoder.encodeMessagePack(toMessagePack()));
 
+  /// Get the bytes of this transaction.
+  Uint8List toBytes() =>
+      Uint8List.fromList(Encoder.encodeMessagePack(toMessagePack()));
+
   Map<String, dynamic> toJson() => _$RawTransactionToJson(this);
 
   Map<String, dynamic> toMessagePack() => <String, dynamic>{

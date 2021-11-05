@@ -6,16 +6,15 @@ part of 'signed_transaction_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SignedTransaction _$SignedTransactionFromJson(Map<String, dynamic> json) {
-  return SignedTransaction(
-    transaction: const TransactionSerializer()
-        .fromJson(json['txn'] as Map<String, dynamic>),
-    signature: const NullableByteArraySerializer().fromJson(json['sig']),
-    logicSignature: json['lsig'] == null
-        ? null
-        : LogicSignature.fromJson(json['lsig'] as Map<String, dynamic>),
-  )..authAddress = const AddressSerializer().fromJson(json['sgnr']);
-}
+SignedTransaction _$SignedTransactionFromJson(Map<String, dynamic> json) =>
+    SignedTransaction(
+      transaction: const TransactionSerializer()
+          .fromJson(json['txn'] as Map<String, dynamic>),
+      signature: const NullableByteArraySerializer().fromJson(json['sig']),
+      logicSignature: json['lsig'] == null
+          ? null
+          : LogicSignature.fromJson(json['lsig'] as Map<String, dynamic>),
+    )..authAddress = const AddressSerializer().fromJson(json['sgnr']);
 
 Map<String, dynamic> _$SignedTransactionToJson(SignedTransaction instance) =>
     <String, dynamic>{

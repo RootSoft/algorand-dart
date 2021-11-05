@@ -6,24 +6,23 @@ part of 'payment_transaction.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) {
-  return PaymentTransaction(
-    receiver: const AddressSerializer().fromJson(json['rcv']),
-    amount: json['amt'] as int?,
-    closeRemainderTo: const AddressSerializer().fromJson(json['close']),
-    fee: json['fee'] as int?,
-    firstValid: json['fv'] as int?,
-    genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
-    lastValid: json['lv'] as int?,
-    sender: const AddressSerializer().fromJson(json['snd']),
-    type: json['type'] as String?,
-    genesisId: json['gen'] as String?,
-    group: const Base32Serializer().fromJson(json['grp']),
-    lease: const NullableByteArraySerializer().fromJson(json['lx']),
-    note: const NullableByteArraySerializer().fromJson(json['note']),
-    rekeyTo: json['rekey'] as String?,
-  );
-}
+PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) =>
+    PaymentTransaction(
+      receiver: const AddressSerializer().fromJson(json['rcv']),
+      amount: json['amt'] as int?,
+      closeRemainderTo: const AddressSerializer().fromJson(json['close']),
+      fee: json['fee'] as int?,
+      firstValid: json['fv'] as int?,
+      genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
+      lastValid: json['lv'] as int?,
+      sender: const AddressSerializer().fromJson(json['snd']),
+      type: json['type'] as String?,
+      genesisId: json['gen'] as String?,
+      group: const Base32Serializer().fromJson(json['grp']),
+      lease: const NullableByteArraySerializer().fromJson(json['lx']),
+      note: const NullableByteArraySerializer().fromJson(json['note']),
+      rekeyTo: json['rekey'] as String?,
+    );
 
 Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
     <String, dynamic>{

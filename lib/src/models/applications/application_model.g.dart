@@ -6,15 +6,14 @@ part of 'application_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Application _$ApplicationFromJson(Map<String, dynamic> json) {
-  return Application(
-    id: json['id'] as int,
-    params: ApplicationParams.fromJson(json['params'] as Map<String, dynamic>),
-    deleted: json['deleted'] as bool? ?? false,
-    createdAtRound: json['created-at-round'] as int?,
-    deletedAtRound: json['deleted-at-round'] as int?,
-  );
-}
+Application _$ApplicationFromJson(Map<String, dynamic> json) => Application(
+      id: json['id'] as int,
+      params:
+          ApplicationParams.fromJson(json['params'] as Map<String, dynamic>),
+      deleted: json['deleted'] as bool? ?? false,
+      createdAtRound: json['created-at-round'] as int?,
+      deletedAtRound: json['deleted-at-round'] as int?,
+    );
 
 Map<String, dynamic> _$ApplicationToJson(Application instance) =>
     <String, dynamic>{

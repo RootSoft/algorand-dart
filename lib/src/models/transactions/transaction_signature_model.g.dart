@@ -6,11 +6,11 @@ part of 'transaction_signature_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TransactionSignature _$TransactionSignatureFromJson(Map<String, dynamic> json) {
-  return TransactionSignature(
-    signature: json['sig'] as String?,
-  );
-}
+TransactionSignature _$TransactionSignatureFromJson(
+        Map<String, dynamic> json) =>
+    TransactionSignature(
+      signature: json['sig'] as String?,
+    );
 
 Map<String, dynamic> _$TransactionSignatureToJson(
         TransactionSignature instance) =>
