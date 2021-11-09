@@ -308,6 +308,18 @@ class Algorand {
     return accountInformation.amountWithoutPendingRewards;
   }
 
+  /// Get the list of asset holdings of the given address.
+  /// Given a specific account public key, this call returns the list
+  /// account of asset holdings
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the list of asset holdings.
+  Future<List<AssetHolding>> getAssetHoldingsByAddress(String address) async {
+    final accountInformation =
+        await _accountRepository.getAccountByAddress(address);
+    return accountInformation.assets;
+  }
+
   /// Get the list of pending transactions by address, sorted by priority,
   /// in decreasing order, truncated at the end at MAX.
   ///
