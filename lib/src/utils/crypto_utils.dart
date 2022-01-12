@@ -35,7 +35,7 @@ extension CryptoStringExtension on String {
         case 'str':
           return Uint8List.fromList(utf8.encode(parts[1]));
         case 'int':
-          return writeBigInt(BigInt.parse(parts[1]));
+          return BigIntEncoder.encodeUint64(BigInt.parse(parts[1]));
         case 'addr':
           final address = Address.fromAlgorandAddress(address: parts[1]);
           return address.toBytes();
@@ -46,16 +46,4 @@ extension CryptoStringExtension on String {
 
     return arguments;
   }
-}
-
-Uint8List writeBigInt(BigInt number) {
-  // Not handling negative numbers. Decide how you want to do that.
-  final bytes = (number.bitLength + 7) >> 3;
-  final b256 = BigInt.from(256);
-  final result = Uint8List(bytes);
-  for (var i = 0; i < bytes; i++) {
-    result[i] = number.remainder(b256).toInt();
-    number = number >> 8;
-  }
-  return result;
 }
