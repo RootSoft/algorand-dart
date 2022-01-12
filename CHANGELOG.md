@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 - 2022-01-12
+
+- Fix application arguments Uin64 encoding
+
 ## 1.0.0 - 2021-11-05
 
 - Support AVM 1.0 & TEAL v5
