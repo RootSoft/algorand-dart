@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'asset_parameters_model.g.dart';
@@ -5,7 +6,8 @@ part 'asset_parameters_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.kebab)
 class AssetParameters {
   /// The total number of units of this asset.
-  final int total;
+  @BigIntSerializer()
+  final BigInt total;
 
   /// The number of digits to use after the decimal point when displaying
   /// this asset.
