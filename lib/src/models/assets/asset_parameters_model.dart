@@ -6,8 +6,8 @@ part 'asset_parameters_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.kebab)
 class AssetParameters {
   /// The total number of units of this asset.
-  //@BigIntSerializer()
-  final int total;
+  @BigIntSerializer()
+  final BigInt total;
 
   /// The number of digits to use after the decimal point when displaying
   /// this asset.

@@ -10,7 +10,7 @@ AssetParameters _$AssetParametersFromJson(Map<String, dynamic> json) =>
     AssetParameters(
       decimals: json['decimals'] as int,
       creator: json['creator'] as String,
-      total: json['total'] as int,
+      total: const BigIntSerializer().fromJson(json['total']),
       clawback: json['clawback'] as String?,
       defaultFrozen: json['default-frozen'] as bool?,
       freeze: json['freeze'] as String?,
@@ -24,7 +24,7 @@ AssetParameters _$AssetParametersFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$AssetParametersToJson(AssetParameters instance) =>
     <String, dynamic>{
-      'total': instance.total,
+      'total': const BigIntSerializer().toJson(instance.total),
       'decimals': instance.decimals,
       'creator': instance.creator,
       'clawback': instance.clawback,
