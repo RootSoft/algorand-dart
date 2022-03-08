@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2 - 2022-03-08
+
+- Added minimum balance
+- Rekeying fix
+- Updated AlgoExplorer endpoints  
+- Small bugfixes
+- Algorand Exception message
+
 ## 1.0.1 - 2022-01-12
 
 - Fix application arguments Uin64 encoding
