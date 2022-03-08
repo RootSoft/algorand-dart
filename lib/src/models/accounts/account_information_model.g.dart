@@ -48,6 +48,8 @@ AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) =>
           ? null
           : ApplicationStateSchema.fromJson(
               json['apps-total-schema'] as Map<String, dynamic>),
+      minimumBalance:
+          const NullableBigIntSerializer().fromJson(json['min-balance']),
     );
 
 Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
@@ -71,6 +73,8 @@ Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
       'created-apps': instance.createdApps,
       'created-assets': instance.createdAssets,
       'participation': instance.participation,
+      'min-balance':
+          const NullableBigIntSerializer().toJson(instance.minimumBalance),
     };
 
 const _$SignatureTypeEnumMap = {

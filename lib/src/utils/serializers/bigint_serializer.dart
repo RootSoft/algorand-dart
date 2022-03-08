@@ -19,3 +19,23 @@ class BigIntSerializer implements JsonConverter<BigInt, dynamic> {
   @override
   String toJson(BigInt data) => data.toString();
 }
+
+class NullableBigIntSerializer implements JsonConverter<BigInt?, dynamic> {
+  const NullableBigIntSerializer();
+
+  @override
+  BigInt? fromJson(dynamic data) {
+    if (data is String) {
+      return BigInt.parse(data);
+    }
+
+    if (data is num) {
+      return BigInt.from(data);
+    }
+
+    return BigInt.zero;
+  }
+
+  @override
+  String toJson(BigInt? data) => data?.toString() ?? '';
+}

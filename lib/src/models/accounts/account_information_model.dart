@@ -1,4 +1,5 @@
 import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'account_information_model.g.dart';
@@ -83,6 +84,11 @@ class AccountInformation {
   ///
   final AccountParticipation? participation;
 
+  /// The minimum balance required
+  @JsonKey(name: 'min-balance')
+  @NullableBigIntSerializer()
+  final BigInt? minimumBalance;
+
   AccountInformation({
     required this.address,
     required this.amount,
@@ -103,6 +109,7 @@ class AccountInformation {
     this.signatureType,
     this.authAddress,
     this.appsTotalSchema,
+    this.minimumBalance,
   });
 
   factory AccountInformation.fromJson(Map<String, dynamic> json) =>
