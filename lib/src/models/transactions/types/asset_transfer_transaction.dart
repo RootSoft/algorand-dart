@@ -58,7 +58,7 @@ class AssetTransferTransaction extends RawTransaction {
     Uint8List? group,
     Uint8List? lease,
     Uint8List? note,
-    String? rekeyTo,
+    Address? rekeyTo,
   }) : super(
           type: type,
           fee: fee,

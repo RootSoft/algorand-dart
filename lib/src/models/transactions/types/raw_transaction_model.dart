@@ -114,7 +114,8 @@ class RawTransaction extends Equatable {
   /// This address will be used to authorize all future transactions.
   /// TODO Change key
   @JsonKey(name: 'rekey')
-  final String? rekeyTo;
+  @AddressSerializer()
+  final Address? rekeyTo;
 
   RawTransaction({
     required this.fee,
@@ -233,7 +234,7 @@ class RawTransaction extends Equatable {
         'grp': group,
         'lx': lease,
         'note': note,
-        'rekey': rekeyTo,
+        'rekey': const AddressTransformer().toMessagePack(rekeyTo),
       };
 
   @override

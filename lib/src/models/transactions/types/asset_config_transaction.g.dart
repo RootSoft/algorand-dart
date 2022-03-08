@@ -31,7 +31,7 @@ AssetConfigTransaction _$AssetConfigTransactionFromJson(
       group: const Base32Serializer().fromJson(json['grp']),
       lease: const NullableByteArraySerializer().fromJson(json['lx']),
       note: const NullableByteArraySerializer().fromJson(json['note']),
-      rekeyTo: json['rekey'] as String?,
+      rekeyTo: const AddressSerializer().fromJson(json['rekey']),
     );
 
 Map<String, dynamic> _$AssetConfigTransactionToJson(
@@ -47,7 +47,7 @@ Map<String, dynamic> _$AssetConfigTransactionToJson(
       'grp': const Base32Serializer().toJson(instance.group),
       'lx': const NullableByteArraySerializer().toJson(instance.lease),
       'note': const NullableByteArraySerializer().toJson(instance.note),
-      'rekey': instance.rekeyTo,
+      'rekey': const AddressSerializer().toJson(instance.rekeyTo),
       'caid': instance.assetId,
       't': instance.total,
       'dc': instance.decimals,

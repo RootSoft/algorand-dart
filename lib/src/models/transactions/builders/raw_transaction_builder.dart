@@ -79,7 +79,7 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
 
   /// Specifies the authorized address.
   /// This address will be used to authorize all future transactions.
-  String? rekeyTo;
+  Address? rekeyTo;
 
   RawTransactionBuilder(this.type);
 
