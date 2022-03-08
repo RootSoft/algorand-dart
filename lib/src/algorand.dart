@@ -25,8 +25,6 @@ class Algorand {
 
   late final TransactionRepository _transactionRepository;
 
-  late final AccountRepository _accountRepository;
-
   late final ApplicationRepository _applicationRepository;
 
   /// Manages everything related to assets.
@@ -41,8 +39,10 @@ class Algorand {
     AlgodClient? algodClient,
     IndexerClient? indexerClient,
     KmdClient? kmdClient,
-  })  : _algodClient = algodClient ?? AlgodClient(apiUrl: ''),
-        _indexerClient = indexerClient ?? IndexerClient(apiUrl: ''),
+  })  : _algodClient = algodClient ??
+            AlgodClient(apiUrl: AlgoExplorer.TESTNET_ALGOD_API_URL),
+        _indexerClient = indexerClient ??
+            IndexerClient(apiUrl: AlgoExplorer.TESTNET_INDEXER_API_URL),
         _kmdClient = kmdClient {
     // TODO Provide services
     final transactionService = TransactionService(_algodClient.client);
@@ -53,10 +53,6 @@ class Algorand {
     _transactionRepository = TransactionRepository(
       nodeService: nodeService,
       transactionService: transactionService,
-    );
-
-    _accountRepository = AccountRepository(
-      accountService: AccountService(_algodClient.client),
     );
 
     _applicationRepository = ApplicationRepository(
@@ -293,7 +289,9 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the account information.
   Future<AccountInformation> getAccountByAddress(String address) async {
-    return await _accountRepository.getAccountByAddress(address);
+    final response = await _indexer.getAccountById(address);
+
+    return response.account;
   }
 
   /// Get the balance (in microAlgos) of the given address.
@@ -303,9 +301,9 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the account's balance in microAlgos.
   Future<int> getBalance(String address) async {
-    final accountInformation =
-        await _accountRepository.getAccountByAddress(address);
-    return accountInformation.amountWithoutPendingRewards;
+    final response = await _indexer.getAccountById(address);
+
+    return response.account.amountWithoutPendingRewards;
   }
 
   /// Get the list of pending transactions by address, sorted by priority,

@@ -29,22 +29,25 @@ class PureStake {
 
 class AlgoExplorer {
   /// The Algod API url for AlgoExplorer's MainNet.
-  static const MAINNET_ALGOD_API_URL = 'https://algoexplorerapi.io';
+  static const MAINNET_ALGOD_API_URL = 'https://node.algoexplorerapi.io';
 
   /// The Algod API url for AlgoExplorer's TestNet.
-  static const TESTNET_ALGOD_API_URL = 'https://testnet.algoexplorerapi.io';
+  static const TESTNET_ALGOD_API_URL =
+      'https://node.testnet.algoexplorerapi.io';
 
   /// The Algod API url for AlgoExplorer's BetaNet.
-  static const BETANET_ALGOD_API_URL = 'https://betanet.algoexplorerapi.io';
+  static const BETANET_ALGOD_API_URL =
+      'https://node.betanet.algoexplorerapi.io';
 
   /// The Indexer API url for AlgoExplorer's MainNet.
-  static const MAINNET_INDEXER_API_URL = 'https://algoexplorerapi.io/idx2';
+  static const MAINNET_INDEXER_API_URL =
+      'https://algoindexer.algoexplorerapi.io';
 
   /// The Indexer API url for AlgoExplorer's TestNet.
   static const TESTNET_INDEXER_API_URL =
-      'https://testnet.algoexplorerapi.io/idx2';
+      'https://algoindexer.testnet.algoexplorerapi.io';
 
   /// The Indexer API url for AlgoExplorer's BetaNet.
   static const BETANET_INDEXER_API_URL =
-      'https://betanet.algoexplorerapi.io/idx2';
+      'https://algoindexer.betanet.algoexplorerapi.io';
 }
