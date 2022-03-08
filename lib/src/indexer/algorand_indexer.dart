@@ -84,8 +84,14 @@ class AlgorandIndexer {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the application information for the given application id.
-  Future<ApplicationResponse> getApplicationById(int applicationId) async {
-    return _indexerRepository.getApplicationById(applicationId);
+  Future<ApplicationResponse> getApplicationById(
+    int applicationId, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return _indexerRepository.getApplicationById(
+      applicationId,
+      queryParameters: queryParameters,
+    );
   }
 
   /// Lookup application information by a given id.

@@ -178,9 +178,15 @@ class IndexerRepository {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the application information for the given application id.
-  Future<ApplicationResponse> getApplicationById(int applicationId) async {
+  Future<ApplicationResponse> getApplicationById(
+    int applicationId, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
-      return await applicationService.getApplicationById(applicationId);
+      return await applicationService.getApplicationById(
+        applicationId,
+        queryParameters: queryParameters,
+      );
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }
