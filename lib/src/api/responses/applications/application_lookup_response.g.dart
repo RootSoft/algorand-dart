@@ -8,7 +8,7 @@ part of 'application_lookup_response.dart';
 
 ApplicationResponse _$ApplicationResponseFromJson(Map<String, dynamic> json) =>
     ApplicationResponse(
-      currentRound: json['current-round'] as int,
+      currentRound: json['current-round'] as int? ?? 0,
       application: json['application'] == null
           ? null
           : Application.fromJson(json['application'] as Map<String, dynamic>),

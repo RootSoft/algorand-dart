@@ -6,6 +6,7 @@ part 'application_lookup_response.g.dart';
 @JsonSerializable(fieldRename: FieldRename.kebab)
 class ApplicationResponse {
   /// Round at which the results were computed.
+  @JsonKey(name: 'current-round', defaultValue: 0)
   final int currentRound;
   final Application? application;
 
