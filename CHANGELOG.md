@@ -1,13 +1,13 @@
 # Changelog
 
-## 2.0.0-dev.1 - 2022-03-08
-
-- Support for BigInt asset params: total
-
-## 1.0.3 - 2022-03-28
+## 2.0.0-dev.2 - 2022-03-28
 
 - Bugfix clients
 - Fix assetholding creator
+
+## 2.0.0-dev.1 - 2022-03-08
+
+- Support for BigInt asset params: total
 
 ## 1.0.2 - 2022-03-08
 
