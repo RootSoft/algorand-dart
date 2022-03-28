@@ -9,7 +9,7 @@ part of 'asset_holding_model.dart';
 AssetHolding _$AssetHoldingFromJson(Map<String, dynamic> json) => AssetHolding(
       amount: json['amount'] as int,
       assetId: json['asset-id'] as int,
-      creator: json['creator'] as String,
+      creator: json['creator'] as String?,
       isFrozen: json['is-frozen'] as bool,
       deleted: json['deleted'] as bool?,
       optedInAtRound: json['opted-in-at-round'] as int?,

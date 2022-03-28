@@ -4,6 +4,11 @@
 
 - Support for BigInt asset params: total
 
+## 1.0.3 - 2022-03-28
+
+- Bugfix clients
+- Fix assetholding creator
+
 ## 1.0.2 - 2022-03-08
 
 - Added minimum balance

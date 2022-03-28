@@ -1,10 +1,15 @@
 import 'package:dio/dio.dart';
 
 class AlgorandException implements Exception {
+  final int errorCode;
   final String _message;
   final Object? cause;
 
-  AlgorandException({String message = '', this.cause}) : _message = message;
+  AlgorandException({
+    this.errorCode = 0,
+    String message = '',
+    this.cause,
+  }) : _message = message;
 
   String get message {
     final cause = this.cause;
@@ -20,4 +25,17 @@ class AlgorandException implements Exception {
 
     return message;
   }
+
+  TxError get error {
+    if (message.contains('overspend')) {
+      return TxError.overspend;
+    }
+
+    return TxError.generic;
+  }
+}
+
+enum TxError {
+  generic,
+  overspend,
 }

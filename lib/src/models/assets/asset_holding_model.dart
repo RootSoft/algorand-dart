@@ -15,7 +15,7 @@ class AssetHolding {
   /// This is the address where the parameters for this asset can
   /// be found, and also the address where unwanted asset units can be sent
   /// in the worst case.
-  final String creator;
+  final String? creator;
 
   /// Whether or not the asset holding is currently deleted from its account.
   final bool? deleted;
