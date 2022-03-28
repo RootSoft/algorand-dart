@@ -13,10 +13,10 @@ import 'package:algorand_kmd/algorand_kmd.dart';
 
 class Algorand {
   /// The HTTP Client instance to interact with algod.
-  final AlgodClient _algodClient;
+  final AlgodClient algodClient;
 
   /// The HTTP Client instance to interact with the indexer.
-  final IndexerClient _indexerClient;
+  final IndexerClient indexerClient;
 
   /// The HTTP Client instance to interact with kmd.
   final KmdClient? _kmdClient;
@@ -39,14 +39,14 @@ class Algorand {
     AlgodClient? algodClient,
     IndexerClient? indexerClient,
     KmdClient? kmdClient,
-  })  : _algodClient = algodClient ??
+  })  : algodClient = algodClient ??
             AlgodClient(apiUrl: AlgoExplorer.TESTNET_ALGOD_API_URL),
-        _indexerClient = indexerClient ??
+        indexerClient = indexerClient ??
             IndexerClient(apiUrl: AlgoExplorer.TESTNET_INDEXER_API_URL),
         _kmdClient = kmdClient {
     // TODO Provide services
-    final transactionService = TransactionService(_algodClient.client);
-    final nodeService = NodeService(_algodClient.client);
+    final transactionService = TransactionService(this.algodClient.client);
+    final nodeService = NodeService(this.algodClient.client);
 
     // TODO Inject Repositories
     _nodeRepository = NodeRepository(service: nodeService);
@@ -56,7 +56,7 @@ class Algorand {
     );
 
     _applicationRepository = ApplicationRepository(
-      applicationService: ApplicationService(_algodClient.client),
+      applicationService: ApplicationService(this.algodClient.client),
     );
 
     // TODO Inject Managers
@@ -69,10 +69,10 @@ class Algorand {
     // TODO Inject and provide the Algorand Indexer
     _indexer = AlgorandIndexer(
       indexerRepository: IndexerRepository(
-        indexerService: IndexerService(_indexerClient.client),
-        accountService: AccountService(_indexerClient.client),
-        assetService: AssetService(_indexerClient.client),
-        applicationService: ApplicationService(_indexerClient.client),
+        indexerService: IndexerService(this.indexerClient.client),
+        accountService: AccountService(this.indexerClient.client),
+        assetService: AssetService(this.indexerClient.client),
+        applicationService: ApplicationService(this.indexerClient.client),
       ),
     );
   }
@@ -89,6 +89,21 @@ class Algorand {
 
   /// Get the algorand indexer which lets you search the blockchain.
   AlgorandIndexer indexer() => _indexer;
+
+  /// Set the base url of the [AlgodClient].
+  void setAlgodUrl(String baseUrl) {
+    algodClient.client.options.baseUrl = baseUrl;
+  }
+
+  /// Set the base url of the [IndexerClient].
+  void setIndexerUrl(String baseUrl) {
+    indexerClient.client.options.baseUrl = baseUrl;
+  }
+
+  /// Set the base url of the [IndexerClient].
+  void setKmdUrl(String baseUrl) {
+    _kmdClient?.api.dio.options.baseUrl = baseUrl;
+  }
 
   /// Create a new, random generated account.
   Future<Account> createAccount() async {
