@@ -1,6 +1,6 @@
 name: algorand_dart
 description: Unofficial community SDK to interact with the Algorand network, for Dart & Flutter
-version: 2.0.0-dev.2
+version: 2.0.0-dev.3
 homepage: https://www.algorand.com
 repository: https://github.com/RootSoft/algorand-dart
 issue_tracker: https://github.com/RootSoft/algorand-dart/issues

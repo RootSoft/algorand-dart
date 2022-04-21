@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0-dev.3 - 2022-04-21
+
+- Added exclude option for account by id
+- Added assets
+- Added created-assets
+- Added created-applications
+
 ## 2.0.0-dev.2 - 2022-03-28
 
 - Bugfix clients
