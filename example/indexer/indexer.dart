@@ -399,3 +399,11 @@ Future searchTransactionWithType({
     print(error.response?.toString());
   }
 }
+
+Future getAssets({
+  required Algorand algorand,
+  required Account account,
+}) async {
+  final assets = await algorand.getAssetsByAddress(account.publicAddress);
+  print(assets);
+}

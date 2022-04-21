@@ -309,6 +309,40 @@ class Algorand {
     return response.account;
   }
 
+  /// Get the assets owned of the given address.
+  /// Given a specific account public key, this call returns the assets
+  /// owned by the address.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the assets.
+  Future<List<AssetHolding>> getAssetsByAddress(String address) async {
+    return _indexer.getAssetsByAddress(address);
+  }
+
+  /// Get the assets created by the given account.
+  /// Given a specific account public key, this call returns the assets
+  /// created by the address.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the assets.
+  Future<List<Asset>> getCreatedAssetsByAddress(String address) async {
+    final response = await _indexer.getCreatedAssetsByAddress(address);
+
+    return response.assets;
+  }
+
+  /// Get the assets created by the given account.
+  /// Given a specific account public key, this call returns the assets
+  /// created by the address.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the assets.
+  Future<List<Application>> getCreatedApplicationsByAddress(
+    String address,
+  ) async {
+    return await _indexer.getCreatedApplicationsByAddress(address);
+  }
+
   /// Get the balance (in microAlgos) of the given address.
   /// Given a specific account public key, this call returns the current
   /// balance.

@@ -1,4 +1,5 @@
 import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/src/api/responses/accounts/created_assets_response.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/exceptions/algorand_exception.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
@@ -142,9 +143,50 @@ class IndexerRepository {
   Future<AccountResponse> getAccountById(
     String accountId, {
     int? round,
+    String? exclude,
   }) async {
     try {
       return await accountService.getAccountById(accountId, round: round);
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
+  /// Lookup created assets information by a given account id.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the assets information for the given account id.
+  Future<AssetsResponse> getAssetsByAddress(String address) async {
+    try {
+      return await accountService.getAssetsByAccount(address);
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
+  /// Lookup assets information by a given account id.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the assets information for the given account id.
+  Future<CreatedAssetsResponse> getCreatedAssetsByAddress(
+    String address,
+  ) async {
+    try {
+      return await accountService.getCreatedAssetsByAccount(address);
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
+  /// Lookup created applications information by a given account id.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the created applications information for the given account id.
+  Future<ApplicationsResponse> getCreatedApplicationsByAddress(
+    String address,
+  ) async {
+    try {
+      return await accountService.getCreatedApplicationsByAccount(address);
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }

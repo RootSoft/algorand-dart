@@ -52,9 +52,13 @@ class _AccountService implements AccountService {
   Future<AccountResponse> getAccountById(
     String accountId, {
     int? round,
+    String? exclude,
   }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'round': round};
+    final queryParameters = <String, dynamic>{
+      r'round': round,
+      r'exclude': exclude,
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
@@ -87,6 +91,70 @@ class _AccountService implements AccountService {
       data: _data,
     );
     final value = SearchAccountsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AssetsResponse> getAssetsByAccount(String address) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+      '/v2/accounts/$address/assets',
+      queryParameters: queryParameters,
+      options: dio.Options(
+        method: 'GET',
+        headers: <String, dynamic>{},
+        extra: _extra,
+      ),
+      data: _data,
+    );
+    final value = AssetsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<CreatedAssetsResponse> getCreatedAssetsByAccount(
+    String address,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+      '/v2/accounts/$address/created-assets',
+      queryParameters: queryParameters,
+      options: dio.Options(
+        method: 'GET',
+        headers: <String, dynamic>{},
+        extra: _extra,
+      ),
+      data: _data,
+    );
+    final value = CreatedAssetsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApplicationsResponse> getCreatedApplicationsByAccount(
+    String address,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+      '/v2/accounts/$address/created-applications',
+      queryParameters: queryParameters,
+      options: dio.Options(
+        method: 'GET',
+        headers: <String, dynamic>{},
+        extra: _extra,
+      ),
+      data: _data,
+    );
+    final value = ApplicationsResponse.fromJson(_result.data!);
     return value;
   }
 }

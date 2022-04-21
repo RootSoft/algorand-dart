@@ -1,4 +1,5 @@
 import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/src/api/responses/accounts/created_assets_response.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/services/api_service.dart';
 import 'package:dio/dio.dart' as dio;
@@ -24,7 +25,23 @@ abstract class AccountService extends ApiService {
   Future<AccountResponse> getAccountById(
     /*@Path('accountId')*/ String accountId, {
     /*@Query('round')*/ int? round,
+    /*@Query('exclude')*/ String? exclude,
   });
+
+  //@GET("/v2/accounts/{accountId}/assets")
+  Future<AssetsResponse> getAssetsByAccount(
+    /*@Path('accountId')*/ String address,
+  );
+
+  //@GET("/v2/accounts/{accountId}/created-assets")
+  Future<CreatedAssetsResponse> getCreatedAssetsByAccount(
+    /*@Path('accountId')*/ String address,
+  );
+
+  //@GET("/v2/accounts/{accountId}/created-applications")
+  Future<ApplicationsResponse> getCreatedApplicationsByAccount(
+    /*@Path('accountId')*/ String address,
+  );
 
   //@GET("/v2/assets/{assetId}/balances")
   Future<SearchAccountsResponse> searchAccountsWithBalance(
