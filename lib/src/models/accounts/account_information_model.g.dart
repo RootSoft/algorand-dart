@@ -34,6 +34,10 @@ AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) =>
               ?.map((e) => Asset.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      totalAppsOptedIn: json['total-apps-opted-in'] as int? ?? 0,
+      totalAssetsOptedIn: json['total-assets-opted-in'] as int? ?? 0,
+      totalCreatedApps: json['total-created-apps'] as int? ?? 0,
+      totalCreatedAssets: json['total-created-assets'] as int? ?? 0,
       createdAtRound: json['created-at-round'] as int?,
       participation: json['participation'] == null
           ? null
@@ -50,6 +54,7 @@ AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) =>
               json['apps-total-schema'] as Map<String, dynamic>),
       minimumBalance:
           const NullableBigIntSerializer().fromJson(json['min-balance']),
+      appsTotalExtraPages: json['apps-total-extra-pages'] as int?,
     );
 
 Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
@@ -69,12 +74,17 @@ Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
       'auth-addr': instance.authAddress,
       'assets': instance.assets,
       'apps-local-state': instance.appsLocalState,
+      'apps-total-extra-pages': instance.appsTotalExtraPages,
       'apps-total-schema': instance.appsTotalSchema,
       'created-apps': instance.createdApps,
       'created-assets': instance.createdAssets,
       'participation': instance.participation,
       'min-balance':
           const NullableBigIntSerializer().toJson(instance.minimumBalance),
+      'total-apps-opted-in': instance.totalAppsOptedIn,
+      'total-assets-opted-in': instance.totalAssetsOptedIn,
+      'total-created-apps': instance.totalCreatedApps,
+      'total-created-assets': instance.totalCreatedAssets,
     };
 
 const _$SignatureTypeEnumMap = {

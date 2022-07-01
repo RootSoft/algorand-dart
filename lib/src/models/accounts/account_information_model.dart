@@ -68,6 +68,10 @@ class AccountInformation {
   @JsonKey(name: 'apps-local-state', defaultValue: [])
   final List<ApplicationLocalState> appsLocalState;
 
+  /// he sum of all extra application program pages for this account.
+  @JsonKey(name: 'apps-total-extra-pages')
+  final int? appsTotalExtraPages;
+
   ///  stores the sum of all of the local schemas and global schemas in this
   ///  account.
   final ApplicationStateSchema? appsTotalSchema;
@@ -89,6 +93,25 @@ class AccountInformation {
   @NullableBigIntSerializer()
   final BigInt? minimumBalance;
 
+  /// The count of all applications that have been opted in, equivalent to the
+  /// count of application local data (AppLocalState objects) stored in this
+  /// account.
+  @JsonKey(name: 'total-apps-opted-in', defaultValue: 0)
+  final int totalAppsOptedIn;
+
+  /// The count of all assets that have been opted in, equivalent to the count
+  /// of AssetHolding objects held by this account.
+  @JsonKey(name: 'total-assets-opted-in', defaultValue: 0)
+  final int totalAssetsOptedIn;
+
+  /// The count of all apps (AppParams objects) created by this account.
+  @JsonKey(name: 'total-created-apps', defaultValue: 0)
+  final int totalCreatedApps;
+
+  /// The count of all assets (AssetParams objects) created by this account.
+  @JsonKey(name: 'total-created-assets', defaultValue: 0)
+  final int totalCreatedAssets;
+
   AccountInformation({
     required this.address,
     required this.amount,
@@ -102,6 +125,10 @@ class AccountInformation {
     required this.appsLocalState,
     required this.createdApps,
     required this.createdAssets,
+    required this.totalAppsOptedIn,
+    required this.totalAssetsOptedIn,
+    required this.totalCreatedApps,
+    required this.totalCreatedAssets,
     this.createdAtRound,
     this.participation,
     this.rewardBase,
@@ -110,6 +137,7 @@ class AccountInformation {
     this.authAddress,
     this.appsTotalSchema,
     this.minimumBalance,
+    this.appsTotalExtraPages,
   });
 
   factory AccountInformation.fromJson(Map<String, dynamic> json) =>
