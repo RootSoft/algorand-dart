@@ -16,9 +16,12 @@ AssetParameters _$AssetParametersFromJson(Map<String, dynamic> json) =>
       freeze: json['freeze'] as String?,
       manager: json['manager'] as String?,
       name: json['name'] as String?,
+      nameB64: json['name-b64'] as String?,
       reserve: json['reserve'] as String?,
       unitName: json['unit-name'] as String?,
+      unitNameB64: json['unit-name-b64'] as String?,
       url: json['url'] as String?,
+      urlB64: json['url-b64'] as String?,
       metadataHash: json['metadata-hash'] as String?,
     );
 
@@ -32,8 +35,11 @@ Map<String, dynamic> _$AssetParametersToJson(AssetParameters instance) =>
       'freeze': instance.freeze,
       'manager': instance.manager,
       'name': instance.name,
+      'name-b64': instance.nameB64,
       'reserve': instance.reserve,
       'unit-name': instance.unitName,
+      'unit-name-b64': instance.unitNameB64,
       'url': instance.url,
+      'url-b64': instance.urlB64,
       'metadata-hash': instance.metadataHash,
     };

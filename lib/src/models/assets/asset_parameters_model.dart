@@ -48,14 +48,26 @@ class AssetParameters {
   /// Name of this asset, as supplied by the creator.
   final String? name;
 
+  /// Base64 encoded name of this asset, as supplied by the creator.
+  @JsonKey(name: 'name-b64')
+  final String? nameB64;
+
   /// Address of account holding reserve (non-minted) units of this asset.
   final String? reserve;
 
   /// Name of a unit of this asset, as supplied by the creator.
   final String? unitName;
 
+  /// Base64 encoded name of a unit of this asset, as supplied by the creator.
+  @JsonKey(name: 'unit-name-b64')
+  final String? unitNameB64;
+
   /// URL where more information about the asset can be retrieved.
   final String? url;
+
+  /// Base64 encoded URL where more information about the asset can be found.
+  @JsonKey(name: 'url-b64')
+  final String? urlB64;
 
   /// A commitment to some unspecified asset metadata.
   /// The format of this metadata is up to the application.
@@ -70,9 +82,12 @@ class AssetParameters {
     this.freeze,
     this.manager,
     this.name,
+    this.nameB64,
     this.reserve,
     this.unitName,
+    this.unitNameB64,
     this.url,
+    this.urlB64,
     this.metadataHash,
   });
 
@@ -83,19 +98,6 @@ class AssetParameters {
 
   @override
   String toString() {
-    return 'AssetParameters{'
-        'total: $total, '
-        'decimals: $decimals, '
-        'creator: $creator, '
-        'clawback: $clawback, '
-        'defaultFrozen: $defaultFrozen, '
-        'freeze: $freeze, '
-        'manager: $manager, '
-        'name: $name, '
-        'reserve: $reserve, '
-        'unitName: $unitName, '
-        'url: $url, '
-        'metadataHash: $metadataHash'
-        '}';
+    return 'AssetParameters{total: $total, decimals: $decimals, creator: $creator, clawback: $clawback, defaultFrozen: $defaultFrozen, freeze: $freeze, manager: $manager, name: $name, nameB64: $nameB64, reserve: $reserve, unitName: $unitName, unitNameB64: $unitNameB64, url: $url, urlB64: $urlB64, metadataHash: $metadataHash}';
   }
 }
