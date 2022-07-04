@@ -1,0 +1,156 @@
+#pragma version 6
+txn ApplicationID
+int 0
+==
+bnz main_l14
+txn OnCompletion
+int DeleteApplication
+==
+bnz main_l13
+txn OnCompletion
+int UpdateApplication
+==
+bnz main_l12
+txn OnCompletion
+int CloseOut
+==
+bnz main_l11
+txn OnCompletion
+int OptIn
+==
+bnz main_l10
+txna ApplicationArgs 0
+method "call(application)string"
+==
+bnz main_l9
+txna ApplicationArgs 0
+method "echo(uint64)string"
+==
+bnz main_l8
+err
+main_l8:
+callsub echo_3
+callsub retlog_5
+int 1
+return
+main_l9:
+callsub call_2
+callsub retlog_5
+int 1
+return
+main_l10:
+int 1
+return
+main_l11:
+int 1
+return
+main_l12:
+txn Sender
+global CreatorAddress
+==
+return
+main_l13:
+txn Sender
+global CreatorAddress
+==
+return
+main_l14:
+int 1
+return
+
+// int_to_ascii
+inttoascii_0:
+store 1
+byte "0123456789"
+load 1
+int 1
+extract3
+retsub
+
+// itoa
+itoa_1:
+store 0
+load 0
+int 0
+==
+bnz itoa_1_l5
+load 0
+int 10
+/
+int 0
+>
+bnz itoa_1_l4
+byte ""
+itoa_1_l3:
+load 0
+int 10
+%
+callsub inttoascii_0
+concat
+b itoa_1_l6
+itoa_1_l4:
+load 0
+int 10
+/
+load 0
+swap
+callsub itoa_1
+swap
+store 0
+b itoa_1_l3
+itoa_1_l5:
+byte "0"
+itoa_1_l6:
+retsub
+
+// call
+call_2:
+itxn_begin
+int appl
+itxn_field TypeEnum
+txna ApplicationArgs 1
+btoi
+txnas Applications
+itxn_field ApplicationID
+method "echo(uint64)string"
+itxn_field ApplicationArgs
+int 0
+itxn_field Fee
+itxn_submit
+itxna Logs 0
+extract 6 0
+retsub
+
+// echo
+echo_3:
+byte "In app id "
+txn ApplicationID
+callsub itoa_1
+concat
+byte " which was called by app id "
+concat
+global CallerApplicationID
+callsub itoa_1
+concat
+retsub
+
+// string_encode
+stringencode_4:
+store 3
+load 3
+len
+itob
+extract 6 2
+load 3
+concat
+retsub
+
+// ret_log
+retlog_5:
+store 2
+byte 0x151f7c75
+load 2
+callsub stringencode_4
+concat
+log
+retsub

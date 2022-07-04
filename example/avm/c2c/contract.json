@@ -1,0 +1,22 @@
+{
+  "name":"demo-c2c",
+  "networks":{
+    "default":{
+      "appID": 1
+    }
+  },
+  "methods":[
+    {
+      "name":"call",
+      "desc":"Proxy a call to another app",
+      "args":[ { "type":"application" }],
+      "returns": {"type":"string"}
+    },
+    {
+      "name":"echo",
+      "desc":"Log the current app id and the app id we were called from",
+      "args":[],
+      "returns": {"type":"string"}
+    }
+  ]
+}
