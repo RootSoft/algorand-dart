@@ -38,6 +38,42 @@ class BigIntEncoder {
     }
     return result;
   }
+
+  /// Converts a [Uint8List] byte buffer into a [BigInt]
+  static BigInt decodeBytesToUint(Uint8List encoded) {
+    var result = BigInt.zero;
+
+    for (final byte in encoded) {
+      // reading in big-endian, so we essentially concat the new byte to the end
+      result = (result << 8) | BigInt.from(byte);
+    }
+    return result;
+  }
+
+  /// Encode an non-negative integer as a big-endian general uint value.
+  /// @param value The value to encode.
+  /// @param byteNum The size of output bytes.
+  /// @throws IllegalArgumentException if value cannot be represented by the
+  /// byte array of length byteNum.
+  /// @return A byte array containing the big-endian encoding of the value.
+  /// Its length will be byteNum.
+  static Uint8List encodeUintToBytes(BigInt value, int byteNum) {
+    if (value.compareTo(BigInt.zero) < 0) {
+      throw ArgumentError('Encode int to byte: input BigInteger < 0');
+    }
+
+    final buffer = Uint8List(byteNum);
+    var encoded = value.toUint8List();
+    if (encoded.length == byteNum + 1) {
+      //encoded = Arrays.copyOfRange(encoded, 1, encoded.length);
+      encoded = encoded.sublist(1, encoded.length);
+    }
+    final start = buffer.length - encoded.length;
+    final end = start + encoded.length;
+
+    buffer.setRange(start, end, encoded);
+    return buffer;
+  }
 }
 
 extension BigIntExtension on BigInt {
