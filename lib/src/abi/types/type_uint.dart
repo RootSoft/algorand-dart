@@ -9,14 +9,6 @@ class TypeUint extends AbiType {
   TypeUint(this.bitSize); // TODO Assert size
 
   @override
-  bool isDynamic() => false;
-
-  @override
-  int byteLength() {
-    throw ArgumentError('Dynamic type cannot pre-compute byteLen');
-  }
-
-  @override
   Uint8List encode(dynamic obj) {
     if (obj is BigInt) {
       return BigIntEncoder.encodeUintToBytes(obj, bitSize ~/ 8);
@@ -44,7 +36,24 @@ class TypeUint extends AbiType {
   }
 
   @override
-  bool equals(obj) {
-    return false;
+  bool isDynamic() => false;
+
+  @override
+  int byteLength() {
+    return bitSize ~/ 8;
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is TypeUint &&
+      runtimeType == other.runtimeType &&
+      bitSize == other.bitSize;
+
+  @override
+  int get hashCode => bitSize.hashCode;
+
+  @override
+  String toString() {
+    return 'uint$bitSize';
   }
 }
