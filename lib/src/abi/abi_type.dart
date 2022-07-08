@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/src/abi/segment.dart';
 import 'package:algorand_dart/src/abi/types/type_array_dynamic.dart';
+import 'package:algorand_dart/src/abi/types/type_bool.dart';
 import 'package:algorand_dart/src/abi/types/type_tuple.dart';
 import 'package:algorand_dart/src/abi/types/type_uint.dart';
 
@@ -12,8 +13,6 @@ abstract class AbiType {
   /// Check if this ABI type is a dynamic type.
   /// Returns decision if the ABI type is dynamic.
   bool isDynamic();
-
-  bool equals(dynamic obj);
 
   /// Precompute the byte size of the static ABI typed value
   /// @return the byte size of the ABI value
@@ -90,6 +89,26 @@ abstract class AbiType {
     }
 
     return tupleSeg.toList();
+  }
+
+  static int findBoolLR(List<AbiType> typeArray, int index, int delta) {
+    var until = 0;
+    while (true) {
+      var currentIndex = index + delta * until;
+      if (typeArray[currentIndex] is TypeBool) {
+        if (currentIndex != typeArray.length - 1 && delta > 0) {
+          until++;
+        } else if (currentIndex != 0 && delta < 0) {
+          until++;
+        } else {
+          break;
+        }
+      } else {
+        until--;
+        break;
+      }
+    }
+    return until;
   }
 
   /// Deserialize ABI type scheme from string
