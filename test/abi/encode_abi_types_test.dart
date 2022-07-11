@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/abi/types/type_address.dart';
 import 'package:algorand_dart/src/abi/types/type_bool.dart';
+import 'package:algorand_dart/src/abi/types/type_byte.dart';
+import 'package:algorand_dart/src/abi/types/type_string.dart';
 import 'package:algorand_dart/src/abi/types/type_ufixed.dart';
 import 'package:algorand_dart/src/abi/types/type_uint.dart';
 import 'package:test/test.dart';
@@ -34,6 +36,17 @@ void main() {
     expect(TypeUfixed(32, 10).encode(BigInt.from(33)), equals([0, 0, 0, 33]));
   });
 
+  test('Test encode byte type into bytes', () async {
+    expect(TypeByte().encode(10), equals([10]));
+    expect(TypeByte().encode(255), equals([255]));
+    expect(TypeByte().encode(BigInt.from(10)), equals([10]));
+  });
+
+  test('Test decode byte type into bytes', () async {
+    expect(TypeByte().decode(Uint8List.fromList([10])), equals(10));
+    expect(TypeByte().decode(Uint8List.fromList([255])), equals(255));
+  });
+
   test('Test encode bool into bytes', () async {
     expect(TypeBool().encode(true), equals([128]));
     expect(TypeBool().encode(false), equals([0]));
@@ -56,5 +69,15 @@ void main() {
     final x = 'MO2H6ZU47Q36GJ6GVHUKGEBEQINN7ZWVACMWZQGIYUOE3RBSRVYHV4ACJI';
     final address = Address.fromAlgorandAddress(address: x);
     expect(TypeAddress().decode(address.publicKey), equals(address));
+  });
+
+  test('Test encode string into bytes', () async {
+    expect(TypeString().encode('asdf'),
+        equals(Uint8List.fromList([0, 4, 97, 115, 100, 102])));
+  });
+
+  test('Test decode bytes into string', () async {
+    expect(TypeString().decode(Uint8List.fromList([0, 4, 97, 115, 100, 102])),
+        equals('asdf'));
   });
 }
