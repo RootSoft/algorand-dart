@@ -6,6 +6,7 @@ import 'package:algorand_dart/src/abi/types/type_array_dynamic.dart';
 import 'package:algorand_dart/src/abi/types/type_bool.dart';
 import 'package:algorand_dart/src/abi/types/type_tuple.dart';
 import 'package:algorand_dart/src/abi/types/type_uint.dart';
+import 'package:algorand_dart/src/utils/array_utils.dart';
 
 abstract class AbiType {
   static const ABI_DYNAMIC_HEAD_BYTE_LEN = 2;
@@ -126,7 +127,7 @@ abstract class AbiType {
       }
       final m = r.firstMatch(scheme);
       // TODO finish TypeArrayStatic
-    } else if (scheme.startsWith("uint")) {
+    } else if (scheme.startsWith('uint')) {
       final size = int.parse(scheme.substring(4));
       // return TypeUint(size);
     }
@@ -144,5 +145,34 @@ abstract class AbiType {
       tupleTypes.add(type);
     }
     return TypeTuple(tupleTypes);
+  }
+
+  /// Take the first 2 bytes in the byte array
+  /// (consider the byte array to be an encoding for ABI dynamic typed value)
+  /// @param encoded an ABI encoding byte array
+  /// @return the first 2 bytes of the ABI encoding byte array
+  /// @throws IllegalArgumentException if the encoded byte array has length < 2
+  static Uint8List getLengthEncoded(Uint8List encoded) {
+    if (encoded.length < ABI_DYNAMIC_HEAD_BYTE_LEN) {
+      throw ArgumentError('encode byte size too small, less than 2 bytes');
+    }
+    final encodedLength = Uint8List(ABI_DYNAMIC_HEAD_BYTE_LEN);
+    Array.copy(encoded, 0, encodedLength, 0, ABI_DYNAMIC_HEAD_BYTE_LEN);
+    return encodedLength;
+  }
+
+  /// Take the bytes after the first 2 bytes in the byte array
+  /// (consider the byte array to be an encoding for ABI dynamic typed value)
+  /// @param encoded an ABI encoding byte array
+  /// @return the tailing bytes after the first 2 bytes of the ABI encoding byte array
+  /// @throws IllegalArgumentException if the encoded byte array has length < 2
+  static Uint8List getContentEncoded(Uint8List encoded) {
+    if (encoded.length < ABI_DYNAMIC_HEAD_BYTE_LEN) {
+      throw ArgumentError('encode byte size too small, less than 2 bytes');
+    }
+    final encodedString = Uint8List(encoded.length - ABI_DYNAMIC_HEAD_BYTE_LEN);
+    Array.copy(encoded, ABI_DYNAMIC_HEAD_BYTE_LEN, encodedString, 0,
+        encoded.length - ABI_DYNAMIC_HEAD_BYTE_LEN);
+    return encodedString;
   }
 }
