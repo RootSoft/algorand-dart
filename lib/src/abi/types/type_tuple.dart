@@ -5,6 +5,7 @@ import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/abi/abi_type.dart';
 import 'package:algorand_dart/src/abi/types/type_bool.dart';
 import 'package:algorand_dart/src/utils/array_utils.dart';
+import 'package:collection/collection.dart';
 
 class TypeTuple extends AbiType {
   final List<AbiType> childTypes;
@@ -176,12 +177,13 @@ class TypeTuple extends AbiType {
       }
     }
 
-    final values = [];
+    final values =
+        List<Object?>.filled(childTypes.length, null, growable: false);
     for (var i = 0; i < childTypes.length; i++) {
       values[i] = childTypes[i].decode(valuePartition[i]);
     }
 
-    return values;
+    return values.whereNotNull().toList();
   }
 
   @override
