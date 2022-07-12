@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/abi/types/type_address.dart';
+import 'package:algorand_dart/src/abi/types/type_array_dynamic.dart';
 import 'package:algorand_dart/src/abi/types/type_array_static.dart';
 import 'package:algorand_dart/src/abi/types/type_bool.dart';
 import 'package:algorand_dart/src/abi/types/type_byte.dart';
@@ -120,5 +121,33 @@ void main() {
         TypeArrayStatic(TypeUint(64), 2).decode(Uint8List.fromList(
             [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2])),
         equals([BigInt.from(1), BigInt.from(2)]));
+  });
+
+  test('Test encode array dynamic type into bytes', () async {
+    expect(TypeArrayDynamic(TypeBool()).encode([]),
+        equals(Uint8List.fromList([0, 0])));
+    expect(TypeArrayDynamic(TypeBool()).encode([true, true, false]),
+        equals(Uint8List.fromList([0, 3, 192])));
+    expect(
+        TypeArrayDynamic(TypeBool())
+            .encode([false, true, false, false, false, false, false, false]),
+        equals(Uint8List.fromList([0, 8, 64])));
+    expect(
+        TypeArrayDynamic(TypeBool()).encode(
+            [true, false, false, true, false, false, true, false, true]),
+        equals(Uint8List.fromList([0, 9, 146, 128])));
+  });
+
+  test('Test decode bytes into array dynamic type', () async {
+    expect(TypeArrayDynamic(TypeBool()).decode(Uint8List.fromList([0, 0])),
+        equals([]));
+    expect(TypeArrayDynamic(TypeBool()).decode(Uint8List.fromList([0, 3, 192])),
+        equals([true, true, false]));
+    expect(TypeArrayDynamic(TypeBool()).decode(Uint8List.fromList([0, 8, 64])),
+        equals([false, true, false, false, false, false, false, false]));
+    expect(
+        TypeArrayDynamic(TypeBool())
+            .decode(Uint8List.fromList([0, 9, 146, 128])),
+        equals([true, false, false, true, false, false, true, false, true]));
   });
 }
