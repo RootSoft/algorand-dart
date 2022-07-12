@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/abi/types/type_address.dart';
+import 'package:algorand_dart/src/abi/types/type_array_static.dart';
 import 'package:algorand_dart/src/abi/types/type_bool.dart';
 import 'package:algorand_dart/src/abi/types/type_byte.dart';
 import 'package:algorand_dart/src/abi/types/type_string.dart';
@@ -79,5 +80,45 @@ void main() {
   test('Test decode bytes into string', () async {
     expect(TypeString().decode(Uint8List.fromList([0, 4, 97, 115, 100, 102])),
         equals('asdf'));
+  });
+
+  test('Test encode array static type into bytes', () async {
+    expect(TypeArrayStatic(TypeBool(), 3).encode([true, true, false]),
+        equals(Uint8List.fromList([192])));
+    expect(
+        TypeArrayStatic(TypeBool(), 8)
+            .encode([false, true, false, false, false, false, false, false]),
+        equals(Uint8List.fromList([64])));
+    expect(
+        TypeArrayStatic(TypeBool(), 8)
+            .encode([true, true, true, true, true, true, true, true]),
+        equals(Uint8List.fromList([255])));
+    expect(
+        TypeArrayStatic(TypeBool(), 9).encode(
+            [true, false, false, true, false, false, true, false, true]),
+        equals(Uint8List.fromList([146, 128])));
+
+    expect(
+        TypeArrayStatic(TypeUint(64), 2)
+            .encode([BigInt.from(1), BigInt.from(2)]),
+        equals(Uint8List.fromList(
+            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2])));
+  });
+
+  test('Test decode bytes into array static type', () async {
+    expect(TypeArrayStatic(TypeBool(), 3).decode(Uint8List.fromList([192])),
+        equals([true, true, false]));
+    expect(TypeArrayStatic(TypeBool(), 8).decode(Uint8List.fromList([64])),
+        equals([false, true, false, false, false, false, false, false]));
+    expect(TypeArrayStatic(TypeBool(), 8).decode(Uint8List.fromList([255])),
+        equals([true, true, true, true, true, true, true, true]));
+    expect(
+        TypeArrayStatic(TypeBool(), 9).decode(Uint8List.fromList([146, 128])),
+        equals([true, false, false, true, false, false, true, false, true]));
+
+    expect(
+        TypeArrayStatic(TypeUint(64), 2).decode(Uint8List.fromList(
+            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2])),
+        equals([BigInt.from(1), BigInt.from(2)]));
   });
 }
