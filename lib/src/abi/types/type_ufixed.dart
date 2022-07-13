@@ -7,7 +7,40 @@ class TypeUfixed extends AbiType {
   final int bitSize;
   final int precision;
 
-  TypeUfixed(this.bitSize, this.precision); // TODO Assert size
+  TypeUfixed._internal(this.bitSize, this.precision);
+
+  factory TypeUfixed(int size, int precision) {
+    if (size < 8 || size > 512 || size % 8 != 0) {
+      throw ArgumentError(
+          'uint initialize failure: bitSize should be in [8, 512] and bitSize '
+          'mod 8 == 0');
+    }
+    if (precision < 1 || precision > 160) {
+      throw ArgumentError(
+          'ufixed initialize failure: precision should be in [1, 160]');
+    }
+
+    return TypeUfixed._internal(size, precision);
+  }
+
+  factory TypeUfixed.valueOf(String scheme) {
+    final r = RegExp(r'^ufixed([1-9][\d]*)x([1-9][\d]*)$');
+    if (!r.hasMatch(scheme)) {
+      throw ArgumentError('static array type ill format');
+    }
+
+    final m = r.firstMatch(scheme);
+    final size = m?.group(1);
+    final precision = m?.group(2);
+    if (size == null || precision == null) {
+      throw ArgumentError('No match found in scheme.');
+    }
+
+    return TypeUfixed(
+      int.parse(size, radix: 10),
+      int.parse(precision, radix: 10),
+    );
+  }
 
   @override
   Uint8List encode(dynamic obj) {

@@ -6,7 +6,21 @@ import 'package:algorand_dart/src/abi/abi_type.dart';
 class TypeUint extends AbiType {
   final int bitSize;
 
-  TypeUint(this.bitSize); // TODO Assert size
+  TypeUint._internal(this.bitSize);
+
+  factory TypeUint(int size) {
+    if (size < 8 || size > 512 || size % 8 != 0) {
+      throw ArgumentError(
+          'uint initialize failure: bitSize should be in [8, 512] and bitSize '
+          'mod 8 == 0');
+    }
+    return TypeUint._internal(size);
+  }
+
+  factory TypeUint.valueOf(String scheme) {
+    final size = int.parse(scheme.substring(4));
+    return TypeUint(size);
+  }
 
   @override
   Uint8List encode(dynamic obj) {
