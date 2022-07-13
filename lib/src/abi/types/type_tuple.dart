@@ -12,6 +12,17 @@ class TypeTuple extends AbiType {
 
   TypeTuple(this.childTypes);
 
+  factory TypeTuple.valueOf(String scheme) {
+    final tupleContent =
+        AbiType.parseTupleContent(scheme.substring(1, scheme.length - 1));
+    final tupleTypes = <AbiType>[];
+    for (var subStr in tupleContent) {
+      tupleTypes.add(AbiType.valueOf(subStr));
+    }
+
+    return TypeTuple(tupleTypes);
+  }
+
   @override
   Uint8List encode(dynamic obj) {
     if (obj is! List) {
@@ -217,7 +228,7 @@ class TypeTuple extends AbiType {
   bool operator ==(Object other) =>
       other is TypeTuple &&
       runtimeType == other.runtimeType &&
-      childTypes == other.childTypes;
+      const ListEquality().equals(childTypes, other.childTypes);
 
   @override
   int get hashCode => childTypes.hashCode;

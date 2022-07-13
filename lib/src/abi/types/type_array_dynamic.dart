@@ -8,6 +8,11 @@ class TypeArrayDynamic extends AbiType {
 
   TypeArrayDynamic(this.elemType);
 
+  factory TypeArrayDynamic.valueOf(String scheme) {
+    final elemType = AbiType.valueOf(scheme.substring(0, scheme.length - 2));
+    return TypeArrayDynamic(elemType);
+  }
+
   @override
   bool isDynamic() => true;
 

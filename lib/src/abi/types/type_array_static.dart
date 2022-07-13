@@ -9,6 +9,27 @@ class TypeArrayStatic extends AbiType {
 
   TypeArrayStatic(this.elemType, this.length); // TODO Check length
 
+  factory TypeArrayStatic.valueOf(String scheme) {
+    final r = RegExp(r'^([a-z\d[\](),]+)\[([1-9][\d]*)]$');
+    if (!r.hasMatch(scheme)) {
+      throw ArgumentError('static array type ill format');
+    }
+
+    final m = r.firstMatch(scheme);
+    final type = m?.group(1);
+    final length = m?.group(2);
+    if (type == null || length == null) {
+      throw ArgumentError('No match found in scheme.');
+    }
+
+    final elemType = AbiType.valueOf(type);
+
+    return TypeArrayStatic(
+      elemType,
+      int.parse(length, radix: 10),
+    );
+  }
+
   @override
   Uint8List encode(dynamic obj) {
     if (obj is! List) {

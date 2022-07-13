@@ -2,9 +2,14 @@ import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/abi/segment.dart';
+import 'package:algorand_dart/src/abi/types/type_address.dart';
 import 'package:algorand_dart/src/abi/types/type_array_dynamic.dart';
+import 'package:algorand_dart/src/abi/types/type_array_static.dart';
 import 'package:algorand_dart/src/abi/types/type_bool.dart';
+import 'package:algorand_dart/src/abi/types/type_byte.dart';
+import 'package:algorand_dart/src/abi/types/type_string.dart';
 import 'package:algorand_dart/src/abi/types/type_tuple.dart';
+import 'package:algorand_dart/src/abi/types/type_ufixed.dart';
 import 'package:algorand_dart/src/abi/types/type_uint.dart';
 import 'package:algorand_dart/src/utils/array_utils.dart';
 
@@ -118,21 +123,26 @@ abstract class AbiType {
   /// @throws ArgumentError if ABI type serialization strings are corrupted
   static AbiType valueOf(String scheme) {
     if (scheme.endsWith('[]')) {
-      final elemType = AbiType.valueOf(scheme.substring(0, scheme.length - 2));
-      return TypeArrayDynamic(elemType);
+      return TypeArrayDynamic.valueOf(scheme);
     } else if (scheme.endsWith(']')) {
-      final r = RegExp(r'^([a-z\d[\](),]+)\[([1-9][\d]*)]$');
-      if (!r.hasMatch(scheme)) {
-        throw ArgumentError('static array type ill format');
-      }
-      final m = r.firstMatch(scheme);
-      // TODO finish TypeArrayStatic
+      return TypeArrayStatic.valueOf(scheme);
     } else if (scheme.startsWith('uint')) {
-      final size = int.parse(scheme.substring(4));
-      // return TypeUint(size);
+      return TypeUint.valueOf(scheme);
+    } else if (scheme.startsWith('byte')) {
+      return TypeByte();
+    } else if (scheme.startsWith('ufixed')) {
+      return TypeUfixed.valueOf(scheme);
+    } else if (scheme.startsWith('bool')) {
+      return TypeBool();
+    } else if (scheme.startsWith('address')) {
+      return TypeAddress();
+    } else if (scheme.startsWith('string')) {
+      return TypeString();
+    } else if (scheme.length >= 2 && scheme[0] == '(' && scheme.endsWith(')')) {
+      return TypeTuple.valueOf(scheme);
+    } else {
+      throw ArgumentError('Cannot infer type from string: $scheme');
     }
-
-    return TypeUint(8);
   }
 
   /// Cast a dynamic/static array to ABI tuple type
