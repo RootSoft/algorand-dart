@@ -3,6 +3,10 @@ import 'dart:io';
 
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/abi/abi_contract.dart';
+import 'package:algorand_dart/src/abi/abi_method.dart';
+import 'package:algorand_dart/src/transaction/atomic_transaction_composer.dart';
+import 'package:algorand_dart/src/transaction/method_call_params.dart';
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' show dirname, join;
 
 void main() async {
@@ -28,10 +32,53 @@ void main() async {
   print('Using account ${account.publicAddress}');
 
   // Deploy the application - 97954583
-  final applicationId = await createApp(algorand: algorand, account: account);
-  print('Created application with id: $applicationId');
+  final firstAppId = 97954583;
+  final firstAddress = Address.forApplication(firstAppId);
+  print('Created application with id: $firstAppId');
 
-  final address = Address.forApplication(applicationId);
+  //final secondAppId = await createApp(algorand: algorand, account: account);
+  final secondAppId = 104134362;
+  final secondAddress = Address.forApplication(secondAppId);
+  print('Created application with id: $secondAppId');
+
+  // Get the suggested transaction params
+  var params = await algorand.getSuggestedTransactionParams();
+  final p1Tx = await algorand.createPaymentTransaction(
+    sender: account.address,
+    receiver: firstAddress,
+    amount: 1000000,
+  );
+
+  final p2Tx = await algorand.createPaymentTransaction(
+    sender: account.address,
+    receiver: secondAddress,
+    amount: 1000000,
+  );
+
+  final txs = AtomicTransfer.group([p1Tx, p2Tx]);
+  final signedTxs = await Future.wait(txs.map((tx) => tx.sign(account)));
+  await algorand.sendTransactions(signedTxs, waitForConfirmation: true);
+
+  // Set the fee to 2x min fee, this allows the inner app call to proceed even though the app address is not funded
+  params = await algorand.getSuggestedTransactionParams();
+  params = params.copyWith(fee: params.minFee * 3);
+
+  // Create atc to handle method calling for us
+  final atc = AtomicTransactionComposer();
+  await atc.addMethodCall(MethodCallParams(
+    applicationId: firstAppId,
+    sender: account.address,
+    method: findMethod(contract, 'call'),
+    params: params,
+    signer: account,
+    methodArgs: [secondAppId],
+  ));
+
+  // Run the transaction and wait for the results
+  final result = await atc.execute(algorand, waitRounds: 4);
+
+  // Print out the results
+  print('Result of inner app call: ${result.methodResults[0]}');
 }
 
 Future<AbiContract> getContract() async {
@@ -40,6 +87,10 @@ Future<AbiContract> getContract() async {
   final contractSrc = await File(contractPath).readAsString();
   final data = jsonDecode(contractSrc) as Map<String, dynamic>;
   return AbiContract.fromJson(data);
+}
+
+AbiMethod? findMethod(AbiContract contract, String name) {
+  return contract.methods.firstWhereOrNull((m) => m.name == name);
 }
 
 Future<Account> getAccount() async {
