@@ -371,4 +371,76 @@ void main() {
     valid = Logic.checkProgram(program: program, arguments: []);
     expect(valid, isTrue);
   });
+
+  test('test check program TEAL V6', () async {
+    expect(Logic.evalMaxVersion, greaterThanOrEqualTo(6));
+
+    // bsqrt
+    // byte 0x90; bsqrt; byte 0x0c; b==
+    var program = Uint8List.fromList(
+        [0x06, 0x80, 0x01, 0x90, 0x96, 0x80, 0x01, 0x0c, 0xa8]);
+
+    var valid = Logic.checkProgram(program: program, arguments: []);
+    expect(valid, isTrue);
+
+    // divw
+    // int 9; int 18446744073709551596; int 10; divw; int 18446744073709551614; ==
+    program = Uint8List.fromList([
+      0x06,
+      0x81,
+      0x09,
+      0x81,
+      0xec,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0x01,
+      0x81,
+      0x0a,
+      0x97,
+      0x81,
+      0xfe,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0xff,
+      0x01,
+      0x12
+    ]);
+
+    valid = Logic.checkProgram(program: program, arguments: []);
+    expect(valid, isTrue);
+
+    // txn fields
+    // txn StateProofPK; len; int 64; ==; gtxn 0 LastLog; len; int 10; ==; &&
+    program = Uint8List.fromList([
+      0x06,
+      0x31,
+      0x3f,
+      0x15,
+      0x81,
+      0x40,
+      0x12,
+      0x33,
+      0x00,
+      0x3e,
+      0x15,
+      0x81,
+      0x0a,
+      0x12,
+      0x10
+    ]);
+
+    valid = Logic.checkProgram(program: program, arguments: []);
+    expect(valid, isTrue);
+  });
 }
