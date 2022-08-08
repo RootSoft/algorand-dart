@@ -487,4 +487,230 @@ class Algorand {
     // Send the transaction
     return await _transactionRepository.sendTransaction(signedTransaction);
   }
+
+  Future<PaymentTransaction> createPaymentTransaction({
+    required Address sender,
+    required Address receiver,
+    required int amount,
+    String? note,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (PaymentTransactionBuilder()
+          ..sender = sender
+          ..receiver = receiver
+          ..amount = amount
+          ..noteText = note
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
+
+  Future<ApplicationCreateTransaction> createApplicationCreateTransaction({
+    required Address sender,
+    required TEALProgram approvalProgram,
+    required TEALProgram clearStateProgram,
+    required StateSchema globalStateSchema,
+    required StateSchema localStateSchema,
+    bool optIn = false,
+    List<Uint8List>? arguments,
+    List<Address>? accounts,
+    String? note,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (ApplicationCreateTransactionBuilder()
+          ..sender = sender
+          ..optIn = optIn
+          ..approvalProgram = approvalProgram
+          ..clearStateProgram = clearStateProgram
+          ..globalStateSchema = globalStateSchema
+          ..localStateSchema = localStateSchema
+          ..noteText = note
+          ..arguments = arguments
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
+
+  Future<ApplicationBaseTransaction> createApplicationCallTransaction({
+    required Address sender,
+    required int applicationId,
+    List<Uint8List>? arguments,
+    List<Address>? accounts,
+    List<int>? foreignApps,
+    List<int>? foreignAssets,
+    String? note,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (ApplicationCallTransactionBuilder()
+          ..sender = sender
+          ..applicationId = applicationId
+          ..arguments = arguments
+          ..accounts = accounts
+          ..foreignApps = foreignApps
+          ..foreignAssets = foreignAssets
+          ..noteText = note
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
+
+  Future<AssetConfigTransaction> createAssetCreationTransaction({
+    required Address sender,
+    required String assetName,
+    required String unitName,
+    required int totalAssetsToCreate,
+    required int decimals,
+    bool defaultFrozen = false,
+    Address? managerAddress,
+    Address? reserveAddress,
+    Address? freezeAddress,
+    Address? clawbackAddress,
+    String? url,
+    String? note,
+    Uint8List? metadataHash,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final transaction = await (AssetConfigTransactionBuilder()
+          ..sender = sender
+          ..assetName = assetName
+          ..unitName = unitName
+          ..totalAssetsToCreate = totalAssetsToCreate
+          ..decimals = decimals
+          ..defaultFrozen = defaultFrozen
+          ..managerAddress = managerAddress
+          ..reserveAddress = reserveAddress
+          ..freezeAddress = freezeAddress
+          ..clawbackAddress = clawbackAddress
+          ..url = url
+          ..noteText = note
+          ..metaData = metadataHash
+          ..suggestedParams = params)
+        .build();
+
+    return transaction;
+  }
+
+  Future<AssetTransferTransaction> createAssetOptInTransaction({
+    required Address sender,
+    required int assetId,
+    String? note,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (AssetTransferTransactionBuilder()
+          ..assetId = assetId
+          ..sender = sender
+          ..receiver = sender
+          ..noteText = note
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
+
+  Future<AssetTransferTransaction> createAssetTransferTransaction({
+    required Address sender,
+    int? assetId,
+    int? amount,
+    Address? assetSender,
+    Address? receiver,
+    Address? closeTo,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (AssetTransferTransactionBuilder()
+          ..sender = sender
+          ..assetId = assetId
+          ..amount = amount
+          ..assetSender = assetSender
+          ..receiver = receiver
+          ..closeTo = closeTo
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
+
+  Future<ApplicationBaseTransaction> createApplicationDeleteTransaction({
+    required Address sender,
+    required int applicationId,
+    List<Uint8List>? arguments,
+    List<Address>? accounts,
+    List<int>? foreignApps,
+    List<int>? foreignAssets,
+    String? note,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (ApplicationDeleteTransactionBuilder()
+          ..sender = sender
+          ..applicationId = applicationId
+          ..arguments = arguments
+          ..accounts = accounts
+          ..foreignApps = foreignApps
+          ..foreignAssets = foreignAssets
+          ..noteText = note
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
+
+  /// Create a new application opt in transaction.
+  /// A helper method to easily create a new [ApplicationOptInTransaction].
+  Future<ApplicationBaseTransaction> createApplicationOptInTransaction({
+    required Address sender,
+    required int applicationId,
+    List<Uint8List>? arguments,
+    List<Address>? accounts,
+    List<int>? foreignApps,
+    List<int>? foreignAssets,
+    String? note,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (ApplicationOptInTransactionBuilder()
+          ..sender = sender
+          ..applicationId = applicationId
+          ..arguments = arguments
+          ..accounts = accounts
+          ..foreignApps = foreignApps
+          ..foreignAssets = foreignAssets
+          ..noteText = note
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
 }
