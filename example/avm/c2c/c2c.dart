@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/abi/abi_contract.dart';
 import 'package:algorand_dart/src/abi/abi_method.dart';
-import 'package:algorand_dart/src/transaction/atomic_transaction_composer.dart';
-import 'package:algorand_dart/src/transaction/method_call_params.dart';
+import 'package:algorand_dart/src/abi/atomic_transaction_composer.dart';
+import 'package:algorand_dart/src/abi/method_call_params.dart';
 import 'package:collection/collection.dart';
 import 'package:path/path.dart' show dirname, join;
 
@@ -84,9 +83,7 @@ void main() async {
 Future<AbiContract> getContract() async {
   // Read in the contract
   final contractPath = join(dirname(Platform.script.path), 'contract.json');
-  final contractSrc = await File(contractPath).readAsString();
-  final data = jsonDecode(contractSrc) as Map<String, dynamic>;
-  return AbiContract.fromJson(data);
+  return AbiContract.fromFile(contractPath);
 }
 
 AbiMethod? findMethod(AbiContract contract, String name) {

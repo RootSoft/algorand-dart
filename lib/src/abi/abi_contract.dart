@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:algorand_dart/src/abi/abi_method.dart';
 import 'package:algorand_dart/src/abi/network_info.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -31,4 +34,10 @@ class AbiContract {
       _$AbiContractFromJson(json);
 
   Map<String, dynamic> toJson() => _$AbiContractToJson(this);
+
+  factory AbiContract.fromFile(String path) {
+    final contractSrc = File(path).readAsStringSync();
+    final data = jsonDecode(contractSrc) as Map<String, dynamic>;
+    return AbiContract.fromJson(data);
+  }
 }
