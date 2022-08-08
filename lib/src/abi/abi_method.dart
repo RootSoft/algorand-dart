@@ -15,6 +15,12 @@ part 'abi_method.g.dart';
 class AbiMethod {
   static const TxAnyType = 'txn';
 
+  static const RefTypeAccount = 'account';
+
+  static const RefTypeAsset = 'asset';
+
+  static const RefTypeApplication = 'application';
+
   static final Set<String> TxArgTypes = {
     TxAnyType,
     TransactionType.PAYMENT.value,
@@ -23,6 +29,12 @@ class AbiMethod {
     TransactionType.ASSET_TRANSFER.value,
     TransactionType.ASSET_FREEZE.value,
     TransactionType.APPLICATION_CALL.value,
+  };
+
+  static final Set<String> RefArgTypes = {
+    RefTypeAccount,
+    RefTypeAsset,
+    RefTypeApplication,
   };
 
   @JsonKey(name: 'name', defaultValue: '')
@@ -147,5 +159,9 @@ class AbiMethod {
     }
 
     return filteredMethods.first;
+  }
+
+  static bool isTxnArgOrForeignArrayArgs(String data) {
+    return TxArgTypes.contains(data) || RefArgTypes.contains(data);
   }
 }

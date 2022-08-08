@@ -5,10 +5,11 @@ import 'package:algorand_dart/src/crypto/crypto.dart' as crypto;
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/mnemonic/mnemonic.dart';
 import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/transaction/transaction_signer.dart';
 import 'package:convert/convert.dart';
 import 'package:cryptography/cryptography.dart';
 
-class Account {
+class Account implements TxnSigner {
   /// Prefix for signing bytes
   static const BYTES_SIGN_PREFIX = 'MX';
 
@@ -119,5 +120,20 @@ class Account {
     );
 
     return crypto.Signature(bytes: Uint8List.fromList(signature.bytes));
+  }
+
+  @override
+  Future<List<SignedTransaction>> signTransactions(
+    List<RawTransaction> transactions,
+    List<int> indicesToSign,
+  ) async {
+    final signedTxns = <SignedTransaction>[];
+    for (var i = 0; i < indicesToSign.length; i++) {
+      final txn = transactions[indicesToSign[i]];
+      final signedTxn = await txn.sign(this);
+      signedTxns.add(signedTxn);
+    }
+
+    return signedTxns;
   }
 }

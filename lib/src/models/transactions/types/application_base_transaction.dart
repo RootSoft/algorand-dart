@@ -7,7 +7,7 @@ import 'package:algorand_dart/src/models/transactions/on_completion_model.dart';
 class ApplicationBaseTransaction extends RawTransaction {
   /// ApplicationID is the application being interacted with,
   /// or 0 if creating a new application.
-  final int? applicationId;
+  int? applicationId;
 
   /// Defines what additional actions occur with the transaction.
   /// See the OnComplete section of the TEAL spec for details.

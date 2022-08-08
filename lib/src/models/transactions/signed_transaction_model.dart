@@ -41,15 +41,15 @@ class SignedTransaction extends Equatable implements MessagePackable {
   final MultiSignature? multiSignature;
 
   @JsonKey(ignore: true)
-  final String transactionId;
+  final String? _transactionId;
 
   SignedTransaction({
     required this.transaction,
     this.signature,
     this.logicSignature,
     this.multiSignature,
-    this.transactionId = '',
-  });
+    String? transactionId,
+  }) : _transactionId = transactionId;
 
   /// Export the transaction to a file.
   ///
@@ -59,6 +59,9 @@ class SignedTransaction extends Equatable implements MessagePackable {
     final encodedTransaction = Encoder.encodeMessagePack(toMessagePack());
     return File(filePath).writeAsBytes(encodedTransaction);
   }
+
+  /// Get the transaction id.
+  String get transactionId => _transactionId ?? transaction.id;
 
   /// Get the base64-encoded representation of the transaction..
   String toBase64() => base64Encode(Encoder.encodeMessagePack(toMessagePack()));

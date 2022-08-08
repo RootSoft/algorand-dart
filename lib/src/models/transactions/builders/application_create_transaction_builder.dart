@@ -22,7 +22,9 @@ class ApplicationCreateTransactionBuilder
   /// 2048*(1+ExtraProgramPages) bytes.
   int _extraPages = 0;
 
-  ApplicationCreateTransactionBuilder() : super(OnCompletion.NO_OP_OC);
+  ApplicationCreateTransactionBuilder([
+    OnCompletion onCompletion = OnCompletion.NO_OP_OC,
+  ]) : super(onCompletion);
 
   @override
   set applicationId(int value) {

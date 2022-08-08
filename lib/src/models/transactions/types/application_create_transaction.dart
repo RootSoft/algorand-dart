@@ -16,7 +16,7 @@ class ApplicationCreateTransaction extends ApplicationUpdateTransaction {
   ///
   /// The sum of ApprovalProgram and ClearStateProgram may not exceed
   /// 2048*(1+ExtraProgramPages) bytes.
-  final int? extraPages;
+  int? extraPages;
 
   ApplicationCreateTransaction.builder(
     ApplicationCreateTransactionBuilder builder,

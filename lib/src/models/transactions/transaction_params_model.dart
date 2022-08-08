@@ -50,4 +50,22 @@ class TransactionParams {
       _$TransactionParamsFromJson(json);
 
   Map<String, dynamic> toJson() => _$TransactionParamsToJson(this);
+
+  TransactionParams copyWith({
+    String? consensusVersion,
+    int? fee,
+    String? genesisId,
+    Uint8List? genesisHash,
+    int? lastRound,
+    int? minFee,
+  }) {
+    return TransactionParams(
+      consensusVersion: consensusVersion ?? this.consensusVersion,
+      fee: fee ?? this.fee,
+      genesisId: genesisId ?? this.genesisId,
+      genesisHash: genesisHash ?? this.genesisHash,
+      lastRound: lastRound ?? this.lastRound,
+      minFee: minFee ?? this.minFee,
+    );
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/abi/abi_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'returns.g.dart';
@@ -21,4 +22,6 @@ class Returns {
       _$ReturnsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReturnsToJson(this);
+
+  AbiType? get parsedType => type == 'void' ? null : AbiType.valueOf(type);
 }

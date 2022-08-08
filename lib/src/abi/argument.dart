@@ -1,3 +1,5 @@
+import 'package:algorand_dart/src/abi/abi_method.dart';
+import 'package:algorand_dart/src/abi/abi_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'argument.g.dart';
@@ -23,4 +25,7 @@ class Argument {
       _$ArgumentFromJson(json);
 
   Map<String, dynamic> toJson() => _$ArgumentToJson(this);
+
+  AbiType? get parsedType =>
+      AbiMethod.isTxnArgOrForeignArrayArgs(type) ? null : AbiType.valueOf(type);
 }
