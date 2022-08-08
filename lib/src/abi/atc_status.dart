@@ -1,4 +1,4 @@
-enum ATCStatus {
+enum AtcStatus {
   BUILDING,
   BUILT,
   SIGNED,

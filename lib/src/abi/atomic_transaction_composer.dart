@@ -3,13 +3,13 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/abi/abi_method.dart';
+import 'package:algorand_dart/src/abi/atc_status.dart';
 import 'package:algorand_dart/src/abi/execute_result.dart';
+import 'package:algorand_dart/src/abi/method_call_params.dart';
 import 'package:algorand_dart/src/abi/return_value.dart';
 import 'package:algorand_dart/src/abi/returns.dart';
-import 'package:algorand_dart/src/transaction/atc_status.dart';
-import 'package:algorand_dart/src/transaction/method_call_params.dart';
-import 'package:algorand_dart/src/transaction/transaction_signer.dart';
-import 'package:algorand_dart/src/transaction/transaction_with_signer.dart';
+import 'package:algorand_dart/src/abi/transaction_signer.dart';
+import 'package:algorand_dart/src/abi/transaction_with_signer.dart';
 import 'package:algorand_dart/src/utils/array_utils.dart';
 import 'package:collection/collection.dart';
 
@@ -20,7 +20,7 @@ class AtomicTransactionComposer {
 
   static final ABI_RET_HASH = Uint8List.fromList([0x15, 0x1f, 0x7c, 0x75]);
 
-  ATCStatus _status;
+  AtcStatus _status;
   final Map<int, AbiMethod> methodMap;
   final List<TransactionWithSigner> transactions;
   final List<SignedTransaction> signedTxns;
@@ -29,7 +29,7 @@ class AtomicTransactionComposer {
     Map<int, AbiMethod>? methods,
     List<TransactionWithSigner>? transactions,
     List<SignedTransaction>? signedTxns,
-  })  : _status = ATCStatus.BUILDING,
+  })  : _status = AtcStatus.BUILDING,
         methodMap = methods ?? {},
         transactions = transactions ?? [],
         signedTxns = signedTxns ?? [];
@@ -38,7 +38,7 @@ class AtomicTransactionComposer {
   int get count => transactions.length;
 
   /// Get the current status of the Atomic Transaction Composer.
-  ATCStatus get status => _status;
+  AtcStatus get status => _status;
 
   /// Add a transaction to this atomic group.
   ///
@@ -49,7 +49,7 @@ class AtomicTransactionComposer {
       throw ArgumentError(
           'Atomic Transaction Composer group field must be zero');
     }
-    if (status != ATCStatus.BUILDING) {
+    if (status != AtcStatus.BUILDING) {
       throw ArgumentError(
           'Atomic Transaction Composer only add transaction in BUILDING stage');
     }
@@ -70,7 +70,7 @@ class AtomicTransactionComposer {
   ///
   /// For help creating a MethodCallParams object, see {@link com.algorand.algosdk.builder.transaction.MethodCallTransactionBuilder}
   Future<void> addMethodCall(MethodCallParams methodCall) async {
-    if (status != ATCStatus.BUILDING) {
+    if (status != AtcStatus.BUILDING) {
       throw ArgumentError(
           'Atomic Transaction Composer must be in BUILDING stage');
     }
@@ -89,7 +89,7 @@ class AtomicTransactionComposer {
   ///
   /// The composer's status will be at least BUILT after executing this method.
   List<TransactionWithSigner> buildGroup() {
-    final compareTo = status.index - ATCStatus.BUILT.index;
+    final compareTo = status.index - AtcStatus.BUILT.index;
     if (compareTo >= 0) {
       return transactions;
     }
@@ -107,7 +107,7 @@ class AtomicTransactionComposer {
       }
     }
 
-    _status = ATCStatus.BUILT;
+    _status = AtcStatus.BUILT;
     return transactions;
   }
 
@@ -121,7 +121,7 @@ class AtomicTransactionComposer {
   ///
   /// @return an array of signed transactions.
   Future<List<SignedTransaction>> gatherSignatures() async {
-    final compareTo = status.index - ATCStatus.SIGNED.index;
+    final compareTo = status.index - AtcStatus.SIGNED.index;
     if (compareTo >= 0) {
       return signedTxns;
     }
@@ -163,7 +163,7 @@ class AtomicTransactionComposer {
 
     signedTxns.clear();
     signedTxns.addAll(tempSignedTxns.whereNotNull().toList());
-    _status = ATCStatus.SIGNED;
+    _status = AtcStatus.SIGNED;
     return signedTxns;
   }
 
@@ -182,7 +182,7 @@ class AtomicTransactionComposer {
     Algorand algorand, {
     bool waitForConfirmation = false,
   }) async {
-    final compareTo = status.index - ATCStatus.SUBMITTED.index;
+    final compareTo = status.index - AtcStatus.SUBMITTED.index;
     if (compareTo > 0) {
       throw ArgumentError(
           'Atomic Transaction Composer cannot submit commited transaction.');
@@ -196,7 +196,7 @@ class AtomicTransactionComposer {
       waitForConfirmation: waitForConfirmation,
     );
 
-    _status = ATCStatus.SUBMITTED;
+    _status = AtcStatus.SUBMITTED;
     return getTransactionIds();
   }
 
@@ -214,7 +214,7 @@ class AtomicTransactionComposer {
   /// one element for each method call transaction in this group, and the raw transaction response from algod.
   /// If a method has no return value (void), then the method results array will contain null for that return value.
   Future<ExecuteResult> execute(Algorand algorand, {int waitRounds = 5}) async {
-    if (_status == ATCStatus.COMMITED) {
+    if (_status == AtcStatus.COMMITED) {
       throw ArgumentError('Status shows this is already commited');
     }
 
@@ -239,7 +239,7 @@ class AtomicTransactionComposer {
     );
 
     final retList = <ReturnValue>[];
-    _status = ATCStatus.COMMITED;
+    _status = AtcStatus.COMMITED;
 
     for (var i = 0; i < transactions.length; i++) {
       if (!methodMap.containsKey(i)) continue;
