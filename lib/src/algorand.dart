@@ -110,30 +110,6 @@ class Algorand {
     return await Account.random();
   }
 
-  /// Load an existing account from a private key.
-  /// Private key is a hexadecimal representation of the seed.
-  ///
-  /// Throws [UnsupportedError] if seeds are unsupported.
-  Future<Account> loadAccountFromPrivateKey(String privateKey) async {
-    return await Account.fromPrivateKey(privateKey);
-  }
-
-  /// Load an existing account from an rfc8037 private key.
-  /// Seed is the binary representation of the seed.
-  ///
-  /// Throws [UnsupportedError] if seeds are unsupported.
-  Future<Account> loadAccountFromSeed(List<int> seed) async {
-    return await Account.fromSeed(seed);
-  }
-
-  /// Load an existing account from a 25-word seed phrase.
-  ///
-  /// Throws [MnemonicException] if there is an invalid mnemonic/seedphrase.
-  /// Throws [AlgorandException] if the account cannot be restored.
-  Future<Account> restoreAccount(List<String> words) async {
-    return await Account.fromSeedPhrase(words);
-  }
-
   /// Gets the genesis information.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
@@ -488,6 +464,15 @@ class Algorand {
     return await _transactionRepository.sendTransaction(signedTransaction);
   }
 
+  /// Create a new [PaymentTransaction].
+  ///
+  /// @param sender The sender of the payment
+  /// @param receiver The receiver of the payment.
+  /// @param amount The amount to sent.
+  /// @param note An optional note.
+  /// @param suggestedParams Optional parameters to set.
+  ///
+  /// @returns The constructed payment transaction.
   Future<PaymentTransaction> createPaymentTransaction({
     required Address sender,
     required Address receiver,
@@ -510,66 +495,15 @@ class Algorand {
     return tx;
   }
 
-  Future<ApplicationCreateTransaction> createApplicationCreateTransaction({
-    required Address sender,
-    required TEALProgram approvalProgram,
-    required TEALProgram clearStateProgram,
-    required StateSchema globalStateSchema,
-    required StateSchema localStateSchema,
-    bool optIn = false,
-    List<Uint8List>? arguments,
-    List<Address>? accounts,
-    String? note,
-    TransactionParams? suggestedParams,
-  }) async {
-    // Fetch the suggested transaction params
-    final params = suggestedParams ?? (await getSuggestedTransactionParams());
-
-    // Create the transaction
-    final tx = await (ApplicationCreateTransactionBuilder()
-          ..sender = sender
-          ..optIn = optIn
-          ..approvalProgram = approvalProgram
-          ..clearStateProgram = clearStateProgram
-          ..globalStateSchema = globalStateSchema
-          ..localStateSchema = localStateSchema
-          ..noteText = note
-          ..arguments = arguments
-          ..suggestedParams = params)
-        .build();
-
-    return tx;
-  }
-
-  Future<ApplicationBaseTransaction> createApplicationCallTransaction({
-    required Address sender,
-    required int applicationId,
-    List<Uint8List>? arguments,
-    List<Address>? accounts,
-    List<int>? foreignApps,
-    List<int>? foreignAssets,
-    String? note,
-    OnCompletion onCompletion = OnCompletion.NO_OP_OC,
-    TransactionParams? suggestedParams,
-  }) async {
-    // Fetch the suggested transaction params
-    final params = suggestedParams ?? (await getSuggestedTransactionParams());
-
-    // Create the transaction
-    final tx = await (ApplicationCallTransactionBuilder(onCompletion)
-          ..sender = sender
-          ..applicationId = applicationId
-          ..arguments = arguments
-          ..accounts = accounts
-          ..foreignApps = foreignApps
-          ..foreignAssets = foreignAssets
-          ..noteText = note
-          ..suggestedParams = params)
-        .build();
-
-    return tx;
-  }
-
+  /// Create a new [AssetConfigTransaction].
+  ///
+  /// @param sender The sender of the transaction.
+  /// @param assetName The name of the asset
+  /// @param unitName The unit name of the asset
+  /// @param totalAssetsToCreate The number of total assets to create.
+  /// @param decimals The number of decimals.
+  ///
+  /// @returns The constructed application config transaction.
   Future<AssetConfigTransaction> createAssetCreationTransaction({
     required Address sender,
     required String assetName,
@@ -610,6 +544,12 @@ class Algorand {
     return transaction;
   }
 
+  /// Create a new [AssetTransferTransaction].
+  ///
+  /// @param sender The sender of the transaction.
+  /// @param assetId The id of the asset to opt in.
+  ///
+  /// @returns The constructed application transfer transaction.
   Future<AssetTransferTransaction> createAssetOptInTransaction({
     required Address sender,
     required int assetId,
@@ -631,6 +571,11 @@ class Algorand {
     return tx;
   }
 
+  /// Create a new [AssetTransferTransaction].
+  ///
+  /// @param sender The sender of the transaction.
+  ///
+  /// @returns The constructed application transfer transaction.
   Future<AssetTransferTransaction> createAssetTransferTransaction({
     required Address sender,
     int? assetId,
@@ -657,6 +602,87 @@ class Algorand {
     return tx;
   }
 
+  /// Create a new [ApplicationCreateTransaction].
+  ///
+  /// @param sender The sender of the transaction.
+  /// @param approvalProgram The compiled approval teal program.
+  /// @param clearStateProgram The compiled clear state teal program
+  /// @param globalStateSchema The global state schema.
+  /// @param localStateSchema The local state schema.
+  ///
+  /// @returns The constructed application creation transaction.
+  Future<ApplicationCreateTransaction> createApplicationCreateTransaction({
+    required Address sender,
+    required TEALProgram approvalProgram,
+    required TEALProgram clearStateProgram,
+    required StateSchema globalStateSchema,
+    required StateSchema localStateSchema,
+    bool optIn = false,
+    List<Uint8List>? arguments,
+    List<Address>? accounts,
+    String? note,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (ApplicationCreateTransactionBuilder()
+          ..sender = sender
+          ..optIn = optIn
+          ..approvalProgram = approvalProgram
+          ..clearStateProgram = clearStateProgram
+          ..globalStateSchema = globalStateSchema
+          ..localStateSchema = localStateSchema
+          ..noteText = note
+          ..arguments = arguments
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
+
+  /// Create a new [ApplicationBaseTransaction].
+  ///
+  /// @param sender The sender of the transaction.
+  /// @param applicationId The id of the application to call.
+  ///
+  /// @returns The constructed application call transaction.
+  Future<ApplicationBaseTransaction> createApplicationCallTransaction({
+    required Address sender,
+    required int applicationId,
+    List<Uint8List>? arguments,
+    List<Address>? accounts,
+    List<int>? foreignApps,
+    List<int>? foreignAssets,
+    String? note,
+    OnCompletion onCompletion = OnCompletion.NO_OP_OC,
+    TransactionParams? suggestedParams,
+  }) async {
+    // Fetch the suggested transaction params
+    final params = suggestedParams ?? (await getSuggestedTransactionParams());
+
+    // Create the transaction
+    final tx = await (ApplicationCallTransactionBuilder(onCompletion)
+          ..sender = sender
+          ..applicationId = applicationId
+          ..arguments = arguments
+          ..accounts = accounts
+          ..foreignApps = foreignApps
+          ..foreignAssets = foreignAssets
+          ..noteText = note
+          ..suggestedParams = params)
+        .build();
+
+    return tx;
+  }
+
+  /// Create a new [ApplicationBaseTransaction].
+  ///
+  /// @param sender The sender of the transaction.
+  /// @param applicationId The id of the application to delete.
+  ///
+  /// @returns The constructed application delete transaction.
   Future<ApplicationBaseTransaction> createApplicationDeleteTransaction({
     required Address sender,
     required int applicationId,
@@ -687,6 +713,11 @@ class Algorand {
 
   /// Create a new application opt in transaction.
   /// A helper method to easily create a new [ApplicationOptInTransaction].
+  ///
+  /// @param sender The sender of the transaction.
+  /// @param applicationId The id of the application to opt in.
+  ///
+  /// @returns The constructed application delete transaction.
   Future<ApplicationBaseTransaction> createApplicationOptInTransaction({
     required Address sender,
     required int applicationId,
