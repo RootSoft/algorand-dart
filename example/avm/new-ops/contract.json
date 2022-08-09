@@ -1,0 +1,63 @@
+{
+  "name": "demo-ops",
+  "networks": {
+    "default": {
+      "appID": 1
+    }
+  },
+  "methods": [
+    {
+      "name": "acct_param",
+      "desc": "Get account parameters",
+      "args": [
+        {
+          "type": "account"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "bsqrt",
+      "desc": "Do a square root on a byte encoded number",
+      "args": [
+        {
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "gitxn",
+      "desc": "send 2 payment transactions with accounts and amounts specified, return the sum of the amount sent",
+      "args": [
+        {
+          "type": "account"
+        },
+        {
+          "type": "uint64"
+        },
+        {
+          "type": "account"
+        },
+        {
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "pad",
+      "desc": "noop, just pad the budget",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    }
+  ]
+}
