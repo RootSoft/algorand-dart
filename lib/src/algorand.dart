@@ -110,6 +110,30 @@ class Algorand {
     return await Account.random();
   }
 
+  /// Load an existing account from a private key.
+  /// Private key is a hexadecimal representation of the seed.
+  ///
+  /// Throws [UnsupportedError] if seeds are unsupported.
+  Future<Account> loadAccountFromPrivateKey(String privateKey) async {
+    return await Account.fromPrivateKey(privateKey);
+  }
+
+  /// Load an existing account from an rfc8037 private key.
+  /// Seed is the binary representation of the seed.
+  ///
+  /// Throws [UnsupportedError] if seeds are unsupported.
+  Future<Account> loadAccountFromSeed(List<int> seed) async {
+    return await Account.fromSeed(seed);
+  }
+
+  /// Load an existing account from a 25-word seed phrase.
+  ///
+  /// Throws [MnemonicException] if there is an invalid mnemonic/seedphrase.
+  /// Throws [AlgorandException] if the account cannot be restored.
+  Future<Account> restoreAccount(List<String> words) async {
+    return await Account.fromSeedPhrase(words);
+  }
+
   /// Gets the genesis information.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
