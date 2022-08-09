@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0-dev.4 - 2022-08-09
+
+- Added support for TEAL v6 & AVM 1.1
+- AtomicTransactionComposer
+- Removed named parameter for Algorand addresses - breaking
+- Transaction creation helper methods
+
 ## 2.0.0-dev.3 - 2022-04-21
 
 - Added exclude option for account by id

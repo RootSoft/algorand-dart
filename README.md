@@ -41,14 +41,14 @@ algorand.assetManager.createAsset(
 * Algod
 * Indexer
 * KMD
-* AVM 1.0 & TEAL v5 support
+* AVM 1.1 & TEAL v6 support
 * Transactions
 * Authorization
 * Atomic Transfers
 * Account management
 * Asset management
 * Smart Contracts
-* Flutter 2.0 support :heart:
+* Flutter 3.0 support :heart:
 
 ## Getting started
 
@@ -160,6 +160,15 @@ final transactionId = await algorand.sendPayment(
 );
 ```
 
+V2 of the Algorand Dart SDK includes some new helper functions to easily construct transactions:
+
+```dart
+final payTx = await algorand.createPaymentTransaction(
+    sender: account1.address,
+    receiver: fundAppAddress,
+    amount: 1e5.toInt(),
+);
+```
 
 Or you can use the ```TransactionBuilder``` to create more specific, raw transactions:
 
@@ -673,6 +682,78 @@ final txId = await algorand.applicationManager.clearState(
   account: account,
   applicationId: 19964146,
 );
+```
+
+## Atomic Transaction Composer - ABI method calling
+
+With the introduction of AVM 1.1, it is now possible to use the Atomic Transaction Composer (ATC).
+ATC is a convenient way to build out an atomic group of transactions that handles encoding and decoding of ABI arguments and return values.
+The example folder contains some examples from the Algorand DevRel team.
+
+To use the Atomic Transaction Composer, first initialize the composer:
+
+```dart
+final atc = AtomicTransactionComposer();
+```
+
+**Add individual transactions**
+
+Individual transactions being passed to the composer must be wrapped in a `TransactionWithSigner`.
+
+Constructing a Transaction with Signer and adding it to the transaction composer can be done as follows:
+
+```dart
+final payTx = await algorand.createPaymentTransaction(
+    sender: account.address,
+    receiver: appAddress,
+    amount: 1e5.toInt(),
+);
+
+atc.addTransaction(TransactionWithSigner(transaction: payTx, signer: account));
+```
+
+The call to add a transaction may be performed multiple times, each time adding a new transaction to the atomic group. Recall that a maximum of 16 transactions may be included in a single group.
+
+**Calling ABI methods**
+
+When calling an ABI compliant application, the Atomic Transaction Composer will handle encoding and decoding of the arguments passed and the return value. 
+It will also make sure that any reference types are packed into the transaction group appropriately. 
+Additionally, since it knows the method signature and types required, it will do some type checking to make sure the arguments passed are valid for the method call.
+
+In order to call the methods, a Contract or Interface is constructed. Typically this will be done using a json file that describes the api for the application.
+
+Once the Contract object is constructed, it can be used to look up and pass method objects into the Atomic Transaction Composers `addMethodCall`.
+
+```dart
+Future<AbiContract> getContract() async {
+  // Read in the contract
+  final contractPath = join(dirname(Platform.script.path), 'contract.json');
+  return AbiContract.fromFile(contractPath);
+}
+
+await atc.addMethodCall(MethodCallParams(
+    applicationId: appId,
+    sender: account.address,
+    method: findMethod(contract, 'acct_param'),
+    params: params,
+    signer: account,
+    methodArgs: [account1.address],
+));
+```
+
+**Execution**
+Once all the transactions are added to the atomic group the Atomic Transaction Composer allows several ways to perform the transactions.
+
+- Build Group will construct the group of transactions and taking care of assigning the group id, returning an array of unsigned TransactionWithSigner objects.
+- Submit will call build group first, then gather the signatures associated to the transactions, then submit the group without blocking. It will return the full list of transaction ids that can be passed to a wait for confirmation function.
+- Execute will perform submit then wait for confirmation given a number of rounds. It will return the resulting confirmed round, list of transaction ids and any parsed ABI return values if relevant.
+
+```dart
+// Run the transaction and wait for the results
+final result = await atc.execute(algorand, waitRounds: 4);
+
+// Print out the results
+print('Result of inner app call: ${result.methodResults[0]}');
 ```
 
 ## Multi Signatures
