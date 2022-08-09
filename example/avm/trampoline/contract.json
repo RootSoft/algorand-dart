@@ -1,0 +1,16 @@
+{
+  "name":"demo-trampoline",
+  "networks":{
+    "default":{
+      "appID": 1
+    }
+  },
+  "methods":[
+    {
+      "name":"fund",
+      "desc":"Fund app address for newly created application",
+      "args":[],
+      "returns": {"type":"void"}
+    }
+  ]
+}
