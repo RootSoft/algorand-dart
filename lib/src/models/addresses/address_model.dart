@@ -42,7 +42,7 @@ class Address extends Equatable {
   /// validating the address.
   ///
   /// Throws [AlgorandException] if unable to decode the address.
-  Address.fromAlgorandAddress({required String address})
+  Address.fromAlgorandAddress(String address)
       : this(publicKey: decodeAddress(address));
 
   /// Encode a public key to a human-readable representation, with a 4-byte

@@ -9,7 +9,7 @@ void main() {
       final b = generateRandomBytes();
       final address = Address(publicKey: b);
       final encodedAddress = address.encodedAddress;
-      final address2 = Address.fromAlgorandAddress(address: encodedAddress);
+      final address2 = Address.fromAlgorandAddress(encodedAddress);
       expect(address, equals(address2));
     }
   });
@@ -26,7 +26,7 @@ void main() {
 
     final actual = Address.forApplication(applicationId);
     final expected = Address.fromAlgorandAddress(
-      address: 'PCYUFPA2ZTOYWTP43MX2MOX2OWAIAXUDNC2WFCXAGMRUZ3DYD6BWFDL5YM',
+      'PCYUFPA2ZTOYWTP43MX2MOX2OWAIAXUDNC2WFCXAGMRUZ3DYD6BWFDL5YM',
     );
     expect(actual, equals(expected));
   });

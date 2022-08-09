@@ -6,14 +6,14 @@ void main() {
 
   test('test MultiSigAddress to string', () async {
     final one = Address.fromAlgorandAddress(
-      address: 'XMHLMNAVJIMAW2RHJXLXKKK4G3J3U6VONNO3BTAQYVDC3MHTGDP3J5OCRU',
+      'XMHLMNAVJIMAW2RHJXLXKKK4G3J3U6VONNO3BTAQYVDC3MHTGDP3J5OCRU',
     );
     final two = Address.fromAlgorandAddress(
-      address: 'HTNOX33OCQI2JCOLZ2IRM3BC2WZ6JUILSLEORBPFI6W7GU5Q4ZW6LINHLA',
+      'HTNOX33OCQI2JCOLZ2IRM3BC2WZ6JUILSLEORBPFI6W7GU5Q4ZW6LINHLA',
     );
 
     final three = Address.fromAlgorandAddress(
-      address: 'E6JSNTY4PVCY3IRZ6XEDHEO6VIHCQ5KGXCIQKFQCMB2N6HXRY4IB43VSHI',
+      'E6JSNTY4PVCY3IRZ6XEDHEO6VIHCQ5KGXCIQKFQCMB2N6HXRY4IB43VSHI',
     );
 
     final publicKeys = [one, two, three]

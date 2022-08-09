@@ -61,7 +61,7 @@ void main() {
 
   test('Test encode address into bytes', () async {
     final x = 'MO2H6ZU47Q36GJ6GVHUKGEBEQINN7ZWVACMWZQGIYUOE3RBSRVYHV4ACJI';
-    final address = Address.fromAlgorandAddress(address: x);
+    final address = Address.fromAlgorandAddress(x);
     expect(TypeAddress().encode(x), equals(address.publicKey));
     expect(TypeAddress().encode(address), equals(address.publicKey));
     expect(TypeAddress().encode(address.publicKey), equals(address.publicKey));
@@ -69,7 +69,7 @@ void main() {
 
   test('Test decode byte into address', () async {
     final x = 'MO2H6ZU47Q36GJ6GVHUKGEBEQINN7ZWVACMWZQGIYUOE3RBSRVYHV4ACJI';
-    final address = Address.fromAlgorandAddress(address: x);
+    final address = Address.fromAlgorandAddress(x);
     expect(TypeAddress().decode(address.publicKey), equals(address));
   });
 

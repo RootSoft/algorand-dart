@@ -13,7 +13,7 @@ void main() {
     final seed = base64Decode('5Pf7eGMA52qfMT4R4/vYCt7con/7U3yejkdXkrcb26Q=');
     final program = TEALProgram(program: base64Decode('ASABASI='));
     final address = Address.fromAlgorandAddress(
-      address: '6Z3C3LDVWGMX23BMSYMANACQOSINPFIRF77H7N3AWJZYV6OH6GWTJKVMXY',
+      '6Z3C3LDVWGMX23BMSYMANACQOSINPFIRF77H7N3AWJZYV6OH6GWTJKVMXY',
     );
     final account = await Account.fromSeed(seed);
     final sig1 = await address.sign(account: account, data: data);

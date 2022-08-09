@@ -223,7 +223,7 @@ Future searchAssetsTransactionsRole({
 }) async {
   try {
     final address = Address.fromAlgorandAddress(
-      address: 'G26NNWKJUPSTGVLLDHCUQ7LFJHMZP2UUAQG2HURLI6LOEI235YCQUNPQEI',
+      'G26NNWKJUPSTGVLLDHCUQ7LFJHMZP2UUAQG2HURLI6LOEI235YCQUNPQEI',
     );
 
     final response = await algorand
@@ -317,7 +317,7 @@ Future searchTxAddressAsset({
 }) async {
   try {
     final address = Address.fromAlgorandAddress(
-      address: 'AMF3CVE4MFZM24CCFEWRCOCWW7TEDJQS3O26OUBRHZ3KWKUBE5ZJRNZ3OY',
+      'AMF3CVE4MFZM24CCFEWRCOCWW7TEDJQS3O26OUBRHZ3KWKUBE5ZJRNZ3OY',
     );
 
     final response = await algorand
@@ -342,7 +342,7 @@ Future searchTxAddressBlock({
 }) async {
   try {
     final address = Address.fromAlgorandAddress(
-      address: 'NI2EDLP2KZYH6XYLCEZSI5SSO2TFBYY3ZQ5YQENYAGJFGXN4AFHPTR3LXU',
+      'NI2EDLP2KZYH6XYLCEZSI5SSO2TFBYY3ZQ5YQENYAGJFGXN4AFHPTR3LXU',
     );
 
     final response = await algorand
@@ -365,7 +365,7 @@ Future searchTxAddressTime({
 }) async {
   try {
     final address = Address.fromAlgorandAddress(
-      address: 'RBSTLLHK2NJDL3ZH66MKSEX3BE2OWQ43EUM7S7YRVBJ2PRDRCKBSDD3YD4',
+      'RBSTLLHK2NJDL3ZH66MKSEX3BE2OWQ43EUM7S7YRVBJ2PRDRCKBSDD3YD4',
     );
 
     final response = await algorand

@@ -29,7 +29,7 @@ void main() async {
         ..sender = account.address
         ..noteText = 'Account delegation'
         ..amount = 100000
-        ..receiver = Address.fromAlgorandAddress(address: receiver)
+        ..receiver = Address.fromAlgorandAddress(receiver)
         ..suggestedParams = params)
       .build();
 

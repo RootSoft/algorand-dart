@@ -16,7 +16,7 @@ class AddressSerializer implements JsonConverter<Address?, dynamic> {
 
     if (data is String) {
       try {
-        return Address.fromAlgorandAddress(address: data);
+        return Address.fromAlgorandAddress(data);
       } catch (ex) {
         return null;
       }

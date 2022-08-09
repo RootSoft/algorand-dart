@@ -15,7 +15,7 @@ class TypeAddress extends AbiType {
       return AbiType.castToTupleType(byteLength(), TypeByte())
           .encode(obj.publicKey);
     } else if (obj is String) {
-      final address = Address.fromAlgorandAddress(address: obj);
+      final address = Address.fromAlgorandAddress(obj);
       return AbiType.castToTupleType(byteLength(), TypeByte())
           .encode(address.publicKey);
     }

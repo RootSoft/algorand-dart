@@ -22,9 +22,9 @@ void main() {
         // ignore: lines_longer_than_80_chars
         'actress tongue harbor tray suspect odor load topple vocal avoid ignore apple lunch unknown tissue museum once switch captain place lemon sail outdoor absent creek';
 
-    final sender = Address.fromAlgorandAddress(address: fromAddress);
+    final sender = Address.fromAlgorandAddress(fromAddress);
     final receiver = Address.fromAlgorandAddress(
-      address: 'PU7ZTZJ5GSXET2ZPIWDWDT2TQQEP7WXOGXDQ3ARUCZW6PK7D4ULSE6NYCE',
+      'PU7ZTZJ5GSXET2ZPIWDWDT2TQQEP7WXOGXDQ3ARUCZW6PK7D4ULSE6NYCE',
     );
 
     final tx = await (PaymentTransactionBuilder()
@@ -75,8 +75,7 @@ void main() {
     final tx = await (PaymentTransactionBuilder()
           ..sender = msa.toAddress()
           ..receiver = Address.fromAlgorandAddress(
-            address:
-                'DN7MBMCL5JQ3PFUQS7TMX5AH4EEKOBJVDUF4TCV6WERATKFLQF4MQUPZTA',
+            'DN7MBMCL5JQ3PFUQS7TMX5AH4EEKOBJVDUF4TCV6WERATKFLQF4MQUPZTA',
           )
           ..flatFee = 217000
           ..firstValid = 972508
@@ -128,7 +127,7 @@ void main() {
     );
 
     final address = Address.fromAlgorandAddress(
-      address: 'DPLD3RTSWC5STVBPZL5DIIVE2OC4BSAWTOYBLFN2X6EFLT2ZNF4SMX64UA',
+      'DPLD3RTSWC5STVBPZL5DIIVE2OC4BSAWTOYBLFN2X6EFLT2ZNF4SMX64UA',
     );
 
     final verified = await address.verify(message, signature);
@@ -144,11 +143,11 @@ void main() {
 
   test('Test logic sig transaction', () async {
     final from = Address.fromAlgorandAddress(
-      address: '47YPQTIGQEO7T4Y4RWDYWEKV6RTR2UNBQXBABEEGM72ESWDQNCQ52OPASU',
+      '47YPQTIGQEO7T4Y4RWDYWEKV6RTR2UNBQXBABEEGM72ESWDQNCQ52OPASU',
     );
 
     final to = Address.fromAlgorandAddress(
-      address: 'PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI',
+      'PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI',
     );
 
     final mnemonic =
@@ -188,7 +187,7 @@ void main() {
     final seed = base64Decode('5Pf7eGMA52qfMT4R4/vYCt7con/7U3yejkdXkrcb26Q=');
     final program = TEALProgram(program: base64Decode('ASABASI='));
     final address = Address.fromAlgorandAddress(
-        address: '6Z3C3LDVWGMX23BMSYMANACQOSINPFIRF77H7N3AWJZYV6OH6GWTJKVMXY');
+        '6Z3C3LDVWGMX23BMSYMANACQOSINPFIRF77H7N3AWJZYV6OH6GWTJKVMXY');
     final account = await Account.fromSeed(seed);
 
     final signature1 = await address.sign(account: account, data: data);
@@ -229,13 +228,13 @@ void main() {
 
 MultiSigAddress createTestMsigAddress() {
   final one = Address.fromAlgorandAddress(
-    address: 'DN7MBMCL5JQ3PFUQS7TMX5AH4EEKOBJVDUF4TCV6WERATKFLQF4MQUPZTA',
+    'DN7MBMCL5JQ3PFUQS7TMX5AH4EEKOBJVDUF4TCV6WERATKFLQF4MQUPZTA',
   );
   final two = Address.fromAlgorandAddress(
-    address: 'BFRTECKTOOE7A5LHCF3TTEOH2A7BW46IYT2SX5VP6ANKEXHZYJY77SJTVM',
+    'BFRTECKTOOE7A5LHCF3TTEOH2A7BW46IYT2SX5VP6ANKEXHZYJY77SJTVM',
   );
   final three = Address.fromAlgorandAddress(
-    address: '47YPQTIGQEO7T4Y4RWDYWEKV6RTR2UNBQXBABEEGM72ESWDQNCQ52OPASU',
+    '47YPQTIGQEO7T4Y4RWDYWEKV6RTR2UNBQXBABEEGM72ESWDQNCQ52OPASU',
   );
 
   return MultiSigAddress(

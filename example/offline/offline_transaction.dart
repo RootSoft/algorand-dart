@@ -44,7 +44,7 @@ Future<File> exportSignedTransaction({
   required String fileName,
 }) async {
   final receiver = Address.fromAlgorandAddress(
-    address: 'L5EUPCF4ROKNZMAE37R5FY2T5DF2M3NVYLPKSGWTUKVJRUGIW4RKVPNPD4',
+    'L5EUPCF4ROKNZMAE37R5FY2T5DF2M3NVYLPKSGWTUKVJRUGIW4RKVPNPD4',
   );
 
   // Fetch the suggested params

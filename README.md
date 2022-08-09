@@ -395,7 +395,7 @@ final transaction = await (PaymentTransactionBuilder()
       ..sender = logicSig.toAddress()
       ..note = 'Logic Signature'
       ..amount = 100000
-      ..receiver = Address.fromAlgorandAddress(address: receiver)
+      ..receiver = Address.fromAlgorandAddress(receiver)
       ..suggestedParams = params)
     .build();
 
@@ -433,7 +433,7 @@ final transaction = await (PaymentTransactionBuilder()
       ..sender = account.address
       ..note = 'Account delegation'
       ..amount = 100000
-      ..receiver = Address.fromAlgorandAddress(address: receiver)
+      ..receiver = Address.fromAlgorandAddress(receiver)
       ..suggestedParams = params)
     .build();
 

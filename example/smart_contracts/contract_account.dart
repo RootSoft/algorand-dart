@@ -24,7 +24,7 @@ void main() async {
         ..sender = logicSig.toAddress()
         ..noteText = 'Logic Signature'
         ..amount = 100000
-        ..receiver = Address.fromAlgorandAddress(address: receiver)
+        ..receiver = Address.fromAlgorandAddress(receiver)
         ..suggestedParams = params)
       .build();
 

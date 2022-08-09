@@ -37,7 +37,7 @@ extension CryptoStringExtension on String {
         case 'int':
           return BigIntEncoder.encodeUint64(BigInt.parse(parts[1]));
         case 'addr':
-          final address = Address.fromAlgorandAddress(address: parts[1]);
+          final address = Address.fromAlgorandAddress(parts[1]);
           return address.toBytes();
         default:
           throw AlgorandException(message: 'Does not support conversion');

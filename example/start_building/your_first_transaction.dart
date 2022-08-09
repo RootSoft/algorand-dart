@@ -14,7 +14,7 @@ void main() async {
 
   // Create the receiver
   final receiver = Address.fromAlgorandAddress(
-    address: 'L5EUPCF4ROKNZMAE37R5FY2T5DF2M3NVYLPKSGWTUKVJRUGIW4RKVPNPD4',
+    'L5EUPCF4ROKNZMAE37R5FY2T5DF2M3NVYLPKSGWTUKVJRUGIW4RKVPNPD4',
   );
 
   // Get the suggested transaction parameters

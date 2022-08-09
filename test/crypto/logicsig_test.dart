@@ -10,7 +10,7 @@ void main() {
     final program = Uint8List.fromList(<int>[0x01, 0x20, 0x01, 0x01, 0x22]);
     final programHash =
         '6Z3C3LDVWGMX23BMSYMANACQOSINPFIRF77H7N3AWJZYV6OH6GWTJKVMXY';
-    final sender = Address.fromAlgorandAddress(address: programHash);
+    final sender = Address.fromAlgorandAddress(programHash);
     final lsig = LogicSignature(logic: program);
     expect(lsig.logic, program);
     expect(lsig.arguments, null);
@@ -47,11 +47,11 @@ void main() {
   test('Test logicsig multisignature', () async {
     final program = Uint8List.fromList(<int>[0x01, 0x20, 0x01, 0x01, 0x22]);
     final one = Address.fromAlgorandAddress(
-        address: 'DN7MBMCL5JQ3PFUQS7TMX5AH4EEKOBJVDUF4TCV6WERATKFLQF4MQUPZTA');
+        'DN7MBMCL5JQ3PFUQS7TMX5AH4EEKOBJVDUF4TCV6WERATKFLQF4MQUPZTA');
     final two = Address.fromAlgorandAddress(
-        address: 'BFRTECKTOOE7A5LHCF3TTEOH2A7BW46IYT2SX5VP6ANKEXHZYJY77SJTVM');
+        'BFRTECKTOOE7A5LHCF3TTEOH2A7BW46IYT2SX5VP6ANKEXHZYJY77SJTVM');
     final three = Address.fromAlgorandAddress(
-        address: '47YPQTIGQEO7T4Y4RWDYWEKV6RTR2UNBQXBABEEGM72ESWDQNCQ52OPASU');
+        '47YPQTIGQEO7T4Y4RWDYWEKV6RTR2UNBQXBABEEGM72ESWDQNCQ52OPASU');
 
     final publicKeys = [one, two, three]
         .map((address) => Ed25519PublicKey(bytes: address.publicKey))
