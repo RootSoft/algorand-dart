@@ -549,13 +549,14 @@ class Algorand {
     List<int>? foreignApps,
     List<int>? foreignAssets,
     String? note,
+    OnCompletion onCompletion = OnCompletion.NO_OP_OC,
     TransactionParams? suggestedParams,
   }) async {
     // Fetch the suggested transaction params
     final params = suggestedParams ?? (await getSuggestedTransactionParams());
 
     // Create the transaction
-    final tx = await (ApplicationCallTransactionBuilder()
+    final tx = await (ApplicationCallTransactionBuilder(onCompletion)
           ..sender = sender
           ..applicationId = applicationId
           ..arguments = arguments
