@@ -1,0 +1,86 @@
+#pragma version 6
+txn ApplicationID
+int 0
+==
+bnz main_l6
+txn NumAppArgs
+int 1
+==
+bnz main_l3
+err
+main_l3:
+global CurrentApplicationID
+app_params_get AppApprovalProgram
+store 1
+store 0
+global CurrentApplicationID
+app_params_get AppClearStateProgram
+store 3
+store 2
+global CurrentApplicationAddress
+acct_params_get AcctBalance
+store 5
+store 4
+load 1
+assert
+load 3
+assert
+load 5
+assert
+global OpcodeBudget
+itob
+log
+txna ApplicationArgs 0
+btoi
+int 0
+>
+bnz main_l5
+main_l4:
+int 1
+return
+main_l5:
+itxn_begin
+int appl
+itxn_field TypeEnum
+load 0
+itxn_field ApprovalProgram
+load 2
+itxn_field ClearStateProgram
+int 0
+itxn_field Fee
+itxn_submit
+itxn_begin
+int pay
+itxn_field TypeEnum
+byte "appID"
+itxn CreatedApplicationID
+itob
+concat
+sha512_256
+itxn_field Receiver
+load 4
+int 1000000
+-
+itxn_field Amount
+int 0
+itxn_field Fee
+itxn_next
+int appl
+itxn_field TypeEnum
+itxn CreatedApplicationID
+itxn_field ApplicationID
+int DeleteApplication
+itxn_field OnCompletion
+txna ApplicationArgs 0
+btoi
+int 1
+-
+itob
+itxn_field ApplicationArgs
+int 0
+itxn_field Fee
+itxn_submit
+b main_l4
+main_l6:
+int 1
+return
