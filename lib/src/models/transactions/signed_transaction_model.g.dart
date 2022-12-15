@@ -14,6 +14,7 @@ SignedTransaction _$SignedTransactionFromJson(Map<String, dynamic> json) =>
       logicSignature: json['lsig'] == null
           ? null
           : LogicSignature.fromJson(json['lsig'] as Map<String, dynamic>),
+      transactionId: json['transaction-id'] as String?,
     )..authAddress = const AddressSerializer().fromJson(json['sgnr']);
 
 Map<String, dynamic> _$SignedTransactionToJson(SignedTransaction instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$SignedTransactionToJson(SignedTransaction instance) =>
       'txn': const TransactionSerializer().toJson(instance.transaction),
       'sgnr': const AddressSerializer().toJson(instance.authAddress),
       'lsig': instance.logicSignature?.toJson(),
+      'transaction-id': instance.transactionId,
     };
