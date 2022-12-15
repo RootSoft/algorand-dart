@@ -7,7 +7,7 @@ part of 'returns.dart';
 // **************************************************************************
 
 Returns _$ReturnsFromJson(Map<String, dynamic> json) => Returns(
-      type: json['type'] as String? ?? '',
+      type: json['type'] as String? ?? 'void',
       description: json['desc'] as String?,
     );
 

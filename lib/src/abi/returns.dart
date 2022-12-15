@@ -7,14 +7,14 @@ part 'returns.g.dart';
 class Returns {
   static const VoidRetType = 'void';
 
-  @JsonKey(name: 'type', defaultValue: '')
+  @JsonKey(name: 'type', defaultValue: VoidRetType)
   final String type;
 
   @JsonKey(name: 'desc')
   final String? description;
 
   const Returns({
-    this.type = Returns.VoidRetType,
+    required this.type,
     this.description,
   });
 
