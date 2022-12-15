@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'teal_value_model.g.dart';
@@ -11,7 +12,8 @@ class TealValue {
   final int type;
 
   /// uint value.
-  final int uint;
+  @BigIntSerializer()
+  final BigInt uint;
 
   TealValue({
     required this.bytes,
