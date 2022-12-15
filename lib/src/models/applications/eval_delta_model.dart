@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'eval_delta_model.g.dart';
@@ -14,7 +15,8 @@ class EvalDelta {
 
   /// uint value.
   @JsonKey(name: 'uint')
-  final int? uint;
+  @NullableBigIntSerializer()
+  final BigInt? uint;
 
   EvalDelta({
     required this.action,
