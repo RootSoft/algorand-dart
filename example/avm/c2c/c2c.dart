@@ -22,13 +22,23 @@ void main() async {
     indexerClient: indexerClient,
   );
 
-  // Get the contract
-  final contract = await getContract();
-  print(contract.toString());
-
   // Get the account
   final account = await getAccount();
   print('Using account ${account.publicAddress}');
+
+  final tx = await algorand.createPaymentTransaction(
+    sender: account.address,
+    receiver: account.address,
+    amount: 0,
+    note: 'note',
+  );
+
+  final signedTx = await tx.sign(account);
+  print(signedTx.toBase64());
+
+  // Get the contract
+  final contract = await getContract();
+  print(contract.toString());
 
   // Deploy the application - 97954583
   final firstAppId = 97954583;
