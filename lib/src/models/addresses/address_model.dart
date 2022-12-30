@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:algorand_dart/src/crypto/crypto.dart' as crypto;
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/models/models.dart';
-import 'package:algorand_dart/src/utils/crypto_utils.dart';
 import 'package:algorand_dart/src/utils/utils.dart';
 import 'package:base32/base32.dart';
 import 'package:collection/collection.dart';

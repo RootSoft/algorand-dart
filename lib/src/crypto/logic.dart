@@ -4,8 +4,6 @@ import 'dart:typed_data';
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'crypto.dart';
-
 part 'logic.g.dart';
 
 class Logic {

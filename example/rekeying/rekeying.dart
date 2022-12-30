@@ -1,18 +1,7 @@
 import 'package:algorand_dart/algorand_dart.dart';
 
 void main() async {
-  final algodClient = AlgodClient(
-    apiUrl: AlgoExplorer.TESTNET_ALGOD_API_URL,
-  );
-
-  final indexerClient = IndexerClient(
-    apiUrl: AlgoExplorer.TESTNET_INDEXER_API_URL,
-  );
-
-  final algorand = Algorand(
-    algodClient: algodClient,
-    indexerClient: indexerClient,
-  );
+  final algorand = Algorand();
 
   // NNFYGNORBVVIIGI3ZPDBIDR6BQ2AM2K6UTZHIFXB7KBTEVZE337FHDGW6E
   final account1 = await getAccount();
@@ -45,6 +34,7 @@ void main() async {
     // Wait for confirmation
     final pendingTx = await algorand.waitForConfirmation(txId);
     print(txId);
+    print(pendingTx);
   } on AlgorandException catch (ex) {
     print(ex);
   }

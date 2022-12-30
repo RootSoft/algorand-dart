@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

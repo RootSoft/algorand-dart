@@ -24,6 +24,7 @@ class Base32Serializer implements JsonConverter<Uint8List?, dynamic> {
         return Uint8List.fromList(utf8.encode(data));
       }
     }
+    return null;
   }
 
   @override

@@ -5,18 +5,7 @@ import 'package:algorand_dart/algorand_dart.dart';
 import 'package:path/path.dart' show dirname, join;
 
 void main() async {
-  final algodClient = AlgodClient(
-    apiUrl: AlgoExplorer.TESTNET_ALGOD_API_URL,
-  );
-
-  final indexerClient = IndexerClient(
-    apiUrl: AlgoExplorer.TESTNET_INDEXER_API_URL,
-  );
-
-  final algorand = Algorand(
-    algodClient: algodClient,
-    indexerClient: indexerClient,
-  );
+  final algorand = Algorand();
 
   // Get the account
   final account = await getAccount();
@@ -73,12 +62,12 @@ Future<int> createApp({
   // Read in approval teal source & compile
   final approvalPath = join(dirname(Platform.script.path), 'approval.teal');
   final approval = await File(approvalPath).readAsString();
-  final appResult = await algorand.applicationManager.compileTEAL(approval);
+  final appResult = await algorand.compileTEAL(approval);
 
   // Read in clear teal source & compile
   final clearPath = join(dirname(Platform.script.path), 'clear.teal');
   final clear = await File(clearPath).readAsString();
-  final clearResult = await algorand.applicationManager.compileTEAL(clear);
+  final clearResult = await algorand.compileTEAL(clear);
 
   // Create the application
   final transaction = await (ApplicationCreateTransactionBuilder()

@@ -2,18 +2,7 @@ import 'package:algorand_dart/algorand_dart.dart';
 import 'package:dio/dio.dart';
 
 void main() async {
-  final algodClient = AlgodClient(
-    apiUrl: AlgoExplorer.TESTNET_ALGOD_API_URL,
-  );
-
-  final indexerClient = IndexerClient(
-    apiUrl: AlgoExplorer.TESTNET_INDEXER_API_URL,
-  );
-
-  final algorand = Algorand(
-    algodClient: algodClient,
-    indexerClient: indexerClient,
-  );
+  final algorand = Algorand();
 
   final words =
       // ignore: lines_longer_than_80_chars

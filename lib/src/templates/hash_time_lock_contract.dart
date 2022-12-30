@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/templates/contract_template.dart';
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
 

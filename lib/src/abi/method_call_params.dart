@@ -1,13 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/abi/abi_method.dart';
-import 'package:algorand_dart/src/abi/abi_type.dart';
-import 'package:algorand_dart/src/abi/transaction_signer.dart';
-import 'package:algorand_dart/src/abi/transaction_with_signer.dart';
-import 'package:algorand_dart/src/abi/types/type_address.dart';
-import 'package:algorand_dart/src/abi/types/type_tuple.dart';
-import 'package:algorand_dart/src/abi/types/type_uint.dart';
 
 class MethodCallParams {
   /// if the abi type argument number > 15, then the abi types after 14th
@@ -152,8 +145,8 @@ class MethodCallParams {
           localStateSchema != null ||
           extraPages != null) {
         throw ArgumentError(
-            'One of the following application creation parameters were set on a non-creation call: ' +
-                'approvalProgram, clearProgram, globalStateSchema, localStateSchema, extraPages');
+            'One of the following application creation parameters were set on a non-creation call: '
+            'approvalProgram, clearProgram, globalStateSchema, localStateSchema, extraPages');
       }
     }
 

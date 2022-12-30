@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/models/models.dart';
-import 'package:algorand_dart/src/templates/contract_template.dart';
 
 /// Split allows locking algos in an account which allows transfering to two
 /// predefined addresses in a specified ratio such that for the given ratn and

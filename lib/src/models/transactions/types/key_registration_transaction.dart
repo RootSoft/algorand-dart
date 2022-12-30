@@ -1,10 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:algorand_dart/src/models/keys/vrf_public_key.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/key_registration_transaction_builder.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
-import 'package:algorand_dart/src/utils/serializers/participation_key_serializer.dart';
 import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 

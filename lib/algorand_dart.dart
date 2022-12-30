@@ -2,6 +2,7 @@ library algorand_dart;
 
 export 'src/abi/abi.dart';
 export 'src/algorand.dart';
+export 'src/algorand_options.dart';
 export 'src/api/responses.dart';
 export 'src/clients/clients.dart';
 export 'src/crypto/crypto.dart';

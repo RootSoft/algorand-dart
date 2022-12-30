@@ -1,87 +1,81 @@
 import 'dart:typed_data';
 
-import 'package:algorand_dart/src/api/responses.dart';
-import 'package:algorand_dart/src/clients/clients.dart';
-import 'package:algorand_dart/src/exceptions/exceptions.dart';
-import 'package:algorand_dart/src/indexer/algorand_indexer.dart';
-import 'package:algorand_dart/src/managers/managers.dart';
-import 'package:algorand_dart/src/models/models.dart';
-import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
+import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:algorand_kmd/algorand_kmd.dart';
 
 class Algorand {
   /// The HTTP Client instance to interact with algod.
-  final AlgodClient algodClient;
+  final AlgodClient _algodClient;
 
   /// The HTTP Client instance to interact with the indexer.
-  final IndexerClient indexerClient;
+  final IndexerClient _indexerClient;
 
   /// The HTTP Client instance to interact with kmd.
   final KmdClient? _kmdClient;
 
-  late final NodeRepository _nodeRepository;
+  final NodeRepository _nodeRepository;
 
-  late final TransactionRepository _transactionRepository;
+  final TransactionRepository _transactionRepository;
 
-  late final ApplicationRepository _applicationRepository;
+  final ApplicationRepository _applicationRepository;
 
-  /// Manages everything related to assets.
-  late final AssetManager _assetManager;
+  final AlgorandIndexer _indexer;
 
-  /// Manages everything related to applications & TEAL.
-  late final ApplicationManager _applicationManager;
+  Algorand._({
+    required AlgodClient algodClient,
+    required IndexerClient indexerClient,
+    required KmdClient? kmdClient,
+    required NodeRepository nodeRepo,
+    required TransactionRepository transactionRepo,
+    required ApplicationRepository applicationRepo,
+    required AlgorandIndexer indexer,
+  })  : _algodClient = algodClient,
+        _indexerClient = indexerClient,
+        _kmdClient = kmdClient,
+        _nodeRepository = nodeRepo,
+        _transactionRepository = transactionRepo,
+        _applicationRepository = applicationRepo,
+        _indexer = indexer;
 
-  late final AlgorandIndexer _indexer;
+  factory Algorand({
+    AlgorandOptions? options,
+  }) {
+    final _options = options ?? AlgorandOptions();
 
-  Algorand({
-    AlgodClient? algodClient,
-    IndexerClient? indexerClient,
-    KmdClient? kmdClient,
-  })  : algodClient = algodClient ??
-            AlgodClient(apiUrl: AlgoExplorer.TESTNET_ALGOD_API_URL),
-        indexerClient = indexerClient ??
-            IndexerClient(apiUrl: AlgoExplorer.TESTNET_INDEXER_API_URL),
-        _kmdClient = kmdClient {
-    // TODO Provide services
-    final transactionService = TransactionService(this.algodClient.client);
-    final nodeService = NodeService(this.algodClient.client);
-
-    // TODO Inject Repositories
-    _nodeRepository = NodeRepository(service: nodeService);
-    _transactionRepository = TransactionRepository(
-      nodeService: nodeService,
-      transactionService: transactionService,
+    final nodeRepository = NodeRepository(
+      service: NodeService(_options.algodClient.client),
     );
 
-    _applicationRepository = ApplicationRepository(
-      applicationService: ApplicationService(this.algodClient.client),
+    final transactionRepository = TransactionRepository(
+      nodeService: NodeService(_options.algodClient.client),
+      transactionService: TransactionService(_options.algodClient.client),
     );
 
-    // TODO Inject Managers
-    _assetManager = AssetManager(transactionRepository: _transactionRepository);
-    _applicationManager = ApplicationManager(
-      applicationRepository: _applicationRepository,
-      transactionRepository: _transactionRepository,
+    final applicationRepository = ApplicationRepository(
+      applicationService: ApplicationService(_options.algodClient.client),
     );
 
-    // TODO Inject and provide the Algorand Indexer
-    _indexer = AlgorandIndexer(
+    final indexer = AlgorandIndexer(
       indexerRepository: IndexerRepository(
-        indexerService: IndexerService(this.indexerClient.client),
-        accountService: AccountService(this.indexerClient.client),
-        assetService: AssetService(this.indexerClient.client),
-        applicationService: ApplicationService(this.indexerClient.client),
+        indexerService: IndexerService(_options.indexerClient.client),
+        accountService: AccountService(_options.indexerClient.client),
+        assetService: AssetService(_options.indexerClient.client),
+        applicationService: ApplicationService(_options.indexerClient.client),
       ),
     );
+
+    return Algorand._(
+      algodClient: _options.algodClient,
+      indexerClient: _options.indexerClient,
+      kmdClient: _options.kmdClient,
+      nodeRepo: nodeRepository,
+      transactionRepo: transactionRepository,
+      applicationRepo: applicationRepository,
+      indexer: indexer,
+    );
   }
-
-  /// Get the asset manager, used to perform asset related tasks.
-  AssetManager get assetManager => _assetManager;
-
-  /// Get the application manager, used to perform application related tasks.
-  ApplicationManager get applicationManager => _applicationManager;
 
   /// Get the key management daemon.
   DefaultApi get kmd =>
@@ -92,12 +86,12 @@ class Algorand {
 
   /// Set the base url of the [AlgodClient].
   void setAlgodUrl(String baseUrl) {
-    algodClient.client.options.baseUrl = baseUrl;
+    _algodClient.client.options.baseUrl = baseUrl;
   }
 
   /// Set the base url of the [IndexerClient].
   void setIndexerUrl(String baseUrl) {
-    indexerClient.client.options.baseUrl = baseUrl;
+    _indexerClient.client.options.baseUrl = baseUrl;
   }
 
   /// Set the base url of the [IndexerClient].
@@ -107,7 +101,7 @@ class Algorand {
 
   /// Create a new, random generated account.
   Future<Account> createAccount() async {
-    return await Account.random();
+    return Account.random();
   }
 
   /// Load an existing account from a private key.
@@ -115,7 +109,7 @@ class Algorand {
   ///
   /// Throws [UnsupportedError] if seeds are unsupported.
   Future<Account> loadAccountFromPrivateKey(String privateKey) async {
-    return await Account.fromPrivateKey(privateKey);
+    return Account.fromPrivateKey(privateKey);
   }
 
   /// Load an existing account from an rfc8037 private key.
@@ -123,7 +117,7 @@ class Algorand {
   ///
   /// Throws [UnsupportedError] if seeds are unsupported.
   Future<Account> loadAccountFromSeed(List<int> seed) async {
-    return await Account.fromSeed(seed);
+    return Account.fromSeed(seed);
   }
 
   /// Load an existing account from a 25-word seed phrase.
@@ -131,7 +125,7 @@ class Algorand {
   /// Throws [MnemonicException] if there is an invalid mnemonic/seedphrase.
   /// Throws [AlgorandException] if the account cannot be restored.
   Future<Account> restoreAccount(List<String> words) async {
-    return await Account.fromSeedPhrase(words);
+    return Account.fromSeedPhrase(words);
   }
 
   /// Gets the genesis information.
@@ -139,14 +133,14 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the entire genesis file in json.
   Future<String> genesis() async {
-    return await _nodeRepository.genesis();
+    return _nodeRepository.genesis();
   }
 
   /// Checks if the node is healthy.
   ///
   /// Returns true if the node is healthy.
   Future<bool> health() async {
-    return await _nodeRepository.health();
+    return _nodeRepository.health();
   }
 
   /// Gets the current node status.
@@ -154,7 +148,7 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the current node status.
   Future<NodeStatus> status() async {
-    return await _nodeRepository.status();
+    return _nodeRepository.status();
   }
 
   /// Gets the node status after waiting for the given round.
@@ -168,7 +162,7 @@ class Algorand {
   ///
   /// Returns the current node status.
   Future<NodeStatus> statusAfterRound(int round) async {
-    return await _nodeRepository.statusAfterRound(round);
+    return _nodeRepository.statusAfterRound(round);
   }
 
   /// Get the current supply reported by the ledger.
@@ -176,7 +170,7 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the current supply reported by the ledger.
   Future<LedgerSupply> supply() async {
-    return await _nodeRepository.supply();
+    return _nodeRepository.supply();
   }
 
   /// Get the suggested parameters for constructing a new transaction.
@@ -184,7 +178,7 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the suggested transaction parameters.
   Future<TransactionParams> getSuggestedTransactionParams() async {
-    return await _transactionRepository.getSuggestedTransactionParams();
+    return _transactionRepository.getSuggestedTransactionParams();
   }
 
   /// Broadcast a new (signed) transaction on the network.
@@ -196,7 +190,7 @@ class Algorand {
     bool waitForConfirmation = false,
     int timeout = 5,
   }) async {
-    return await _transactionRepository.sendRawTransaction(
+    return _transactionRepository.sendRawTransaction(
       transaction,
       waitForConfirmation: waitForConfirmation,
       timeout: timeout,
@@ -212,7 +206,7 @@ class Algorand {
     bool waitForConfirmation = false,
     int timeout = 5,
   }) async {
-    return await _transactionRepository.sendRawTransactions(
+    return _transactionRepository.sendRawTransactions(
       transactions,
       waitForConfirmation: waitForConfirmation,
       timeout: timeout,
@@ -228,7 +222,7 @@ class Algorand {
     bool waitForConfirmation = false,
     int timeout = 5,
   }) async {
-    return await _transactionRepository.sendTransaction(
+    return _transactionRepository.sendTransaction(
       transaction,
       waitForConfirmation: waitForConfirmation,
       timeout: timeout,
@@ -245,7 +239,7 @@ class Algorand {
     bool waitForConfirmation = false,
     int timeout = 5,
   }) async {
-    return await _transactionRepository.sendTransactions(
+    return _transactionRepository.sendTransactions(
       transactions,
       waitForConfirmation: waitForConfirmation,
       timeout: timeout,
@@ -290,7 +284,7 @@ class Algorand {
     final signedTx = await transaction.sign(account);
 
     // Send the transaction
-    return await sendTransaction(
+    return sendTransaction(
       signedTx,
       waitForConfirmation: waitForConfirmation,
       timeout: timeout,
@@ -340,7 +334,7 @@ class Algorand {
   Future<List<Application>> getCreatedApplicationsByAddress(
     String address,
   ) async {
-    return await _indexer.getCreatedApplicationsByAddress(address);
+    return _indexer.getCreatedApplicationsByAddress(address);
   }
 
   /// Get the balance (in microAlgos) of the given address.
@@ -366,7 +360,7 @@ class Algorand {
     String address, {
     int max = 0,
   }) async {
-    return await _transactionRepository.getPendingTransactionsByAddress(address,
+    return _transactionRepository.getPendingTransactionsByAddress(address,
         max: max);
   }
 
@@ -381,7 +375,7 @@ class Algorand {
   Future<PendingTransactionsResponse> getPendingTransactions({
     int max = 0,
   }) async {
-    return await _transactionRepository.getPendingTransactions(max: max);
+    return _transactionRepository.getPendingTransactions(max: max);
   }
 
   /// Get a specific pending transaction.
@@ -402,7 +396,7 @@ class Algorand {
   Future<PendingTransaction> getPendingTransactionById(
     String transactionId,
   ) async {
-    return await _transactionRepository.getPendingTransactionById(
+    return _transactionRepository.getPendingTransactionById(
       transactionId,
     );
   }
@@ -419,73 +413,30 @@ class Algorand {
     String transactionId, {
     int timeout = 5,
   }) async {
-    return await _transactionRepository.waitForConfirmation(
+    return _transactionRepository.waitForConfirmation(
       transactionId,
       timeout: timeout,
     );
   }
 
-  /// Register an account online.
+  /// Compile TEAL source code to binary, produce its hash
   ///
+  /// Given TEAL source code in plain text, return base64 encoded program bytes
+  /// and base32 SHA512_256 hash of program bytes (Address style).
   ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the pending transaction.
-  Future<String> registerOnline({
-    required ParticipationPublicKey votePK,
-    required VRFPublicKey selectionPK,
-    required int voteFirst,
-    required int voteLast,
-    required int voteKeyDilution,
-    required Account account,
-  }) async {
-    // Fetch the suggested transaction params
-    final params = await _transactionRepository.getSuggestedTransactionParams();
-
-    // Transfer the asset
-    final transaction = await (KeyRegistrationTransactionBuilder()
-          ..votePK = votePK
-          ..selectionPK = selectionPK
-          ..voteFirst = voteFirst
-          ..voteLast = voteLast
-          ..voteKeyDilution = voteKeyDilution
-          ..sender = account.address
-          ..suggestedParams = params)
-        .build();
-
-    // Sign the transactions
-    final signedTransaction = await transaction.sign(account);
-
-    // Send the transaction
-    return await _transactionRepository.sendTransaction(signedTransaction);
+  /// This endpoint is only enabled when a node's configuration file sets
+  /// EnableDeveloperAPI to true.
+  Future<TealCompilation> compileTEAL(String sourceCode) async {
+    return _applicationRepository.compileTEAL(sourceCode);
   }
 
-  /// Register an account offline.
-  ///
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the pending transaction.
-  Future<String> registerOffline({
-    required Account account,
-  }) async {
-    // Fetch the suggested transaction params
-    final params = await _transactionRepository.getSuggestedTransactionParams();
-
-    // Transfer the asset
-    final transaction = await (KeyRegistrationTransactionBuilder()
-          ..votePK = null
-          ..selectionPK = null
-          ..voteFirst = null
-          ..voteLast = null
-          ..voteKeyDilution = null
-          ..sender = account.address
-          ..suggestedParams = params)
-        .build();
-
-    // Sign the transactions
-    final signedTransaction = await transaction.sign(account);
-
-    // Send the transaction
-    return await _transactionRepository.sendTransaction(signedTransaction);
+  /// Executes TEAL program(s) in context and returns debugging information
+  /// about the execution.
+  /// This endpoint is only enabled when a node's configuration file sets
+  /// EnableDeveloperAPI to true.
+  /// /v2/teal/dryrun
+  Future<DryRunResponse> dryrun(DryRunRequest request) async {
+    return _applicationRepository.dryrun(request);
   }
 
   /// Create a new [PaymentTransaction].

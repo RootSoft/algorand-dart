@@ -1,5 +1,4 @@
 import 'package:algorand_dart/src/api/responses.dart';
-import 'package:algorand_dart/src/api/responses/accounts/created_assets_response.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/indexer/builders/application_query_builder.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';

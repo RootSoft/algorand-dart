@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/crypto/crypto.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
 import 'package:cryptography/cryptography.dart' as crypto;
 import 'package:equatable/equatable.dart';

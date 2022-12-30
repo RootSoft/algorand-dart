@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
-import 'package:algorand_dart/src/models/transactions/on_completion_model.dart';
 
 class ApplicationBaseTransaction extends RawTransaction {
   /// ApplicationID is the application being interacted with,

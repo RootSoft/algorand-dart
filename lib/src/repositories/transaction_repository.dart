@@ -5,7 +5,6 @@ import 'package:algorand_dart/src/api/responses.dart';
 import 'package:algorand_dart/src/exceptions/algorand_exception.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/services/services.dart';
-import 'package:algorand_dart/src/services/transaction_service.dart';
 import 'package:algorand_dart/src/utils/encoders/msgpack_encoder.dart';
 import 'package:buffer/buffer.dart';
 import 'package:dio/dio.dart';

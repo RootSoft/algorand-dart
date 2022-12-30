@@ -1,4 +1,3 @@
-import 'package:algorand_dart/src/models/applications/state_schema_model.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
 
