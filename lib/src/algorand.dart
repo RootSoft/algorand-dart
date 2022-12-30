@@ -6,14 +6,7 @@ import 'package:algorand_dart/src/services/services.dart';
 import 'package:algorand_kmd/algorand_kmd.dart';
 
 class Algorand {
-  /// The HTTP Client instance to interact with algod.
-  final AlgodClient _algodClient;
-
-  /// The HTTP Client instance to interact with the indexer.
-  final IndexerClient _indexerClient;
-
-  /// The HTTP Client instance to interact with kmd.
-  final KmdClient? _kmdClient;
+  final AlgorandOptions _options;
 
   final NodeRepository _nodeRepository;
 
@@ -24,16 +17,12 @@ class Algorand {
   final AlgorandIndexer _indexer;
 
   Algorand._({
-    required AlgodClient algodClient,
-    required IndexerClient indexerClient,
-    required KmdClient? kmdClient,
+    required AlgorandOptions options,
     required NodeRepository nodeRepo,
     required TransactionRepository transactionRepo,
     required ApplicationRepository applicationRepo,
     required AlgorandIndexer indexer,
-  })  : _algodClient = algodClient,
-        _indexerClient = indexerClient,
-        _kmdClient = kmdClient,
+  })  : _options = options,
         _nodeRepository = nodeRepo,
         _transactionRepository = transactionRepo,
         _applicationRepository = applicationRepo,
@@ -67,9 +56,7 @@ class Algorand {
     );
 
     return Algorand._(
-      algodClient: _options.algodClient,
-      indexerClient: _options.indexerClient,
-      kmdClient: _options.kmdClient,
+      options: _options,
       nodeRepo: nodeRepository,
       transactionRepo: transactionRepository,
       applicationRepo: applicationRepository,
@@ -79,24 +66,24 @@ class Algorand {
 
   /// Get the key management daemon.
   DefaultApi get kmd =>
-      _kmdClient?.api.getDefaultApi() ?? AlgorandKmd().getDefaultApi();
+      _options.kmdClient?.api.getDefaultApi() ?? AlgorandKmd().getDefaultApi();
 
   /// Get the algorand indexer which lets you search the blockchain.
   AlgorandIndexer indexer() => _indexer;
 
   /// Set the base url of the [AlgodClient].
   void setAlgodUrl(String baseUrl) {
-    _algodClient.client.options.baseUrl = baseUrl;
+    _options.algodClient.client.options.baseUrl = baseUrl;
   }
 
   /// Set the base url of the [IndexerClient].
   void setIndexerUrl(String baseUrl) {
-    _indexerClient.client.options.baseUrl = baseUrl;
+    _options.indexerClient.client.options.baseUrl = baseUrl;
   }
 
   /// Set the base url of the [IndexerClient].
   void setKmdUrl(String baseUrl) {
-    _kmdClient?.api.dio.options.baseUrl = baseUrl;
+    _options.kmdClient?.api.dio.options.baseUrl = baseUrl;
   }
 
   /// Create a new, random generated account.
@@ -188,12 +175,12 @@ class Algorand {
   Future<String> sendRawTransaction(
     Uint8List transaction, {
     bool waitForConfirmation = false,
-    int timeout = 5,
+    int? timeout,
   }) async {
     return _transactionRepository.sendRawTransaction(
       transaction,
       waitForConfirmation: waitForConfirmation,
-      timeout: timeout,
+      timeout: timeout ?? _options.timeout,
     );
   }
 
@@ -204,12 +191,12 @@ class Algorand {
   Future<String> sendRawTransactions(
     List<Uint8List> transactions, {
     bool waitForConfirmation = false,
-    int timeout = 5,
+    int? timeout,
   }) async {
     return _transactionRepository.sendRawTransactions(
       transactions,
       waitForConfirmation: waitForConfirmation,
-      timeout: timeout,
+      timeout: timeout ?? _options.timeout,
     );
   }
 
@@ -220,12 +207,12 @@ class Algorand {
   Future<String> sendTransaction(
     SignedTransaction transaction, {
     bool waitForConfirmation = false,
-    int timeout = 5,
+    int? timeout,
   }) async {
     return _transactionRepository.sendTransaction(
       transaction,
       waitForConfirmation: waitForConfirmation,
-      timeout: timeout,
+      timeout: timeout ?? _options.timeout,
     );
   }
 
@@ -237,12 +224,12 @@ class Algorand {
   Future<String> sendTransactions(
     List<SignedTransaction> transactions, {
     bool waitForConfirmation = false,
-    int timeout = 5,
+    int? timeout,
   }) async {
     return _transactionRepository.sendTransactions(
       transactions,
       waitForConfirmation: waitForConfirmation,
-      timeout: timeout,
+      timeout: timeout ?? _options.timeout,
     );
   }
 
@@ -266,7 +253,7 @@ class Algorand {
     required int amount,
     String? note,
     bool waitForConfirmation = false,
-    int timeout = 5,
+    int? timeout,
   }) async {
     // Fetch the suggested transaction params
     final params = await getSuggestedTransactionParams();
@@ -287,7 +274,7 @@ class Algorand {
     return sendTransaction(
       signedTx,
       waitForConfirmation: waitForConfirmation,
-      timeout: timeout,
+      timeout: timeout ?? _options.timeout,
     );
   }
 
@@ -411,11 +398,11 @@ class Algorand {
   /// This means that transactions are confirmed, on average, in 5 seconds
   Future<PendingTransaction> waitForConfirmation(
     String transactionId, {
-    int timeout = 5,
+    int? timeout,
   }) async {
     return _transactionRepository.waitForConfirmation(
       transactionId,
-      timeout: timeout,
+      timeout: timeout ?? _options.timeout,
     );
   }
 
