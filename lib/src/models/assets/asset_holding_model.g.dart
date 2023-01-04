@@ -7,7 +7,7 @@ part of 'asset_holding_model.dart';
 // **************************************************************************
 
 AssetHolding _$AssetHoldingFromJson(Map<String, dynamic> json) => AssetHolding(
-      amount: json['amount'] as int,
+      amount: const BigIntSerializer().fromJson(json['amount']),
       assetId: json['asset-id'] as int,
       creator: json['creator'] as String?,
       isFrozen: json['is-frozen'] as bool,
@@ -18,7 +18,7 @@ AssetHolding _$AssetHoldingFromJson(Map<String, dynamic> json) => AssetHolding(
 
 Map<String, dynamic> _$AssetHoldingToJson(AssetHolding instance) =>
     <String, dynamic>{
-      'amount': instance.amount,
+      'amount': const BigIntSerializer().toJson(instance.amount),
       'asset-id': instance.assetId,
       'creator': instance.creator,
       'deleted': instance.deleted,

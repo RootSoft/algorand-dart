@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'asset_holding_model.g.dart';
@@ -5,7 +6,8 @@ part 'asset_holding_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.kebab)
 class AssetHolding {
   /// Number of units held.
-  final int amount;
+  @BigIntSerializer()
+  final BigInt amount;
 
   /// Asset ID of the holding.
   final int assetId;
