@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/api/block/block.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:algorand_kmd/algorand_kmd.dart';
+import 'package:dio/dio.dart';
 
 class Algorand {
   final AlgorandOptions _options;
@@ -16,17 +18,21 @@ class Algorand {
 
   final AlgorandIndexer _indexer;
 
+  final BlocksApi _blocksApi;
+
   Algorand._({
     required AlgorandOptions options,
     required NodeRepository nodeRepo,
     required TransactionRepository transactionRepo,
     required ApplicationRepository applicationRepo,
     required AlgorandIndexer indexer,
+    required BlocksApi blocksApi,
   })  : _options = options,
         _nodeRepository = nodeRepo,
         _transactionRepository = transactionRepo,
         _applicationRepository = applicationRepo,
-        _indexer = indexer;
+        _indexer = indexer,
+        _blocksApi = blocksApi;
 
   factory Algorand({
     AlgorandOptions? options,
@@ -46,6 +52,13 @@ class Algorand {
       applicationService: ApplicationService(_options.algodClient.client),
     );
 
+    final blocksApi = BlocksApi(
+      BlockService(
+        algod: AlgodBlockService(_options.algodClient.client),
+        indexer: IndexerBlockService(_options.indexerClient.client),
+      ),
+    );
+
     final indexer = AlgorandIndexer(
       indexerRepository: IndexerRepository(
         indexerService: IndexerService(_options.indexerClient.client),
@@ -53,6 +66,7 @@ class Algorand {
         assetService: AssetService(_options.indexerClient.client),
         applicationService: ApplicationService(_options.indexerClient.client),
       ),
+      blocksApi: blocksApi,
     );
 
     return Algorand._(
@@ -61,6 +75,7 @@ class Algorand {
       transactionRepo: transactionRepository,
       applicationRepo: applicationRepository,
       indexer: indexer,
+      blocksApi: blocksApi,
     );
   }
 
@@ -158,6 +173,24 @@ class Algorand {
   /// Returns the current supply reported by the ledger.
   Future<LedgerSupply> supply() async {
     return _nodeRepository.supply();
+  }
+
+  /// Lookup a block it the given round number.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the block in the given round number.
+  Future<AlgodBlock> getBlockByRound(
+    int round, {
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _blocksApi.getAlgodBlockByRound(
+      round,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 
   /// Get the suggested parameters for constructing a new transaction.

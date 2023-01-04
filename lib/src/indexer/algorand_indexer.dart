@@ -1,10 +1,11 @@
-import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/api/block/block.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/indexer/builders/application_query_builder.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
 import 'package:algorand_dart/src/indexer/indexer_health.dart';
-import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
+import 'package:dio/dio.dart';
 
 /// The AlgorandIndexer provides a set of REST API calls for searching
 /// blockchain Transactions, Accounts, Assets and Blocks.
@@ -15,8 +16,13 @@ class AlgorandIndexer {
   /// Client used to perform indexing operations.
   final IndexerRepository _indexerRepository;
 
-  AlgorandIndexer({required IndexerRepository indexerRepository})
-      : _indexerRepository = indexerRepository;
+  final BlocksApi _blocksApi;
+
+  AlgorandIndexer({
+    required IndexerRepository indexerRepository,
+    required BlocksApi blocksApi,
+  })  : _indexerRepository = indexerRepository,
+        _blocksApi = blocksApi;
 
   /// Get the health status of the indexer.
   ///
@@ -152,7 +158,17 @@ class AlgorandIndexer {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the block in the given round number.
-  Future<Block> getBlockByRound(int round) async {
-    return _indexerRepository.getBlockByRound(round);
+  Future<Block> getBlockByRound(
+    int round, {
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _blocksApi.getIndexerBlockByRound(
+      round,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 }

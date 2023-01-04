@@ -1,9 +1,7 @@
-import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
-import 'package:algorand_dart/src/exceptions/algorand_exception.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
 import 'package:algorand_dart/src/indexer/indexer_health.dart';
-import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:dio/dio.dart';
 
@@ -246,18 +244,6 @@ class IndexerRepository {
         applicationId,
         queryParameters: queryParameters,
       );
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
-  /// Lookup a block it the given round number.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the block in the given round number.
-  Future<Block> getBlockByRound(int round) async {
-    try {
-      return await indexerService.getBlockByRound(round);
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }

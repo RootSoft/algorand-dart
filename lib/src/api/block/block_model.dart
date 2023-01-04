@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/api/block/block.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -6,25 +7,25 @@ part 'block_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.kebab)
 class Block {
   /// hash to which this block belongs.
-  final String genesisHash;
+  final String? genesisHash;
 
   ///  ID to which this block belongs.
-  final String genesisId;
+  final String? genesisId;
 
   /// Previous block hash.
-  final String previousBlockHash;
+  final String? previousBlockHash;
 
   /// Rewards for this block
   final BlockRewards? rewards;
 
   /// Current round on which this block was appended to the chain.
-  final int round;
+  final int? round;
 
   /// Sortition seed.
-  final String seed;
+  final String? seed;
 
   /// Block creation timestamp in seconds since eposh
-  final int timestamp;
+  final int? timestamp;
 
   /// List of transactions corresponding to a given round.
   @JsonKey(name: 'transactions', defaultValue: [])
@@ -40,7 +41,7 @@ class Block {
   ///
   /// Two blocks with the same transactions but in a different order and
   /// with different signatures will have the same TxnRoot.
-  final String transactionsRoot;
+  final String? transactionsRoot;
 
   /// TxnCounter counts the number of transactions committed in the ledger,
   /// from the time at which support for this feature was introduced.
@@ -51,14 +52,14 @@ class Block {
   final BlockUpgradeVote? upgradeVote;
 
   Block({
-    required this.genesisHash,
-    required this.genesisId,
-    required this.previousBlockHash,
-    required this.round,
-    required this.seed,
-    required this.timestamp,
     required this.transactions,
-    required this.transactionsRoot,
+    this.genesisHash,
+    this.genesisId,
+    this.previousBlockHash,
+    this.round,
+    this.seed,
+    this.timestamp,
+    this.transactionsRoot,
     this.rewards,
     this.txnCounter,
     this.upgradeState,

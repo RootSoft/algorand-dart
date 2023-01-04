@@ -54,7 +54,7 @@ Map<String, dynamic> _$ApplicationTransactionResponseToJson(
       'foreign-assets': instance.foreignAssets,
       'global-state-schema': instance.globalStateSchema,
       'local-state-schema': instance.localStateSchema,
-      'on-completion': _$OnCompletionEnumMap[instance.onCompletion],
+      'on-completion': _$OnCompletionEnumMap[instance.onCompletion]!,
     };
 
 const _$OnCompletionEnumMap = {
