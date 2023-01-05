@@ -78,37 +78,6 @@ class AlgorandIndexer {
     return _indexerRepository.getAccountById(accountId, round: round);
   }
 
-  /// Lookup assets information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the assets information for the given account id.
-  Future<List<AssetHolding>> getAssetsByAddress(String address) async {
-    final response = await _indexerRepository.getAssetsByAddress(address);
-    return response.assets;
-  }
-
-  /// Lookup created assets information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the created assets information for the given account id.
-  Future<CreatedAssetsResponse> getCreatedAssetsByAddress(
-    String address,
-  ) async {
-    return _indexerRepository.getCreatedAssetsByAddress(address);
-  }
-
-  /// Lookup created applications information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the created applications information for the given account id.
-  Future<List<Application>> getCreatedApplicationsByAddress(
-    String address,
-  ) async {
-    final response =
-        await _indexerRepository.getCreatedApplicationsByAddress(address);
-    return response.applications;
-  }
-
   /// Lookup asset information by a given asset id.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.

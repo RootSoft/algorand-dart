@@ -1,4 +1,4 @@
-import 'package:algorand_dart/src/api/responses.dart';
+import 'package:algorand_dart/src/api/asset/asset.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 

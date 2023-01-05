@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'state_schema_model.dart';
+part of '../../api/application/state_schema_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

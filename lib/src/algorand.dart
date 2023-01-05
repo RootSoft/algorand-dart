@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/api/application/indexer_application_service.dart';
 import 'package:algorand_dart/src/api/asset/algod_asset_service.dart';
 import 'package:algorand_dart/src/api/asset/assets_api.dart';
 import 'package:algorand_dart/src/api/asset/indexer_asset_service.dart';
@@ -24,6 +25,8 @@ class Algorand {
 
   final AssetsApi _assetsApi;
 
+  final ApplicationsApi _applicationsApi;
+
   Algorand._({
     required AlgorandOptions options,
     required NodeRepository nodeRepo,
@@ -32,13 +35,15 @@ class Algorand {
     required AlgorandIndexer indexer,
     required BlocksApi blocksApi,
     required AssetsApi assetsApi,
+    required ApplicationsApi applicationsApi,
   })  : _options = options,
         _nodeRepository = nodeRepo,
         _transactionRepository = transactionRepo,
         _applicationRepository = applicationRepo,
         _indexer = indexer,
         _blocksApi = blocksApi,
-        _assetsApi = assetsApi;
+        _assetsApi = assetsApi,
+        _applicationsApi = applicationsApi;
 
   factory Algorand({
     AlgorandOptions? options,
@@ -72,6 +77,11 @@ class Algorand {
       indexer: IndexerAssetService(_options.indexerClient.client),
     );
 
+    final applicationsApi = ApplicationsApi(
+      api: api,
+      indexer: IndexerApplicationService(_options.indexerClient.client),
+    );
+
     final indexer = AlgorandIndexer(
       indexerRepository: IndexerRepository(
         indexerService: IndexerService(_options.indexerClient.client),
@@ -90,6 +100,7 @@ class Algorand {
       indexer: indexer,
       blocksApi: blocksApi,
       assetsApi: assetsApi,
+      applicationsApi: applicationsApi,
     );
   }
 
@@ -396,9 +407,23 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the assets.
   Future<List<Application>> getCreatedApplicationsByAddress(
-    String address,
-  ) async {
-    return _indexer.getCreatedApplicationsByAddress(address);
+    String address, {
+    int? applicationId,
+    bool? includeAll,
+    int? perPage,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _applicationsApi.getCreatedApplicationsByAddress(
+      address,
+      applicationId: applicationId,
+      includeAll: includeAll,
+      perPage: perPage,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 
   /// Get the balance (in microAlgos) of the given address.

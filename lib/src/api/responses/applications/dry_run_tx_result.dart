@@ -1,5 +1,5 @@
+import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/api/responses.dart';
-import 'package:algorand_dart/src/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'dry_run_tx_result.g.dart';

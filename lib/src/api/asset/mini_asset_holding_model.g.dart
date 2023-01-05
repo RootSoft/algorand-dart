@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../../api/asset/mini_asset_holding_model.dart';
+part of 'mini_asset_holding_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

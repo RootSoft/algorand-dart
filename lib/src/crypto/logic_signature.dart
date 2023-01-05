@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/crypto/crypto.dart';
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/models/models.dart';

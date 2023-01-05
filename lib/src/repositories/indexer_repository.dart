@@ -149,46 +149,6 @@ class IndexerRepository {
     }
   }
 
-  /// Lookup created assets information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the assets information for the given account id.
-  Future<AssetsResponse> getAssetsByAddress(String address) async {
-    try {
-      return await accountService.getAssetsByAccount(address);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
-  /// Lookup assets information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the assets information for the given account id.
-  Future<CreatedAssetsResponse> getCreatedAssetsByAddress(
-    String address,
-  ) async {
-    try {
-      return await accountService.getCreatedAssetsByAccount(address);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
-  /// Lookup created applications information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the created applications information for the given account id.
-  Future<ApplicationsResponse> getCreatedApplicationsByAddress(
-    String address,
-  ) async {
-    try {
-      return await accountService.getCreatedApplicationsByAccount(address);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
   /// Lookup asset information by a given asset id.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.

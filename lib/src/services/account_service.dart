@@ -27,21 +27,6 @@ abstract class AccountService extends ApiService {
     /*@Query('exclude')*/ String? exclude,
   });
 
-  //@GET("/v2/accounts/{accountId}/assets")
-  Future<AssetsResponse> getAssetsByAccount(
-    /*@Path('accountId')*/ String address,
-  );
-
-  //@GET("/v2/accounts/{accountId}/created-assets")
-  Future<CreatedAssetsResponse> getCreatedAssetsByAccount(
-    /*@Path('accountId')*/ String address,
-  );
-
-  //@GET("/v2/accounts/{accountId}/created-applications")
-  Future<ApplicationsResponse> getCreatedApplicationsByAccount(
-    /*@Path('accountId')*/ String address,
-  );
-
   //@GET("/v2/assets/{assetId}/balances")
   Future<SearchAccountsResponse> searchAccountsWithBalance(
     /*@Path('assetId')*/ int assetId,
