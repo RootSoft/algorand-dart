@@ -70,7 +70,7 @@ class AccountInformation {
   @JsonKey(name: 'apps-local-state', defaultValue: [])
   final List<ApplicationLocalState> appsLocalState;
 
-  /// he sum of all extra application program pages for this account.
+  /// The sum of all extra application program pages for this account.
   @JsonKey(name: 'apps-total-extra-pages')
   final int? appsTotalExtraPages;
 

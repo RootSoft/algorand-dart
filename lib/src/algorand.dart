@@ -400,9 +400,7 @@ class Algorand {
     );
   }
 
-  /// Get the assets created by the given account.
-  /// Given a specific account public key, this call returns the assets
-  /// created by the address.
+  /// Lookup created applications information by a given account id.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the assets.
