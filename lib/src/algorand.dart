@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/api/account/account_algod_service.dart';
+import 'package:algorand_dart/src/api/account/account_indexer_service.dart';
+import 'package:algorand_dart/src/api/account/accounts_api.dart';
 import 'package:algorand_dart/src/api/application/indexer_application_service.dart';
 import 'package:algorand_dart/src/api/asset/algod_asset_service.dart';
 import 'package:algorand_dart/src/api/asset/assets_api.dart';
@@ -23,6 +26,8 @@ class Algorand {
 
   final BlocksApi _blocksApi;
 
+  final AccountsApi _accountsApi;
+
   final AssetsApi _assetsApi;
 
   final ApplicationsApi _applicationsApi;
@@ -34,6 +39,7 @@ class Algorand {
     required ApplicationRepository applicationRepo,
     required AlgorandIndexer indexer,
     required BlocksApi blocksApi,
+    required AccountsApi accountsApi,
     required AssetsApi assetsApi,
     required ApplicationsApi applicationsApi,
   })  : _options = options,
@@ -42,6 +48,7 @@ class Algorand {
         _applicationRepository = applicationRepo,
         _indexer = indexer,
         _blocksApi = blocksApi,
+        _accountsApi = accountsApi,
         _assetsApi = assetsApi,
         _applicationsApi = applicationsApi;
 
@@ -71,6 +78,12 @@ class Algorand {
       ),
     );
 
+    final accountsApi = AccountsApi(
+      api: api,
+      algod: AccountAlgodService(_options.algodClient.client),
+      indexer: AccountIndexerService(_options.indexerClient.client),
+    );
+
     final assetsApi = AssetsApi(
       api: api,
       algod: AlgodAssetService(_options.algodClient.client),
@@ -90,6 +103,7 @@ class Algorand {
         applicationService: ApplicationService(_options.indexerClient.client),
       ),
       blocksApi: blocksApi,
+      accountsApi: accountsApi,
     );
 
     return Algorand._(
@@ -99,6 +113,7 @@ class Algorand {
       applicationRepo: applicationRepository,
       indexer: indexer,
       blocksApi: blocksApi,
+      accountsApi: accountsApi,
       assetsApi: assetsApi,
       applicationsApi: applicationsApi,
     );
@@ -336,16 +351,30 @@ class Algorand {
     );
   }
 
-  /// Get the account information of the given address.
+  /// Get the account information of the given address, using Algod.
   /// Given a specific account public key, this call returns the accounts
-  /// status, balance and spendable amounts
+  /// status, balance and spendable amounts.
+  ///
+  /// exclude - When set to all will exclude asset holdings, application local
+  /// state, created asset parameters, any created application parameters.
+  /// Defaults to none. enum (all, none)
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the account information.
-  Future<AccountInformation> getAccountByAddress(String address) async {
-    final response = await _indexer.getAccountById(address);
-
-    return response.account;
+  Future<AccountInformation> getAccountByAddress(
+    String address, {
+    Exclude? exclude,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _accountsApi.getAccountByAddress(
+      address,
+      exclude: exclude,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 
   /// Get the assets owned of the given address.
@@ -431,7 +460,7 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the account's balance in microAlgos.
   Future<int> getBalance(String address) async {
-    final response = await _indexer.getAccountById(address);
+    final response = await _indexer.getAccountByAddress(address);
 
     return response.account.amountWithoutPendingRewards;
   }

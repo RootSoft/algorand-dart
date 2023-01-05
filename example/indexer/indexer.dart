@@ -63,7 +63,7 @@ Future getAccountInfoBlock({
   required Algorand algorand,
   required Account account,
 }) async {
-  final information = await algorand.indexer().getAccountById(
+  final information = await algorand.indexer().getAccountByAddress(
         account.publicAddress,
         round: 16280357,
       );

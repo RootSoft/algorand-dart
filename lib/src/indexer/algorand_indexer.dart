@@ -1,4 +1,5 @@
 import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/api/account/accounts_api.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/indexer/builders/application_query_builder.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
@@ -17,11 +18,15 @@ class AlgorandIndexer {
 
   final BlocksApi _blocksApi;
 
+  final AccountsApi _accountsApi;
+
   AlgorandIndexer({
     required IndexerRepository indexerRepository,
     required BlocksApi blocksApi,
+    required AccountsApi accountsApi,
   })  : _indexerRepository = indexerRepository,
-        _blocksApi = blocksApi;
+        _blocksApi = blocksApi,
+        _accountsApi = accountsApi;
 
   /// Get the health status of the indexer.
   ///
@@ -66,16 +71,28 @@ class AlgorandIndexer {
     );
   }
 
-  /// Lookup account information by a given account id.
+  /// Lookup account information by a given account address.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the account information for the given account id.
-  Future<AccountResponse> getAccountById(
-    String accountId, {
+  Future<AccountResponse> getAccountByAddress(
+    String address, {
     int? round,
-    String? exclude,
+    List<Exclude>? exclude,
+    bool? includeAll,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
-    return _indexerRepository.getAccountById(accountId, round: round);
+    return _accountsApi.getIndexerAccountByAddress(
+      address,
+      round: round,
+      exclude: exclude,
+      includeAll: includeAll,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 
   /// Lookup asset information by a given asset id.

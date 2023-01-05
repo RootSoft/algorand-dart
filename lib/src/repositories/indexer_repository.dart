@@ -133,22 +133,6 @@ class IndexerRepository {
     }
   }
 
-  /// Lookup account information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the account information for the given account id.
-  Future<AccountResponse> getAccountById(
-    String accountId, {
-    int? round,
-    String? exclude,
-  }) async {
-    try {
-      return await accountService.getAccountById(accountId, round: round);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
   /// Lookup asset information by a given asset id.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.

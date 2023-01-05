@@ -3,6 +3,16 @@ import 'package:algorand_dart/src/exceptions/algorand_exception.dart';
 import 'package:dio/dio.dart';
 
 class AlgorandApi {
+  Future<T> execute<T>(Future<T> Function() callback) async {
+    try {
+      final response = await callback();
+
+      return response;
+    } on DioError catch (ex) {
+      throw AlgorandException(message: ex.message, cause: ex);
+    }
+  }
+
   Future<List<T>> paginate<T>(
     Future<PaginatedResult<T>> Function(String? nextToken) callback,
   ) async {

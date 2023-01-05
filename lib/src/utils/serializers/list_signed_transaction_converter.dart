@@ -9,7 +9,7 @@ class ListSignedTransactionConverter
   List<SignedTransaction> fromJson(List<dynamic> json) {
     return json
         .whereType<Map<String, dynamic>>()
-        .map((e) => SignedTransaction.fromJson(e))
+        .map(SignedTransaction.fromJson)
         .toList();
   }
 
