@@ -17,7 +17,7 @@ class AlgorandException implements Exception {
       return _message;
     }
 
-    final message = cause.response?.data['message'];
+    final message = cause.response?.data?['message'];
 
     if (message is! String) {
       return _message;
