@@ -1,4 +1,5 @@
-import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/api/asset/asset.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'asset_model.g.dart';

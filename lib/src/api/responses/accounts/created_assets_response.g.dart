@@ -13,10 +13,14 @@ CreatedAssetsResponse _$CreatedAssetsResponseFromJson(
               ?.map((e) => Asset.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      currentRound: json['current-round'] as int? ?? 0,
+      nextToken: json['next-token'] as String?,
     );
 
 Map<String, dynamic> _$CreatedAssetsResponseToJson(
         CreatedAssetsResponse instance) =>
     <String, dynamic>{
       'assets': instance.assets,
+      'current-round': instance.currentRound,
+      'next-token': instance.nextToken,
     };

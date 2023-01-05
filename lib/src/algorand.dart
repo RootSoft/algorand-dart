@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/api/block/block.dart';
+import 'package:algorand_dart/src/api/asset/algod_asset_service.dart';
+import 'package:algorand_dart/src/api/asset/assets_api.dart';
+import 'package:algorand_dart/src/api/asset/indexer_asset_service.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:algorand_kmd/algorand_kmd.dart';
@@ -20,6 +22,8 @@ class Algorand {
 
   final BlocksApi _blocksApi;
 
+  final AssetsApi _assetsApi;
+
   Algorand._({
     required AlgorandOptions options,
     required NodeRepository nodeRepo,
@@ -27,17 +31,20 @@ class Algorand {
     required ApplicationRepository applicationRepo,
     required AlgorandIndexer indexer,
     required BlocksApi blocksApi,
+    required AssetsApi assetsApi,
   })  : _options = options,
         _nodeRepository = nodeRepo,
         _transactionRepository = transactionRepo,
         _applicationRepository = applicationRepo,
         _indexer = indexer,
-        _blocksApi = blocksApi;
+        _blocksApi = blocksApi,
+        _assetsApi = assetsApi;
 
   factory Algorand({
     AlgorandOptions? options,
   }) {
     final _options = options ?? AlgorandOptions();
+    final api = AlgorandApi();
 
     final nodeRepository = NodeRepository(
       service: NodeService(_options.algodClient.client),
@@ -59,6 +66,12 @@ class Algorand {
       ),
     );
 
+    final assetsApi = AssetsApi(
+      api: api,
+      algod: AlgodAssetService(_options.algodClient.client),
+      indexer: IndexerAssetService(_options.indexerClient.client),
+    );
+
     final indexer = AlgorandIndexer(
       indexerRepository: IndexerRepository(
         indexerService: IndexerService(_options.indexerClient.client),
@@ -76,6 +89,7 @@ class Algorand {
       applicationRepo: applicationRepository,
       indexer: indexer,
       blocksApi: blocksApi,
+      assetsApi: assetsApi,
     );
   }
 
@@ -329,8 +343,24 @@ class Algorand {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the assets.
-  Future<List<AssetHolding>> getAssetsByAddress(String address) async {
-    return _indexer.getAssetsByAddress(address);
+  Future<List<AssetHolding>> getAssetsByAddress(
+    String address, {
+    int? assetId,
+    bool? includeAll,
+    int? perPage,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _assetsApi.getAssetsByAddress(
+      address,
+      assetId: assetId,
+      includeAll: includeAll,
+      perPage: perPage,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 
   /// Get the assets created by the given account.
@@ -339,10 +369,24 @@ class Algorand {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the assets.
-  Future<List<Asset>> getCreatedAssetsByAddress(String address) async {
-    final response = await _indexer.getCreatedAssetsByAddress(address);
-
-    return response.assets;
+  Future<List<Asset>> getCreatedAssetsByAddress(
+    String address, {
+    int? assetId,
+    bool? includeAll,
+    int? perPage,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _assetsApi.getCreatedAssetsByAddress(
+      address,
+      assetId: assetId,
+      includeAll: includeAll,
+      perPage: perPage,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 
   /// Get the assets created by the given account.

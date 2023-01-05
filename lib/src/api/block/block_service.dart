@@ -1,5 +1,4 @@
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/api/block/block.dart';
 import 'package:dio/dio.dart';
 
 class BlockService {
