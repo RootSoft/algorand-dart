@@ -9,9 +9,9 @@ part of 'account_information_model.dart';
 AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) =>
     AccountInformation(
       address: json['address'] as String,
-      amount: json['amount'] as int,
-      amountWithoutPendingRewards:
-          json['amount-without-pending-rewards'] as int,
+      amount: const BigIntSerializer().fromJson(json['amount']),
+      amountWithoutPendingRewards: const BigIntSerializer()
+          .fromJson(json['amount-without-pending-rewards']),
       pendingRewards: json['pending-rewards'] as int,
       rewards: json['rewards'] as int,
       round: json['round'] as int,
@@ -60,8 +60,9 @@ AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
     <String, dynamic>{
       'address': instance.address,
-      'amount': instance.amount,
-      'amount-without-pending-rewards': instance.amountWithoutPendingRewards,
+      'amount': const BigIntSerializer().toJson(instance.amount),
+      'amount-without-pending-rewards':
+          const BigIntSerializer().toJson(instance.amountWithoutPendingRewards),
       'created-at-round': instance.createdAtRound,
       'deleted': instance.deleted,
       'pending-rewards': instance.pendingRewards,

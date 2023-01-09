@@ -6,6 +6,7 @@ part 'asset_holding_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.kebab)
 class AssetHolding {
   /// Number of units held.
+  @JsonKey(name: 'amount')
   @BigIntSerializer()
   final BigInt amount;
 

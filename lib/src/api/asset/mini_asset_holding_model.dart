@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'mini_asset_holding_model.g.dart';
@@ -8,7 +9,9 @@ class MiniAssetHolding {
   final String address;
 
   /// Number of units held.
-  final int amount;
+  @JsonKey(name: 'amount')
+  @BigIntSerializer()
+  final BigInt amount;
 
   /// Whether or not the asset holding is currently deleted from its account.
   final bool? deleted;

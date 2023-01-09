@@ -12,11 +12,15 @@ class AccountInformation {
   final String address;
 
   /// total number of MicroAlgos in the account
-  final int amount;
+  @JsonKey(name: 'amount')
+  @BigIntSerializer()
+  final BigInt amount;
 
   /// specifies the amount of MicroAlgos in the account, without the pending
   /// rewards.
-  final int amountWithoutPendingRewards;
+  @JsonKey(name: 'amount-without-pending-rewards')
+  @BigIntSerializer()
+  final BigInt amountWithoutPendingRewards;
 
   /// Round during which this account first appeared in a transaction.
   final int? createdAtRound;

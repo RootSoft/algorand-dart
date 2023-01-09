@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'asset_transfer_transaction_response.g.dart';
@@ -7,8 +8,9 @@ part 'asset_transfer_transaction_response.g.dart';
 class AssetTransferTransactionResponse {
   /// Amount of asset to transfer. A zero amount transferred to self allocates
   /// that asset in the account's Assets map.
-  @JsonKey(name: 'amount', defaultValue: 0)
-  final int amount;
+  @JsonKey(name: 'amount')
+  @BigIntSerializer()
+  final BigInt amount;
 
   /// ID of the asset being transferred.
   @JsonKey(name: 'asset-id', defaultValue: 0)
