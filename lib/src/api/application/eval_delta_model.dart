@@ -28,4 +28,12 @@ class EvalDelta {
       _$EvalDeltaFromJson(json);
 
   Map<String, dynamic> toJson() => _$EvalDeltaToJson(this);
+
+  factory EvalDelta.fromMessagePack(Map<String, dynamic> json) {
+    return EvalDelta(
+      action: json['at'] as int? ?? 0,
+      bytes: json['bs'] as String?,
+      uint: const NullableBigIntSerializer().fromJson(json['ui']),
+    );
+  }
 }

@@ -10,28 +10,6 @@ class BlocksApi {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the block in the given round number.
-  Future<AlgodBlock> getAlgodBlockByRound(
-    int round, {
-    CancelToken? cancelToken,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    try {
-      return _service.getAlgodBlockByRound(
-        round,
-        cancelToken: cancelToken,
-        onSendProgress: onSendProgress,
-        onReceiveProgress: onReceiveProgress,
-      );
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
-  /// Lookup a block it the given round number.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the block in the given round number.
   Future<Block> getIndexerBlockByRound(
     int round, {
     CancelToken? cancelToken,

@@ -1,5 +1,5 @@
-import 'package:algorand_dart/src/api/block/block.dart';
-import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/api/algod/signed_transaction_with_ad.dart';
+import 'package:algorand_dart/src/api/converters/byte_array_to_b64_converter.dart';
 import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -9,6 +9,7 @@ part 'algod_block_model.g.dart';
 class AlgodBlock {
   /// hash to which this block belongs.
   @JsonKey(name: 'gh')
+  @ByteArrayToB64Converter()
   final String? genesisHash;
 
   ///  ID to which this block belongs.
@@ -17,11 +18,8 @@ class AlgodBlock {
 
   /// Previous block hash.
   @JsonKey(name: 'prev')
+  @ByteArrayToB64Converter()
   final String? previousBlockHash;
-
-  /// Rewards for this block
-  @JsonKey(ignore: true)
-  final BlockRewards? rewards;
 
   /// Current round on which this block was appended to the chain.
   @JsonKey(name: 'rnd')
@@ -29,6 +27,7 @@ class AlgodBlock {
 
   /// Sortition seed.
   @JsonKey(name: 'seed')
+  @ByteArrayToB64Converter()
   final String? seed;
 
   /// Block creation timestamp in seconds since eposh
@@ -37,29 +36,13 @@ class AlgodBlock {
 
   /// List of transactions corresponding to a given round.
   @JsonKey(name: 'txns', defaultValue: [])
-  @ListSignedTransactionConverter()
-  final List<SignedTransaction> transactions;
-
-  /// TransactionsRoot authenticates the set of transactions appearing in
-  /// the block.
-  /// More specifically, it's the root of a merkle tree whose leaves are the
-  /// block's Txids, in lexicographic order.
-  ///
-  /// For the empty block, it's 0. Note that the TxnRoot does not authenticate
-  /// the signatures on the transactions, only the transactions themselves.
-  ///
-  /// Two blocks with the same transactions but in a different order and
-  /// with different signatures will have the same TxnRoot.
-  final String? transactionsRoot;
+  @ListAlgodTransactionConverter()
+  final List<SignedTransactionWithAD> transactions;
 
   /// TxnCounter counts the number of transactions committed in the ledger,
   /// from the time at which support for this feature was introduced.
   @JsonKey(name: 'tc')
   final int? txnCounter;
-
-  final BlockUpgradeState? upgradeState;
-
-  final BlockUpgradeVote? upgradeVote;
 
   AlgodBlock({
     required this.transactions,
@@ -69,11 +52,7 @@ class AlgodBlock {
     this.round,
     this.seed,
     this.timestamp,
-    this.transactionsRoot,
-    this.rewards,
     this.txnCounter,
-    this.upgradeState,
-    this.upgradeVote,
   });
 
   factory AlgodBlock.fromJson(Map<String, dynamic> json) =>

@@ -8,6 +8,7 @@ import 'package:algorand_dart/src/api/application/indexer_application_service.da
 import 'package:algorand_dart/src/api/asset/algod_asset_service.dart';
 import 'package:algorand_dart/src/api/asset/assets_api.dart';
 import 'package:algorand_dart/src/api/asset/indexer_asset_service.dart';
+import 'package:algorand_dart/src/api/block/blocks_algod_api.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:algorand_kmd/algorand_kmd.dart';
@@ -24,7 +25,7 @@ class Algorand {
 
   final AlgorandIndexer _indexer;
 
-  final BlocksApi _blocksApi;
+  final BlocksAlgodApi _blocksApi;
 
   final AccountsApi _accountsApi;
 
@@ -38,7 +39,7 @@ class Algorand {
     required TransactionRepository transactionRepo,
     required ApplicationRepository applicationRepo,
     required AlgorandIndexer indexer,
-    required BlocksApi blocksApi,
+    required BlocksAlgodApi blocksApi,
     required AccountsApi accountsApi,
     required AssetsApi assetsApi,
     required ApplicationsApi applicationsApi,
@@ -78,6 +79,11 @@ class Algorand {
       ),
     );
 
+    final blocksAlgodApi = BlocksAlgodApi(
+      api: api,
+      service: AlgodBlockService(_options.algodClient.client),
+    );
+
     final accountsApi = AccountsApi(
       api: api,
       algod: AccountAlgodService(_options.algodClient.client),
@@ -112,7 +118,7 @@ class Algorand {
       transactionRepo: transactionRepository,
       applicationRepo: applicationRepository,
       indexer: indexer,
-      blocksApi: blocksApi,
+      blocksApi: blocksAlgodApi,
       accountsApi: accountsApi,
       assetsApi: assetsApi,
       applicationsApi: applicationsApi,
@@ -219,13 +225,13 @@ class Algorand {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the block in the given round number.
-  Future<AlgodBlock> getBlockByRound(
+  Future<Block> getBlockByRound(
     int round, {
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    return _blocksApi.getAlgodBlockByRound(
+    return _blocksApi.getBlockByRound(
       round,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,

@@ -291,9 +291,9 @@ packages:
   msgpack_dart:
     dependency: "direct main"
     description:
-      name: msgpack_dart
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "/Users/tomas/dapplabs/projects/algorand/msgpack-algorand"
+      relative: false
+    source: path
     version: "1.0.0"
   node_preamble:
     dependency: transitive

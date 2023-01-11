@@ -44,6 +44,18 @@ class Address extends Equatable {
   Address.fromAlgorandAddress(String address)
       : this(publicKey: decodeAddress(address));
 
+  static Address? tryParse(String? address) {
+    if (address == null) {
+      return null;
+    }
+
+    try {
+      return Address.fromAlgorandAddress(address);
+    } catch (ex) {
+      return null;
+    }
+  }
+
   /// Encode a public key to a human-readable representation, with a 4-byte
   /// checksum appended at the end, using SHA512/256.
   ///

@@ -125,10 +125,6 @@ class Transaction {
   @JsonKey(name: 'inner-txns', defaultValue: [])
   final List<Transaction> innerTxns;
 
-  /// Fields for a payment transaction.
-  //@JsonKey(name: 'payment-transaction')
-  //final Payment? payment;
-
   /// Optional information about a payment transaction - see payment
   @JsonKey(name: 'payment-transaction')
   final PaymentTransactionResponse? paymentTransaction;

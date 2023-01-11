@@ -12,6 +12,7 @@ void main() async {
     final account = await algorand.indexer().getAccountByAddress(
           'GOOSEKPIKOZPEPBMFO7TRRR2EPXLWKOIBLKXJKXWMK2J56SOXWRC3FLNSU',
           round: 26054963,
+          exclude: [Exclude.assets, Exclude.createdAssets],
           includeAll: false,
           cancelToken: CancelToken(),
           onSendProgress: (count, total) {},

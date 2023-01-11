@@ -9,38 +9,27 @@ part of 'algod_block_model.dart';
 AlgodBlock _$AlgodBlockFromJson(Map<String, dynamic> json) => AlgodBlock(
       transactions: json['txns'] == null
           ? []
-          : const ListSignedTransactionConverter()
+          : const ListAlgodTransactionConverter()
               .fromJson(json['txns'] as List),
-      genesisHash: json['gh'] as String?,
+      genesisHash: const ByteArrayToB64Converter().fromJson(json['gh']),
       genesisId: json['gen'] as String?,
-      previousBlockHash: json['prev'] as String?,
+      previousBlockHash: const ByteArrayToB64Converter().fromJson(json['prev']),
       round: json['rnd'] as int?,
-      seed: json['seed'] as String?,
+      seed: const ByteArrayToB64Converter().fromJson(json['seed']),
       timestamp: json['ts'] as int?,
-      transactionsRoot: json['transactions-root'] as String?,
       txnCounter: json['tc'] as int?,
-      upgradeState: json['upgrade-state'] == null
-          ? null
-          : BlockUpgradeState.fromJson(
-              json['upgrade-state'] as Map<String, dynamic>),
-      upgradeVote: json['upgrade-vote'] == null
-          ? null
-          : BlockUpgradeVote.fromJson(
-              json['upgrade-vote'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AlgodBlockToJson(AlgodBlock instance) =>
     <String, dynamic>{
-      'gh': instance.genesisHash,
+      'gh': const ByteArrayToB64Converter().toJson(instance.genesisHash),
       'gen': instance.genesisId,
-      'prev': instance.previousBlockHash,
+      'prev':
+          const ByteArrayToB64Converter().toJson(instance.previousBlockHash),
       'rnd': instance.round,
-      'seed': instance.seed,
+      'seed': const ByteArrayToB64Converter().toJson(instance.seed),
       'ts': instance.timestamp,
       'txns':
-          const ListSignedTransactionConverter().toJson(instance.transactions),
-      'transactions-root': instance.transactionsRoot,
+          const ListAlgodTransactionConverter().toJson(instance.transactions),
       'tc': instance.txnCounter,
-      'upgrade-state': instance.upgradeState,
-      'upgrade-vote': instance.upgradeVote,
     };

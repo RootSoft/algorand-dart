@@ -19,22 +19,24 @@ class _AlgodBlockService implements AlgodBlockService {
   String? baseUrl;
 
   @override
-  Future<BlockResponse> getBlockByRound({
+  Future<List<int>> getBlockByRound({
     required round,
+    format = 'msgpack',
     cancelToken,
     onSendProgress,
     onReceiveProgress,
   }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'format': format};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<BlockResponse>(Options(
+    final _result =
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<int>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
+      responseType: ResponseType.bytes,
     )
             .compose(
               _dio.options,
@@ -46,7 +48,7 @@ class _AlgodBlockService implements AlgodBlockService {
               onReceiveProgress: onReceiveProgress,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BlockResponse.fromJson(_result.data!);
+    final value = _result.data!.cast<int>();
     return value;
   }
 
