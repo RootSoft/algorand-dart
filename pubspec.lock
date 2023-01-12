@@ -291,9 +291,11 @@ packages:
   msgpack_dart:
     dependency: "direct main"
     description:
-      path: "/Users/tomas/dapplabs/projects/algorand/msgpack-algorand"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "47ae50c6b8a88d7a633b25446af4d0f0fc9cb22b"
+      url: "https://github.com/RootSoft/msgpack_dart.git"
+    source: git
     version: "1.0.0"
   node_preamble:
     dependency: transitive

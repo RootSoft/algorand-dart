@@ -19,7 +19,7 @@ ApplicationTransaction _$ApplicationTransactionFromJson(
       approvalProgram: const TealProgramConverter().fromJson(json['apap']),
       clearStateProgram: const TealProgramConverter().fromJson(json['apsu']),
       applicationId: json['apid'] as int? ?? 0,
-      onCompletion: $enumDecodeNullable(_$OnCompletionEnumMap, json['apan']),
+      onCompletion: const OnCompletionConverter().fromJson(json['apan']),
       arguments: const ListByteArraySerializer().fromJson(json['apaa']),
       accounts: const ListByteArraySerializer().fromJson(json['apat']),
       foreignApps:
@@ -59,18 +59,9 @@ Map<String, dynamic> _$ApplicationTransactionToJson(
       'apap': const TealProgramConverter().toJson(instance.approvalProgram),
       'apsu': const TealProgramConverter().toJson(instance.clearStateProgram),
       'apid': instance.applicationId,
-      'apan': _$OnCompletionEnumMap[instance.onCompletion],
+      'apan': const OnCompletionConverter().toJson(instance.onCompletion),
       'apaa': const ListByteArraySerializer().toJson(instance.arguments),
       'apat': const ListByteArraySerializer().toJson(instance.accounts),
       'apfa': instance.foreignApps,
       'apas': instance.foreignAssets,
     };
-
-const _$OnCompletionEnumMap = {
-  OnCompletion.NO_OP_OC: 'noop',
-  OnCompletion.OPT_IN_OC: 'optin',
-  OnCompletion.CLOSE_OUT_OC: 'closeout',
-  OnCompletion.CLEAR_STATE_OC: 'clear',
-  OnCompletion.UPDATE_APPLICATION_OC: 'update',
-  OnCompletion.DELETE_APPLICATION_OC: 'delete',
-};

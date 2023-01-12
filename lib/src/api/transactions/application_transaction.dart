@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/api/api.dart';
-import 'package:algorand_dart/src/api/converters/teal_program_converter.dart';
+import 'package:algorand_dart/src/api/converters/converters.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -53,6 +53,7 @@ class ApplicationTransaction extends RawTransaction {
   /// Defines what additional actions occur with the transaction.
   /// See the OnComplete section of the TEAL spec for details.
   @JsonKey(name: 'apan')
+  @OnCompletionConverter()
   final OnCompletion? onCompletion;
 
   /// Transaction specific arguments accessed from the application's

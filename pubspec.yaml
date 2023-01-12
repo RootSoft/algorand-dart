@@ -40,7 +40,8 @@ dependencies:
   # Messagepack
   #   msgpack_dart: ^1.0.0
   msgpack_dart:
-    path: '/Users/tomas/dapplabs/projects/algorand/msgpack-algorand'
+    git:
+      url: https://github.com/RootSoft/msgpack_dart.git
 
   # Key Management Daemon API
   algorand_kmd: ^1.0.0

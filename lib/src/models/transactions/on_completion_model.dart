@@ -50,3 +50,12 @@ extension OnCompletionExtension on OnCompletion {
     }
   }
 }
+
+const kOnCompletionEnumMap = {
+  OnCompletion.NO_OP_OC: 'noop',
+  OnCompletion.OPT_IN_OC: 'optin',
+  OnCompletion.CLOSE_OUT_OC: 'closeout',
+  OnCompletion.CLEAR_STATE_OC: 'clear',
+  OnCompletion.UPDATE_APPLICATION_OC: 'update',
+  OnCompletion.DELETE_APPLICATION_OC: 'delete',
+};

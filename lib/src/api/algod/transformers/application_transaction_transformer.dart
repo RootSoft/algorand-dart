@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/algod/transformers/algod_transformer.dart';
 import 'package:algorand_dart/src/api/converters/byte_array_to_b64_converter.dart';
-import 'package:algorand_dart/src/api/transactions/application_transaction.dart';
 
 class ApplicationTransactionTransformer
     extends AlgodTransformer<RawTransaction, ApplicationTransactionResponse?> {

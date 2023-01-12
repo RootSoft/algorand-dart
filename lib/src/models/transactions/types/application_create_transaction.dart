@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
@@ -19,39 +17,6 @@ class ApplicationCreateTransaction extends ApplicationUpdateTransaction {
   /// The sum of ApprovalProgram and ClearStateProgram may not exceed
   /// 2048*(1+ExtraProgramPages) bytes.
   int? extraPages;
-
-  ApplicationCreateTransaction({
-    this.localStateSchema,
-    this.globalStateSchema,
-    this.extraPages,
-    TEALProgram? approvalProgram,
-    TEALProgram? clearStateProgram,
-    int? fee,
-    int? firstValid,
-    Uint8List? genesisHash,
-    int? lastValid,
-    Address? sender,
-    String? type,
-    String? genesisId,
-    Uint8List? group,
-    Uint8List? lease,
-    Uint8List? note,
-    Address? rekeyTo,
-  }) : super(
-          approvalProgram: approvalProgram,
-          clearStateProgram: clearStateProgram,
-          type: type,
-          fee: fee,
-          firstValid: firstValid,
-          genesisHash: genesisHash,
-          lastValid: lastValid,
-          sender: sender,
-          genesisId: genesisId,
-          group: group,
-          lease: lease,
-          note: note,
-          rekeyTo: rekeyTo,
-        );
 
   ApplicationCreateTransaction.builder(
     ApplicationCreateTransactionBuilder builder,
