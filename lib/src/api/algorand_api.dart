@@ -1,4 +1,4 @@
-import 'package:algorand_dart/src/api/algod_transformer.dart';
+import 'package:algorand_dart/src/api/algod/transformers/algod_transformer.dart';
 import 'package:algorand_dart/src/api/paginated_result.dart';
 import 'package:algorand_dart/src/exceptions/algorand_exception.dart';
 import 'package:dio/dio.dart';

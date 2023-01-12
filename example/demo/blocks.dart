@@ -35,7 +35,7 @@ void main() async {
     );
 
     final result = block.transactions
-        .where((tx) => tx.assetConfigTransaction != null)
+        .where((tx) => tx.applicationTransaction != null)
         .toList();
     print(result);
     print(block);

@@ -1,5 +1,5 @@
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/api/algod_transformer.dart';
+import 'package:algorand_dart/src/api/algod/transformers/algod_transformer.dart';
 
 class AssetTransferTransactionTransformer extends AlgodTransformer<
     RawTransaction, AssetTransferTransactionResponse?> {

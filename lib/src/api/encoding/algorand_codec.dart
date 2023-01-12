@@ -8,11 +8,11 @@ class AlgorandCodec extends Encoding {
 
   /// The name of this codec is "algorand".
   @override
-  String get name => "algorand";
+  String get name => 'algorand';
 
   @override
-  String decode(List<int> codeUnits, {bool? allowMalformed}) {
-    return decoder.convert(codeUnits);
+  String decode(List<int> encoded, {bool? allowMalformed}) {
+    return decoder.convert(encoded);
   }
 
   @override

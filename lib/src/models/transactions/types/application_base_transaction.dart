@@ -29,6 +29,33 @@ class ApplicationBaseTransaction extends RawTransaction {
   /// approval-program and clear-state-program. The access is read-only.
   List<int>? foreignAssets;
 
+  ApplicationBaseTransaction({
+    this.onCompletion,
+    int? fee,
+    int? firstValid,
+    Uint8List? genesisHash,
+    int? lastValid,
+    Address? sender,
+    String? type,
+    String? genesisId,
+    Uint8List? group,
+    Uint8List? lease,
+    Uint8List? note,
+    Address? rekeyTo,
+  }) : super(
+          type: type,
+          fee: fee,
+          firstValid: firstValid,
+          genesisHash: genesisHash,
+          lastValid: lastValid,
+          sender: sender,
+          genesisId: genesisId,
+          group: group,
+          lease: lease,
+          note: note,
+          rekeyTo: rekeyTo,
+        );
+
   ApplicationBaseTransaction.builder(
     ApplicationBaseTransactionBuilder builder,
   )   : applicationId = builder.applicationId,

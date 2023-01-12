@@ -1,10 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/api/algod/transformers/block_transformer.dart';
 import 'package:algorand_dart/src/api/api.dart';
-import 'package:algorand_dart/src/api/block/block_transformer.dart';
+import 'package:algorand_dart/src/utils/encoders/msgpack_encoder.dart';
 import 'package:dio/dio.dart';
-
-import '../../utils/encoders/msgpack_encoder.dart';
 
 class BlocksAlgodApi {
   final AlgorandApi _api;

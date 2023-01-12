@@ -1,4 +1,4 @@
-import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/api/api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 class GlobalStateDeltaConverter

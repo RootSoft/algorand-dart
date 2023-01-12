@@ -1,6 +1,5 @@
+import 'package:algorand_dart/src/api/api.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../api.dart';
 
 class LocalStateDeltaConverter
     extends JsonConverter<List<AccountStateDelta>, dynamic> {
@@ -13,7 +12,6 @@ class LocalStateDeltaConverter
       final state = <AccountStateDelta>[];
 
       for (var entry in delta.entries) {
-        final key = entry.key;
         final values = entry.value as Map<String, dynamic>;
         final deltas = <EvalDeltaKeyValue>[];
         for (var entry2 in values.entries) {

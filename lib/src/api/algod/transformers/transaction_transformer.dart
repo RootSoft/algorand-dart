@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/algod/signed_transaction_with_ad.dart';
-import 'package:algorand_dart/src/api/algod_transformer.dart';
+import 'package:algorand_dart/src/api/algod/transformers/transformers.dart';
 import 'package:algorand_dart/src/api/converters/byte_array_to_b32_converter.dart';
 import 'package:algorand_dart/src/api/converters/byte_array_to_b64_converter.dart';
-import 'package:algorand_dart/src/api/transactions/transformers.dart';
 
 class TransactionTransformer
     extends AlgodTransformer<SignedTransactionWithAD, Transaction> {
@@ -56,6 +55,8 @@ class TransactionTransformer
           const AssetFreezeTransactionTransformer().transform(txn),
       keyRegistrationTransaction:
           const KeyRegistrationTransactionTransformer().transform(txn),
+      applicationTransaction:
+          const ApplicationTransactionTransformer().transform(txn),
     );
   }
 }

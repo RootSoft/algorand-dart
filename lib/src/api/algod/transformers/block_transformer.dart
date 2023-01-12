@@ -1,6 +1,5 @@
-import 'package:algorand_dart/src/api/algod_transformer.dart';
+import 'package:algorand_dart/src/api/algod/transformers/transformers.dart';
 import 'package:algorand_dart/src/api/block/block.dart';
-import 'package:algorand_dart/src/api/transactions/transaction_transformer.dart';
 
 /// A Transformer to transform an encoded block from the algod/node endpoint to
 /// the indexer [Block] model.
