@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'indexer_application_service.dart';
+part of 'application_indexer_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'indexer_application_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _IndexerApplicationService implements IndexerApplicationService {
-  _IndexerApplicationService(
+class _ApplicationIndexerService implements ApplicationIndexerService {
+  _ApplicationIndexerService(
     this._dio, {
     this.baseUrl,
   });

@@ -2,12 +2,12 @@ import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-part 'indexer_application_service.g.dart';
+part 'application_indexer_service.g.dart';
 
 @RestApi()
-abstract class IndexerApplicationService {
-  factory IndexerApplicationService(Dio dio, {String baseUrl}) =
-      _IndexerApplicationService;
+abstract class ApplicationIndexerService {
+  factory ApplicationIndexerService(Dio dio, {String baseUrl}) =
+      _ApplicationIndexerService;
 
   @GET('/v2/accounts/{accountId}/created-applications')
   Future<ApplicationsResponse> getApplicationsByAccount({

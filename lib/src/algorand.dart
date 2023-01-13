@@ -5,7 +5,8 @@ import 'package:algorand_dart/src/api/account/account_algod_service.dart';
 import 'package:algorand_dart/src/api/account/account_indexer_service.dart';
 import 'package:algorand_dart/src/api/account/accounts_algod_api.dart';
 import 'package:algorand_dart/src/api/account/accounts_indexer_api.dart';
-import 'package:algorand_dart/src/api/application/indexer_application_service.dart';
+import 'package:algorand_dart/src/api/application/application_indexer_service.dart';
+import 'package:algorand_dart/src/api/application/applications_indexer_api.dart';
 import 'package:algorand_dart/src/api/asset/asset_indexer_service.dart';
 import 'package:algorand_dart/src/api/asset/assets_indexer_api.dart';
 import 'package:algorand_dart/src/api/block/block_algod_service.dart';
@@ -34,7 +35,7 @@ class Algorand {
 
   final AssetsIndexerApi _assetsApi;
 
-  final ApplicationsApi _applicationsApi;
+  final ApplicationsIndexerApi _applicationsApi;
 
   Algorand._({
     required AlgorandOptions options,
@@ -45,7 +46,7 @@ class Algorand {
     required BlocksAlgodApi blocksApi,
     required AccountsAlgodApi accountsApi,
     required AssetsIndexerApi assetsApi,
-    required ApplicationsApi applicationsApi,
+    required ApplicationsIndexerApi applicationsApi,
   })  : _options = options,
         _nodeRepository = nodeRepo,
         _transactionRepository = transactionRepo,
@@ -90,9 +91,9 @@ class Algorand {
       service: AssetIndexerService(_options.indexerClient.client),
     );
 
-    final applicationsApi = ApplicationsApi(
+    final applicationsApi = ApplicationsIndexerApi(
       api: api,
-      indexer: IndexerApplicationService(_options.indexerClient.client),
+      service: ApplicationIndexerService(_options.indexerClient.client),
     );
 
     final indexer = AlgorandIndexer(

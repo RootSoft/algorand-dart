@@ -1,17 +1,16 @@
 import 'package:algorand_dart/src/api/api.dart';
-import 'package:algorand_dart/src/api/application/indexer_application_service.dart';
+import 'package:algorand_dart/src/api/application/application_indexer_service.dart';
 import 'package:dio/dio.dart';
 
-class ApplicationsApi {
+class ApplicationsIndexerApi {
   final AlgorandApi _api;
-  //final AlgodAssetService _algod;
-  final IndexerApplicationService _indexer;
+  final ApplicationIndexerService _service;
 
-  ApplicationsApi({
+  ApplicationsIndexerApi({
     required AlgorandApi api,
-    required IndexerApplicationService indexer,
+    required ApplicationIndexerService service,
   })  : _api = api,
-        _indexer = indexer;
+        _service = service;
 
   /// Lookup created applications information by a given account id.
   ///
@@ -27,7 +26,7 @@ class ApplicationsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     return _api.paginate<Application>((nextToken) async {
-      final response = await _indexer.getApplicationsByAccount(
+      final response = await _service.getApplicationsByAccount(
         address: address,
         applicationId: applicationId,
         includeAll: includeAll,

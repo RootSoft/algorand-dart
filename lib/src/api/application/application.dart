@@ -4,7 +4,6 @@ export 'application_log_data_model.dart';
 export 'application_model.dart';
 export 'application_params_model.dart';
 export 'application_state_schema_model.dart';
-export 'applications_api.dart';
 export 'applications_response.dart';
 export 'applications_response.dart';
 export 'eval_delta_key_value_model.dart';
