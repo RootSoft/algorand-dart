@@ -3,7 +3,8 @@ import 'dart:typed_data';
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/account/account_algod_service.dart';
 import 'package:algorand_dart/src/api/account/account_indexer_service.dart';
-import 'package:algorand_dart/src/api/account/accounts_api.dart';
+import 'package:algorand_dart/src/api/account/accounts_algod_api.dart';
+import 'package:algorand_dart/src/api/account/accounts_indexer_api.dart';
 import 'package:algorand_dart/src/api/application/indexer_application_service.dart';
 import 'package:algorand_dart/src/api/asset/asset_indexer_service.dart';
 import 'package:algorand_dart/src/api/asset/assets_indexer_api.dart';
@@ -29,7 +30,7 @@ class Algorand {
 
   final BlocksAlgodApi _blocksApi;
 
-  final AccountsApi _accountsApi;
+  final AccountsAlgodApi _accountsApi;
 
   final AssetsIndexerApi _assetsApi;
 
@@ -42,7 +43,7 @@ class Algorand {
     required ApplicationRepository applicationRepo,
     required AlgorandIndexer indexer,
     required BlocksAlgodApi blocksApi,
-    required AccountsApi accountsApi,
+    required AccountsAlgodApi accountsApi,
     required AssetsIndexerApi assetsApi,
     required ApplicationsApi applicationsApi,
   })  : _options = options,
@@ -79,10 +80,9 @@ class Algorand {
       service: BlockAlgodService(_options.algodClient.client),
     );
 
-    final accountsApi = AccountsApi(
+    final accountsApi = AccountsAlgodApi(
       api: api,
-      algod: AccountAlgodService(_options.algodClient.client),
-      indexer: AccountIndexerService(_options.indexerClient.client),
+      service: AccountAlgodService(_options.algodClient.client),
     );
 
     final assetsApi = AssetsIndexerApi(
@@ -106,7 +106,10 @@ class Algorand {
         api: api,
         service: BlockIndexerService(_options.indexerClient.client),
       ),
-      accountsApi: accountsApi,
+      accountsApi: AccountsIndexerApi(
+        api: api,
+        service: AccountIndexerService(_options.indexerClient.client),
+      ),
     );
 
     return Algorand._(
