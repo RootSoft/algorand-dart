@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/api/account/account.dart';
 import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/api/asset/asset.dart';
 import 'package:algorand_dart/src/models/models.dart';
