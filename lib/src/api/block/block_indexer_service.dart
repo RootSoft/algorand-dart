@@ -6,7 +6,7 @@ part 'block_indexer_service.g.dart';
 
 @RestApi()
 abstract class BlockIndexerService {
-  factory BlockIndexerService(Dio dio, {String baseUrl}) = _IndexerBlockService;
+  factory BlockIndexerService(Dio dio, {String baseUrl}) = _BlockIndexerService;
 
   @GET('/v2/blocks/{round}')
   Future<Block> getBlockByRound({

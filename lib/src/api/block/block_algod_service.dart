@@ -5,7 +5,7 @@ part 'block_algod_service.g.dart';
 
 @RestApi()
 abstract class BlockAlgodService {
-  factory BlockAlgodService(Dio dio, {String baseUrl}) = _AlgodBlockService;
+  factory BlockAlgodService(Dio dio, {String baseUrl}) = _BlockAlgodService;
 
   @GET('/v2/blocks/{round}')
   @DioResponseType(ResponseType.bytes)

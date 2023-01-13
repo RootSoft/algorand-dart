@@ -8,8 +8,8 @@ part of 'block_algod_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AlgodBlockService implements BlockAlgodService {
-  _AlgodBlockService(
+class _BlockAlgodService implements BlockAlgodService {
+  _BlockAlgodService(
     this._dio, {
     this.baseUrl,
   });

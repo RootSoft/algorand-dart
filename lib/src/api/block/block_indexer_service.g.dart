@@ -8,8 +8,8 @@ part of 'block_indexer_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _IndexerBlockService implements BlockIndexerService {
-  _IndexerBlockService(
+class _BlockIndexerService implements BlockIndexerService {
+  _BlockIndexerService(
     this._dio, {
     this.baseUrl,
   });
