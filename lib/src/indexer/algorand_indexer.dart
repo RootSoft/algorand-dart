@@ -74,10 +74,15 @@ class AlgorandIndexer {
 
   /// Lookup account information by a given account address.
   ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// If [throwOnEmptyBalance] is true, an [AlgorandException] will be thrown,
+  /// otherwise an empty account will be returned.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error, or an invalid
+  /// address is passed.
   /// Returns the account information for the given account id.
   Future<AccountResponse> getAccountByAddress(
     String address, {
+    bool throwOnEmptyBalance = true,
     int? round,
     List<Exclude>? exclude,
     bool? includeAll,
@@ -85,15 +90,32 @@ class AlgorandIndexer {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    return _accountsApi.getAccountByAddress(
-      address,
-      round: round,
-      exclude: exclude,
-      includeAll: includeAll,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
+    try {
+      final response = await _accountsApi.getAccountByAddress(
+        address,
+        throwOnEmptyBalance: throwOnEmptyBalance,
+        round: round,
+        exclude: exclude,
+        includeAll: includeAll,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+
+      return response;
+    } on AlgorandException catch (ex) {
+      final statusCode = ex.statusCode;
+      if (statusCode == 404 && !throwOnEmptyBalance) {
+        return Future.value(
+          AccountResponse(
+            currentRound: 0,
+            account: AccountInformation.empty(address),
+          ),
+        );
+      }
+
+      rethrow;
+    }
   }
 
   /// Lookup asset information by a given asset id.

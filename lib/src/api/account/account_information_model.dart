@@ -147,6 +147,28 @@ class AccountInformation {
     this.appsTotalExtraPages,
   });
 
+  factory AccountInformation.empty(String address) {
+    return AccountInformation(
+      address: address,
+      amount: BigInt.zero,
+      amountWithoutPendingRewards: BigInt.zero,
+      pendingRewards: 0,
+      rewards: 0,
+      round: 0,
+      status: 'Offline',
+      deleted: false,
+      assets: [],
+      appsLocalState: [],
+      createdApps: [],
+      createdAssets: [],
+      totalAppsOptedIn: 0,
+      totalAssetsOptedIn: 0,
+      totalCreatedApps: 0,
+      totalCreatedAssets: 0,
+      minimumBalance: BigInt.from(100000),
+    );
+  }
+
   factory AccountInformation.fromJson(Map<String, dynamic> json) =>
       _$AccountInformationFromJson(json);
 

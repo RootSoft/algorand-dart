@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 
 class AlgorandException implements Exception {
   final int errorCode;
+  final int? statusCode;
   final String _message;
   final Object? cause;
 
   AlgorandException({
     this.errorCode = 0,
     String message = '',
+    this.statusCode,
     this.cause,
   }) : _message = message;
 
