@@ -1,17 +1,16 @@
+import 'package:algorand_dart/src/api/block/block_model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-part 'algod_block_service.g.dart';
+part 'block_indexer_service.g.dart';
 
 @RestApi()
-abstract class AlgodBlockService {
-  factory AlgodBlockService(Dio dio, {String baseUrl}) = _AlgodBlockService;
+abstract class BlockIndexerService {
+  factory BlockIndexerService(Dio dio, {String baseUrl}) = _IndexerBlockService;
 
   @GET('/v2/blocks/{round}')
-  @DioResponseType(ResponseType.bytes)
-  Future<List<int>> getBlockByRound({
+  Future<Block> getBlockByRound({
     @Path('round') required int round,
-    @Query('format') String format = 'msgpack',
     @CancelRequest() CancelToken? cancelToken,
     @SendProgress() ProgressCallback? onSendProgress,
     @ReceiveProgress() ProgressCallback? onReceiveProgress,

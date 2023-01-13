@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'algod_block_service.dart';
+part of 'block_algod_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,7 +8,7 @@ part of 'algod_block_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AlgodBlockService implements AlgodBlockService {
+class _AlgodBlockService implements BlockAlgodService {
   _AlgodBlockService(
     this._dio, {
     this.baseUrl,

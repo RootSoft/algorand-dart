@@ -8,7 +8,10 @@ import 'package:algorand_dart/src/api/application/indexer_application_service.da
 import 'package:algorand_dart/src/api/asset/algod_asset_service.dart';
 import 'package:algorand_dart/src/api/asset/assets_api.dart';
 import 'package:algorand_dart/src/api/asset/indexer_asset_service.dart';
+import 'package:algorand_dart/src/api/block/block_algod_service.dart';
+import 'package:algorand_dart/src/api/block/block_indexer_service.dart';
 import 'package:algorand_dart/src/api/block/blocks_algod_api.dart';
+import 'package:algorand_dart/src/api/block/blocks_indexer_api.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:algorand_kmd/algorand_kmd.dart';
@@ -72,16 +75,9 @@ class Algorand {
       applicationService: ApplicationService(_options.algodClient.client),
     );
 
-    final blocksApi = BlocksApi(
-      BlockService(
-        algod: AlgodBlockService(_options.algodClient.client),
-        indexer: IndexerBlockService(_options.indexerClient.client),
-      ),
-    );
-
     final blocksAlgodApi = BlocksAlgodApi(
       api: api,
-      service: AlgodBlockService(_options.algodClient.client),
+      service: BlockAlgodService(_options.algodClient.client),
     );
 
     final accountsApi = AccountsApi(
@@ -108,7 +104,10 @@ class Algorand {
         assetService: AssetService(_options.indexerClient.client),
         applicationService: ApplicationService(_options.indexerClient.client),
       ),
-      blocksApi: blocksApi,
+      blocksApi: BlocksIndexerApi(
+        api: api,
+        service: BlockIndexerService(_options.indexerClient.client),
+      ),
       accountsApi: accountsApi,
     );
 

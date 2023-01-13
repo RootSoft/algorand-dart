@@ -2,17 +2,17 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/src/api/algod/transformers/block_transformer.dart';
 import 'package:algorand_dart/src/api/api.dart';
+import 'package:algorand_dart/src/api/block/block_algod_service.dart';
 import 'package:algorand_dart/src/utils/encoders/msgpack_encoder.dart';
 import 'package:dio/dio.dart';
 
 class BlocksAlgodApi {
   final AlgorandApi _api;
-
-  final AlgodBlockService _service;
+  final BlockAlgodService _service;
 
   BlocksAlgodApi({
     required AlgorandApi api,
-    required AlgodBlockService service,
+    required BlockAlgodService service,
   })  : _api = api,
         _service = service;
 

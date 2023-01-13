@@ -1,5 +1,6 @@
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/account/accounts_api.dart';
+import 'package:algorand_dart/src/api/block/blocks_indexer_api.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/indexer/builders/application_query_builder.dart';
 import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
@@ -16,13 +17,13 @@ class AlgorandIndexer {
   /// Client used to perform indexing operations.
   final IndexerRepository _indexerRepository;
 
-  final BlocksApi _blocksApi;
+  final BlocksIndexerApi _blocksApi;
 
   final AccountsApi _accountsApi;
 
   AlgorandIndexer({
     required IndexerRepository indexerRepository,
-    required BlocksApi blocksApi,
+    required BlocksIndexerApi blocksApi,
     required AccountsApi accountsApi,
   })  : _indexerRepository = indexerRepository,
         _blocksApi = blocksApi,
@@ -149,7 +150,7 @@ class AlgorandIndexer {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    return _blocksApi.getIndexerBlockByRound(
+    return _blocksApi.getBlockByRound(
       round,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
