@@ -1,22 +1,18 @@
 import 'dart:async';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/api/asset/algod_asset_service.dart';
-import 'package:algorand_dart/src/api/asset/indexer_asset_service.dart';
+import 'package:algorand_dart/src/api/asset/asset_indexer_service.dart';
 import 'package:dio/dio.dart';
 
-class AssetsApi {
+class AssetsIndexerApi {
   final AlgorandApi _api;
-  final AlgodAssetService _algod;
-  final IndexerAssetService _indexer;
+  final AssetIndexerService _service;
 
-  AssetsApi({
+  AssetsIndexerApi({
     required AlgorandApi api,
-    required AlgodAssetService algod,
-    required IndexerAssetService indexer,
+    required AssetIndexerService service,
   })  : _api = api,
-        _algod = algod,
-        _indexer = indexer;
+        _service = service;
 
   /// Lookup assets information by a given account id.
   ///
@@ -32,7 +28,7 @@ class AssetsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     return _api.paginate<AssetHolding>((nextToken) async {
-      final response = await _indexer.getAssetsByAccount(
+      final response = await _service.getAssetsByAccount(
         address: address,
         assetId: assetId,
         includeAll: includeAll,
@@ -65,7 +61,7 @@ class AssetsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     return _api.paginate<Asset>((nextToken) async {
-      final response = await _indexer.getCreatedAssetsByAccount(
+      final response = await _service.getCreatedAssetsByAccount(
         address: address,
         assetId: assetId,
         includeAll: includeAll,

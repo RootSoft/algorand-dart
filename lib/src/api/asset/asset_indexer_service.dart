@@ -2,11 +2,11 @@ import 'package:algorand_dart/src/api/asset/asset.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-part 'indexer_asset_service.g.dart';
+part 'asset_indexer_service.g.dart';
 
 @RestApi()
-abstract class IndexerAssetService {
-  factory IndexerAssetService(Dio dio, {String baseUrl}) = _IndexerAssetService;
+abstract class AssetIndexerService {
+  factory AssetIndexerService(Dio dio, {String baseUrl}) = _AssetIndexerService;
 
   @GET('/v2/accounts/{accountId}/assets')
   Future<AssetsResponse> getAssetsByAccount({

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'indexer_asset_service.dart';
+part of 'asset_indexer_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'indexer_asset_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _IndexerAssetService implements IndexerAssetService {
-  _IndexerAssetService(
+class _AssetIndexerService implements AssetIndexerService {
+  _AssetIndexerService(
     this._dio, {
     this.baseUrl,
   });
