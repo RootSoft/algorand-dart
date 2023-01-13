@@ -14,13 +14,21 @@ void main() async {
   /// 17411560 - asset config
   try {
     final block = await algorand.getBlockByRound(
-      26190419,
+      26031514,
       cancelToken: CancelToken(),
       onSendProgress: (count, total) {},
       onReceiveProgress: (count, total) {},
     );
 
-    print(block);
+    final txs = block.transactions
+        .where((tx) => tx.applicationTransaction != null)
+        .toList();
+    print(txs);
+    final iBlock = await algorand.indexer().getBlockByRound(26031514);
+    final iTxs = iBlock.transactions
+        .where((tx) => tx.applicationTransaction != null)
+        .toList();
+    print(iTxs);
   } on AlgorandException catch (ex) {
     print(ex);
   }

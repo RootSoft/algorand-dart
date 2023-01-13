@@ -10,7 +10,7 @@ void main() async {
 
   try {
     final account = await algorand.indexer().getAccountByAddress(
-          'GOOSEKPIKOZPEPBMFO7TRRR2EPXLWKOIBLKXJKXWMK2J56SOXWRC3FLNSU',
+          '4SOZXGYC5MGZ4S24LX3MHOLYVBZNOHNUN5MP4E5TLX6TXP22BZ6KNN4UQI',
           round: 26054963,
           exclude: [Exclude.assets, Exclude.createdAssets],
           includeAll: false,

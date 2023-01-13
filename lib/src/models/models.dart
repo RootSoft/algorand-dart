@@ -1,6 +1,4 @@
-export 'accounts/account_information_model.dart';
 export 'accounts/account_model.dart';
-export 'accounts/account_participation_model.dart';
 export 'addresses/address_model.dart';
 export 'addresses/address_role.dart';
 export 'keys/participation_public_key.dart';
