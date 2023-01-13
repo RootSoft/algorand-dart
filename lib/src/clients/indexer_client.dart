@@ -1,4 +1,5 @@
 import 'package:algorand_dart/src/clients/algorand_client.dart';
+import 'package:dio/dio.dart';
 
 /// Algorand provides a standalone daemon algorand-indexer that reads committed
 /// blocks from the Algorand blockchain and maintains a local database of
@@ -13,6 +14,19 @@ class IndexerClient extends AlgorandClient {
     required String apiUrl,
     String apiKey = '',
     String tokenKey = INDEXER_API_TOKEN,
+    Duration connectTimeout = const Duration(seconds: 30),
+    Duration receiveTimeout = const Duration(seconds: 30),
+    Duration sendTimeout = const Duration(seconds: 30),
     bool debug = false,
-  }) : super(apiUrl: apiUrl, apiKey: apiKey, tokenKey: tokenKey, debug: debug);
+    Interceptor? logInterceptor,
+  }) : super(
+          apiUrl: apiUrl,
+          apiKey: apiKey,
+          tokenKey: tokenKey,
+          connectTimeout: connectTimeout,
+          receiveTimeout: receiveTimeout,
+          sendTimeout: sendTimeout,
+          debug: debug,
+          logInterceptor: logInterceptor,
+        );
 }

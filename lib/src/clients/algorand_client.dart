@@ -8,20 +8,26 @@ abstract class AlgorandClient {
     required String apiUrl,
     required String apiKey,
     required String tokenKey,
+    Duration connectTimeout = const Duration(seconds: 30),
+    Duration receiveTimeout = const Duration(seconds: 30),
+    Duration sendTimeout = const Duration(seconds: 30),
     bool debug = false,
+    Interceptor? logInterceptor,
   }) {
     final options = BaseOptions(
       baseUrl: apiUrl,
-      connectTimeout: const Duration(seconds: 30).inMilliseconds,
-      receiveTimeout: const Duration(seconds: 30).inMilliseconds,
+      connectTimeout: connectTimeout.inMilliseconds,
+      receiveTimeout: receiveTimeout.inMilliseconds,
+      sendTimeout: sendTimeout.inMilliseconds,
       headers: {
         tokenKey: apiKey,
       },
     );
 
     client = Dio(options);
+
     if (debug) {
-      client.interceptors.add(LogInterceptor());
+      client.interceptors.add(logInterceptor ?? LogInterceptor());
     }
   }
 
