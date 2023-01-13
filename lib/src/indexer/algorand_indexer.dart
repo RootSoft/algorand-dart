@@ -93,7 +93,6 @@ class AlgorandIndexer {
     try {
       final response = await _accountsApi.getAccountByAddress(
         address,
-        throwOnEmptyBalance: throwOnEmptyBalance,
         round: round,
         exclude: exclude,
         includeAll: includeAll,
