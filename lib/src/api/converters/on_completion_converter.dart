@@ -11,6 +11,10 @@ class OnCompletionConverter implements JsonConverter<OnCompletion?, dynamic> {
       return null;
     }
 
+    if (data is OnCompletion) {
+      return data;
+    }
+
     if (data is String) {
       return $enumDecodeNullable(kOnCompletionEnumMap, data);
     }

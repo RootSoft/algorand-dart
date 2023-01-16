@@ -13,8 +13,16 @@ class TealProgramConverter implements JsonConverter<TEALProgram?, dynamic> {
       return null;
     }
 
+    if (data is TEALProgram) {
+      return data;
+    }
+
+    if (data is List<int>) {
+      return TEALProgram(program: Uint8List.fromList(data));
+    }
+
     if (data is Uint8List) {
-      return TEALProgram(program: data);
+      return TEALProgram(program: Uint8List.fromList(data));
     }
 
     if (data is String) {

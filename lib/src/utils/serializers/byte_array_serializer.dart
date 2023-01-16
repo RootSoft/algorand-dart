@@ -60,5 +60,10 @@ class ListByteArraySerializer
   }
 
   @override
-  dynamic toJson(List<Uint8List>? data) => null;
+  dynamic toJson(List<Uint8List>? data) {
+    if (data == null) {
+      return null;
+    }
+    return data.map((e) => base64.encode(e)).toList();
+  }
 }
