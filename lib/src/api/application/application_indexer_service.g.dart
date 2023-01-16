@@ -59,6 +59,84 @@ class _ApplicationIndexerService implements ApplicationIndexerService {
     return value;
   }
 
+  @override
+  Future<ApplicationResponse> getApplicationById({
+    required applicationId,
+    includeAll,
+    cancelToken,
+    onSendProgress,
+    onReceiveProgress,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'include-all': includeAll};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApplicationResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v2/applications/${applicationId}',
+              queryParameters: queryParameters,
+              data: _data,
+              cancelToken: cancelToken,
+              onSendProgress: onSendProgress,
+              onReceiveProgress: onReceiveProgress,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApplicationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApplicationLogsResponse> getApplicationLogsById({
+    required applicationId,
+    limit,
+    maxRound,
+    minRound,
+    next,
+    senderAddress,
+    transactionId,
+    cancelToken,
+    onSendProgress,
+    onReceiveProgress,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'limit': limit,
+      r'max-round': maxRound,
+      r'min-round': minRound,
+      r'next': next,
+      r'sender-address': senderAddress,
+      r'txid': transactionId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApplicationLogsResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v2/applications/${applicationId}/logs',
+              queryParameters: queryParameters,
+              data: _data,
+              cancelToken: cancelToken,
+              onSendProgress: onSendProgress,
+              onReceiveProgress: onReceiveProgress,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApplicationLogsResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

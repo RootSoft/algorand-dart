@@ -8,6 +8,15 @@ part 'asset_indexer_service.g.dart';
 abstract class AssetIndexerService {
   factory AssetIndexerService(Dio dio, {String baseUrl}) = _AssetIndexerService;
 
+  @GET('/v2/assets/{assetId}')
+  Future<AssetResponse> getAssetById({
+    @Path('assetId') required int assetId,
+    @Query('include-all') bool? includeAll,
+    @CancelRequest() CancelToken? cancelToken,
+    @SendProgress() ProgressCallback? onSendProgress,
+    @ReceiveProgress() ProgressCallback? onReceiveProgress,
+  });
+
   @GET('/v2/accounts/{accountId}/assets')
   Future<AssetsResponse> getAssetsByAccount({
     @Path('accountId') required String address,

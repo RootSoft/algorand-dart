@@ -112,6 +112,14 @@ class Algorand {
         api: api,
         service: AccountIndexerService(_options.indexerClient.client),
       ),
+      assetsApi: AssetsIndexerApi(
+        api: api,
+        service: AssetIndexerService(_options.indexerClient.client),
+      ),
+      applicationsApi: ApplicationsIndexerApi(
+        api: api,
+        service: ApplicationIndexerService(_options.indexerClient.client),
+      ),
     );
 
     return Algorand._(

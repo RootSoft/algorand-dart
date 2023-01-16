@@ -14,6 +14,32 @@ class AssetsIndexerApi {
   })  : _api = api,
         _service = service;
 
+  /// Lookup asset information by a given asset id.
+  ///
+  /// Include all items including closed accounts, deleted applications,
+  /// destroyed assets, opted-out asset holdings, and closed-out application
+  /// localstates.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the asset information for the given asset id.
+  Future<AssetResponse> getAssetById(
+    int assetId, {
+    bool? includeAll,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _api.execute<AssetResponse>(
+      () => _service.getAssetById(
+        assetId: assetId,
+        includeAll: includeAll,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      ),
+    );
+  }
+
   /// Lookup assets information by a given account id.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.

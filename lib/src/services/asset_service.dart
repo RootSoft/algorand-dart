@@ -1,4 +1,3 @@
-import 'package:algorand_dart/src/api/asset/asset.dart';
 import 'package:algorand_dart/src/api/responses.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -12,7 +11,4 @@ abstract class AssetService {
   Future<SearchAssetsResponse> searchAssets(
     Map<String, dynamic> queryParameters,
   );
-
-  //@GET("/v2/assets/{assetId}")
-  Future<AssetResponse> getAssetById(/*@Path('assetId')*/ int assetId);
 }

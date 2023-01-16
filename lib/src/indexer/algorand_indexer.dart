@@ -1,5 +1,7 @@
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/account/accounts_indexer_api.dart';
+import 'package:algorand_dart/src/api/application/applications_indexer_api.dart';
+import 'package:algorand_dart/src/api/asset/assets_indexer_api.dart';
 import 'package:algorand_dart/src/api/block/blocks_indexer_api.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
@@ -18,13 +20,21 @@ class AlgorandIndexer {
 
   final AccountsIndexerApi _accountsApi;
 
+  final AssetsIndexerApi _assetsApi;
+
+  final ApplicationsIndexerApi _applicationsApi;
+
   AlgorandIndexer({
     required IndexerRepository indexerRepository,
     required BlocksIndexerApi blocksApi,
     required AccountsIndexerApi accountsApi,
+    required AssetsIndexerApi assetsApi,
+    required ApplicationsIndexerApi applicationsApi,
   })  : _indexerRepository = indexerRepository,
         _blocksApi = blocksApi,
-        _accountsApi = accountsApi;
+        _accountsApi = accountsApi,
+        _assetsApi = assetsApi,
+        _applicationsApi = applicationsApi;
 
   /// Get the health status of the indexer.
   ///
@@ -116,10 +126,26 @@ class AlgorandIndexer {
 
   /// Lookup asset information by a given asset id.
   ///
+  /// Include all items including closed accounts, deleted applications,
+  /// destroyed assets, opted-out asset holdings, and closed-out application
+  /// localstates.
+  ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the asset information for the given asset id.
-  Future<AssetResponse> getAssetById(int assetId) async {
-    return _indexerRepository.getAssetById(assetId);
+  Future<AssetResponse> getAssetById(
+    int assetId, {
+    bool? includeAll,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _assetsApi.getAssetById(
+      assetId,
+      includeAll: includeAll,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 
   /// Lookup application information by a given id.
@@ -128,11 +154,17 @@ class AlgorandIndexer {
   /// Returns the application information for the given application id.
   Future<ApplicationResponse> getApplicationById(
     int applicationId, {
-    Map<String, dynamic>? queryParameters,
+    bool? includeAll,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
-    return _indexerRepository.getApplicationById(
+    return _applicationsApi.getApplicationById(
       applicationId,
-      queryParameters: queryParameters,
+      includeAll: includeAll,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
   }
 
@@ -142,11 +174,27 @@ class AlgorandIndexer {
   /// Returns the application information for the given application id.
   Future<ApplicationLogsResponse> getApplicationLogsById(
     int applicationId, {
-    Map<String, dynamic> queryParameters = const {},
+    int? limit,
+    int? maxRound,
+    int? minRound,
+    String? next,
+    String? senderAddress,
+    String? transactionId,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
-    return _indexerRepository.getApplicationLogsById(
+    return _applicationsApi.getApplicationLogsById(
       applicationId,
-      queryParameters: queryParameters,
+      limit: limit,
+      maxRound: maxRound,
+      minRound: minRound,
+      next: next,
+      senderAddress: senderAddress,
+      transactionId: transactionId,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
   }
 

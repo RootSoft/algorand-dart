@@ -1,5 +1,4 @@
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:dio/dio.dart';
 
@@ -131,18 +130,6 @@ class IndexerRepository {
     }
   }
 
-  /// Lookup asset information by a given asset id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the asset information for the given asset id.
-  Future<AssetResponse> getAssetById(int assetId) async {
-    try {
-      return await assetService.getAssetById(assetId);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
   /// Lookup transaction information by a given transaction id.
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
@@ -150,42 +137,6 @@ class IndexerRepository {
   Future<TransactionResponse> getTransactionById(String transactionId) async {
     try {
       return await indexerService.getTransactionById(transactionId);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
-  /// Lookup application information by a given id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the application information for the given application id.
-  Future<ApplicationResponse> getApplicationById(
-    int applicationId, {
-    Map<String, dynamic>? queryParameters,
-  }) async {
-    try {
-      return await applicationService.getApplicationById(
-        applicationId,
-        queryParameters: queryParameters,
-      );
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
-    }
-  }
-
-  /// Lookup application logs by a given application id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the application logs for the given application id.
-  Future<ApplicationLogsResponse> getApplicationLogsById(
-    int applicationId, {
-    required Map<String, dynamic> queryParameters,
-  }) async {
-    try {
-      return await applicationService.getApplicationLogsById(
-        applicationId,
-        queryParameters: queryParameters,
-      );
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }

@@ -1,4 +1,5 @@
-import 'package:algorand_dart/src/api/application/application.dart';
+import 'package:algorand_dart/src/api/api.dart';
+import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -16,6 +17,29 @@ abstract class ApplicationIndexerService {
     @Query('include-all') bool? includeAll,
     @Query('limit') int? limit,
     @Query('next') String? next,
+    @CancelRequest() CancelToken? cancelToken,
+    @SendProgress() ProgressCallback? onSendProgress,
+    @ReceiveProgress() ProgressCallback? onReceiveProgress,
+  });
+
+  @GET('/v2/applications/{applicationId}')
+  Future<ApplicationResponse> getApplicationById({
+    @Path('applicationId') required int applicationId,
+    @Query('include-all') bool? includeAll,
+    @CancelRequest() CancelToken? cancelToken,
+    @SendProgress() ProgressCallback? onSendProgress,
+    @ReceiveProgress() ProgressCallback? onReceiveProgress,
+  });
+
+  @GET('/v2/applications/{applicationId}/logs')
+  Future<ApplicationLogsResponse> getApplicationLogsById({
+    @Path('applicationId') required int applicationId,
+    @Query('limit') int? limit,
+    @Query('max-round') int? maxRound,
+    @Query('min-round') int? minRound,
+    @Query('next') String? next,
+    @Query('sender-address') String? senderAddress,
+    @Query('txid') String? transactionId,
     @CancelRequest() CancelToken? cancelToken,
     @SendProgress() ProgressCallback? onSendProgress,
     @ReceiveProgress() ProgressCallback? onReceiveProgress,

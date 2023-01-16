@@ -27,24 +27,4 @@ class _AssetService implements AssetService {
     final value = SearchAssetsResponse.fromJson(_result.data!);
     return value;
   }
-
-  @override
-  Future<AssetResponse> getAssetById(int assetId) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-      '/v2/assets/$assetId',
-      queryParameters: queryParameters,
-      options: dio.Options(
-        method: 'GET',
-        headers: <String, dynamic>{},
-        extra: _extra,
-      ),
-      data: _data,
-    );
-    final value = AssetResponse.fromJson(_result.data!);
-    return value;
-  }
 }
