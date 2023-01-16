@@ -157,6 +157,16 @@ class Algorand {
     _options.kmdClient?.api.dio.options.baseUrl = baseUrl;
   }
 
+  /// Override the base options for the Algod HTTP client.
+  void setAlgodOptions(void Function(BaseOptions options) callback) {
+    callback(_options.algodClient.client.options);
+  }
+
+  /// Override the base options for the Indexer HTTP client.
+  void setIndexerOptions(void Function(BaseOptions options) callback) {
+    callback(_options.indexerClient.client.options);
+  }
+
   /// Register a new error supplier so the consumer can easily detect what
   /// caused the error to be thrown.
   ///
