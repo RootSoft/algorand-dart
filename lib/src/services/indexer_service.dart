@@ -1,5 +1,4 @@
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/indexer/indexer_health.dart';
 import 'package:algorand_dart/src/services/api_service.dart';
 import 'package:dio/dio.dart' as dio;
 

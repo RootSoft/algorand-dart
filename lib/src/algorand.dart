@@ -13,6 +13,7 @@ import 'package:algorand_dart/src/api/block/block_algod_service.dart';
 import 'package:algorand_dart/src/api/block/block_indexer_service.dart';
 import 'package:algorand_dart/src/api/block/blocks_algod_api.dart';
 import 'package:algorand_dart/src/api/block/blocks_indexer_api.dart';
+import 'package:algorand_dart/src/exceptions/algorand_factory.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:algorand_kmd/algorand_kmd.dart';
@@ -146,6 +147,19 @@ class Algorand {
   /// Set the base url of the [IndexerClient].
   void setKmdUrl(String baseUrl) {
     _options.kmdClient?.api.dio.options.baseUrl = baseUrl;
+  }
+
+  /// Register a new error supplier so the consumer can easily detect what
+  /// caused the error to be thrown.
+  ///
+  /// Since Algorand does not support error codes out of the box, we have to
+  /// perform a check against the error message. For example, consider the
+  /// following Algorand error message: "overspend (account ...)".
+  ///
+  /// We can now easily create and register our own Algorand Error supplier
+  /// based on a key "overspend" which occurs in the message string.
+  void registerError(String key, AlgorandError error) {
+    AlgorandFactory().registerError(key, error);
   }
 
   /// Create a new, random generated account.

@@ -1,7 +1,5 @@
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
-import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
-import 'package:algorand_dart/src/indexer/indexer_health.dart';
 import 'package:algorand_dart/src/services/services.dart';
 import 'package:dio/dio.dart';
 

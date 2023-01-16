@@ -1,3 +1,5 @@
+import 'package:algorand_dart/src/exceptions/algorand_factory.dart';
+import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:dio/dio.dart';
 
 class AlgorandException implements Exception {
@@ -12,6 +14,14 @@ class AlgorandException implements Exception {
     this.statusCode,
     this.cause,
   }) : _message = message;
+
+  factory AlgorandException.fromDioError(DioError error) {
+    return AlgorandException(
+      statusCode: error.response?.statusCode,
+      message: error.message,
+      cause: error,
+    );
+  }
 
   String get message {
     final cause = this.cause;
@@ -28,16 +38,7 @@ class AlgorandException implements Exception {
     return message;
   }
 
-  TxError get error {
-    if (message.contains('overspend')) {
-      return TxError.overspend;
-    }
-
-    return TxError.generic;
+  AlgorandError? get error {
+    return AlgorandFactory().tryParse(message);
   }
-}
-
-enum TxError {
-  generic,
-  overspend,
 }
