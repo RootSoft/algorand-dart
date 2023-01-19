@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/abi/transaction_signer.dart';
+import 'package:algorand_dart/src/api/account/account.dart';
 import 'package:algorand_dart/src/crypto/crypto.dart' as crypto;
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/mnemonic/mnemonic.dart';
@@ -19,14 +20,30 @@ class Account implements TxnSigner {
 
   final Address address;
 
-  Account._create({required this.publicKey, required this.keyPair})
-      : address = Address(publicKey: Uint8List.fromList(publicKey.bytes));
+  final String? name;
+
+  final AccountType accountType;
+
+  Account._create({
+    required this.publicKey,
+    required this.keyPair,
+    this.name,
+    this.accountType = AccountType.single,
+  }) : address = Address(publicKey: Uint8List.fromList(publicKey.bytes));
 
   /// Create a new, random generated account.
-  static Future<Account> random() async {
+  static Future<Account> random({
+    String? name,
+    AccountType accountType = AccountType.single,
+  }) async {
     final keyPair = await Ed25519().newKeyPair();
     final publicKey = await keyPair.extractPublicKey();
-    final account = Account._create(publicKey: publicKey, keyPair: keyPair);
+    final account = Account._create(
+      publicKey: publicKey,
+      keyPair: keyPair,
+      name: name,
+      accountType: accountType,
+    );
 
     return account;
   }
@@ -35,11 +52,20 @@ class Account implements TxnSigner {
   /// Private key is a hexadecimal representation of the seed.
   ///
   /// Throws [UnsupportedError] if seeds are unsupported.
-  static Future<Account> fromPrivateKey(String privateKey) async {
+  static Future<Account> fromPrivateKey(
+    String privateKey, {
+    String? name,
+    AccountType accountType = AccountType.single,
+  }) async {
     // TODO Derive the seed from the private key
     final keyPair = await Ed25519().newKeyPairFromSeed(hex.decode(privateKey));
     final publicKey = await keyPair.extractPublicKey();
-    final account = Account._create(publicKey: publicKey, keyPair: keyPair);
+    final account = Account._create(
+      publicKey: publicKey,
+      keyPair: keyPair,
+      name: name,
+      accountType: accountType,
+    );
 
     return account;
   }
@@ -48,10 +74,19 @@ class Account implements TxnSigner {
   /// Seed is the binary representation of the seed.
   ///
   /// Throws [UnsupportedError] if seeds are unsupported.
-  static Future<Account> fromSeed(List<int> seed) async {
+  static Future<Account> fromSeed(
+    List<int> seed, {
+    String? name,
+    AccountType accountType = AccountType.single,
+  }) async {
     final keyPair = await Ed25519().newKeyPairFromSeed(seed);
     final publicKey = await keyPair.extractPublicKey();
-    final account = Account._create(publicKey: publicKey, keyPair: keyPair);
+    final account = Account._create(
+      publicKey: publicKey,
+      keyPair: keyPair,
+      name: name,
+      accountType: accountType,
+    );
 
     return account;
   }
@@ -61,10 +96,18 @@ class Account implements TxnSigner {
   /// Throws [MnemonicException] if there is an invalid mnemonic/seedphrase.
   /// Throws [AlgorandException] if the account cannot be restored.
   /// Throws [UnsupportedError] if seeds are unsupported.
-  static Future<Account> fromSeedPhrase(List<String> words) async {
+  static Future<Account> fromSeedPhrase(
+    List<String> words, {
+    String? name,
+    AccountType accountType = AccountType.single,
+  }) async {
     // Get the seed from the mnemonic.
     final seed = await Mnemonic.seed(words);
-    return fromSeed(seed);
+    return fromSeed(
+      seed,
+      name: name,
+      accountType: accountType,
+    );
   }
 
   /// Get the public, human readable address of the account,

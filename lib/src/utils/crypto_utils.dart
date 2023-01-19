@@ -3,12 +3,21 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
+import 'package:convert/convert.dart';
 
 Uint8List generateRandomBytes([Random? random, int size = 32]) {
   final r = random ?? Random();
   return Uint8List.fromList(
     List<int>.generate(size, (i) => r.nextInt(256)),
   );
+}
+
+Uint8List generateSecureRandomBytes([int size = 32]) {
+  return generateRandomBytes(Random.secure(), size);
+}
+
+String generateSecureRandomString([int size = 32]) {
+  return hex.encode(generateRandomBytes(Random.secure(), size));
 }
 
 Uint8List fillBytes(int value, [int size = 32]) {

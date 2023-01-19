@@ -19,6 +19,39 @@ class _AssetIndexerService implements AssetIndexerService {
   String? baseUrl;
 
   @override
+  Future<AssetResponse> getAssetById({
+    required assetId,
+    includeAll,
+    cancelToken,
+    onSendProgress,
+    onReceiveProgress,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'include-all': includeAll};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<AssetResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v2/assets/${assetId}',
+              queryParameters: queryParameters,
+              data: _data,
+              cancelToken: cancelToken,
+              onSendProgress: onSendProgress,
+              onReceiveProgress: onReceiveProgress,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AssetResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<AssetsResponse> getAssetsByAccount({
     required address,
     assetId,
@@ -97,39 +130,6 @@ class _AssetIndexerService implements AssetIndexerService {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CreatedAssetsResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<AssetResponse> getAssetById({
-    required assetId,
-    includeAll,
-    cancelToken,
-    onSendProgress,
-    onReceiveProgress,
-  }) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'include-all': includeAll};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<AssetResponse>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/v2/assets/${assetId}',
-              queryParameters: queryParameters,
-              data: _data,
-              cancelToken: cancelToken,
-              onSendProgress: onSendProgress,
-              onReceiveProgress: onReceiveProgress,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AssetResponse.fromJson(_result.data!);
     return value;
   }
 
