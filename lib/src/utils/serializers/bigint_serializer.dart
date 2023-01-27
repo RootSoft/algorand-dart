@@ -5,6 +5,10 @@ class BigIntSerializer implements JsonConverter<BigInt, dynamic> {
 
   @override
   BigInt fromJson(dynamic data) {
+    if (data is BigInt) {
+      return data;
+    }
+
     if (data is String) {
       return BigInt.parse(data);
     }
