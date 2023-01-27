@@ -35,6 +35,7 @@ class AlgorandOptions {
     int timeout = 5,
     bool debug = false,
     Interceptor? logInterceptor,
+    Transformer? transformer,
   }) {
     final _algodClient = algodClient ??
         AlgodClient(
@@ -46,6 +47,7 @@ class AlgorandOptions {
           sendTimeout: sendTimeout,
           debug: debug,
           logInterceptor: logInterceptor,
+          transformer: transformer,
         );
 
     final _indexerClient = indexerClient ??
@@ -58,6 +60,7 @@ class AlgorandOptions {
           sendTimeout: sendTimeout,
           debug: debug,
           logInterceptor: logInterceptor,
+          transformer: transformer,
         );
 
     return AlgorandOptions._(
