@@ -43,11 +43,16 @@ dependencies:
     git:
       url: https://github.com/RootSoft/msgpack_dart.git
 
+  algorand_json:
+    git:
+      url: https://github.com/RootSoft/algorand-json.git
+
   # Key Management Daemon API
   algorand_kmd: ^1.0.0
 
   built_value: '>=8.0.4 <9.0.0'
   built_collection: '>=5.0.0 <6.0.0'
+
 
 dev_dependencies:
   # Testing framework

@@ -13,6 +13,7 @@ abstract class AlgorandClient {
     Duration sendTimeout = const Duration(seconds: 30),
     bool debug = false,
     Interceptor? logInterceptor,
+    Transformer? transformer,
   }) {
     final options = BaseOptions(
       baseUrl: apiUrl,
@@ -25,6 +26,10 @@ abstract class AlgorandClient {
     );
 
     client = Dio(options);
+
+    if (transformer != null) {
+      client.transformer = transformer;
+    }
 
     if (debug) {
       client.interceptors.add(logInterceptor ?? LogInterceptor());

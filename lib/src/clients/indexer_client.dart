@@ -19,6 +19,7 @@ class IndexerClient extends AlgorandClient {
     Duration sendTimeout = const Duration(seconds: 30),
     bool debug = false,
     Interceptor? logInterceptor,
+    Transformer? transformer,
   }) : super(
           apiUrl: apiUrl,
           apiKey: apiKey,
@@ -28,5 +29,6 @@ class IndexerClient extends AlgorandClient {
           sendTimeout: sendTimeout,
           debug: debug,
           logInterceptor: logInterceptor,
+          transformer: transformer,
         );
 }

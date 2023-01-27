@@ -33,6 +33,10 @@ class NullableBigIntSerializer implements JsonConverter<BigInt?, dynamic> {
       return BigInt.from(data);
     }
 
+    if (data is BigInt) {
+      return data;
+    }
+
     return BigInt.zero;
   }
 
