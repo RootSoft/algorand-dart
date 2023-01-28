@@ -15,14 +15,15 @@ abstract class AlgorandClient {
     Interceptor? logInterceptor,
     Transformer? transformer,
   }) {
+    final headers = <String, dynamic>{tokenKey: apiKey};
+    headers.removeWhere((k, v) => k.isEmpty);
+
     final options = BaseOptions(
       baseUrl: apiUrl,
       connectTimeout: connectTimeout.inMilliseconds,
       receiveTimeout: receiveTimeout.inMilliseconds,
       sendTimeout: sendTimeout.inMilliseconds,
-      headers: {
-        tokenKey: apiKey,
-      },
+      headers: headers,
     );
 
     client = Dio(options);
