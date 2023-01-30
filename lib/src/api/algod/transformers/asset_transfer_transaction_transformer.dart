@@ -15,7 +15,7 @@ class AssetTransferTransactionTransformer extends AlgodTransformer<
       amount: BigInt.from(input.amount ?? 0),
       assetId: input.assetId ?? 0,
       receiver: input.receiver?.encodedAddress ?? '',
-      closeAmount: 0,
+      closeAmount: BigInt.zero,
       closeTo: input.closeTo?.encodedAddress,
       sender: input.assetSender?.encodedAddress,
     );

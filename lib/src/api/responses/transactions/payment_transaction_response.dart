@@ -12,8 +12,9 @@ class PaymentTransactionResponse {
 
   /// Number of MicroAlgos that were sent to the close-remainder-to address
   /// when closing the sender account.
-  @JsonKey(name: 'close-amount', defaultValue: 0)
-  final int closeAmount;
+  @JsonKey(name: 'close-amount')
+  @NullableBigIntSerializer()
+  final BigInt? closeAmount;
 
   /// When set, indicates that the sending account should be closed and all
   /// remaining funds be transferred to this address.

@@ -19,7 +19,8 @@ class AssetTransferTransactionResponse {
   /// Number of assets transfered to the close-to account as part of the
   /// transaction.
   @JsonKey(name: 'close-amount')
-  final int? closeAmount;
+  @NullableBigIntSerializer()
+  final BigInt? closeAmount;
 
   /// Indicates that the asset should be removed from the account's Assets map,
   /// and specifies where the remaining asset holdings should be transferred.

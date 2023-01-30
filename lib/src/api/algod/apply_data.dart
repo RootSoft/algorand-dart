@@ -28,8 +28,6 @@ class ApplyData {
         applicationId = applicationId ?? BigInt.zero;
 
   factory ApplyData.fromMessagePack(Map<String, dynamic> data) {
-    print(data);
-
     final applyData = ApplyData(
       closingAmount: BigInt.from(data['ca'] as int? ?? 0),
       assetClosingAmount: BigInt.from(data['aca'] as int? ?? 0),
