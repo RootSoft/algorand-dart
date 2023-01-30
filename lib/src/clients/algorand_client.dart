@@ -12,10 +12,17 @@ abstract class AlgorandClient {
     Duration receiveTimeout = const Duration(seconds: 30),
     Duration sendTimeout = const Duration(seconds: 30),
     bool debug = false,
+    bool enableGzip = true,
     Interceptor? logInterceptor,
     Transformer? transformer,
   }) {
     final headers = <String, dynamic>{tokenKey: apiKey};
+    if (enableGzip) {
+      headers.putIfAbsent(
+        'Accept-Encoding',
+        () => 'gzip',
+      );
+    }
     headers.removeWhere((k, v) => k.isEmpty);
 
     final options = BaseOptions(

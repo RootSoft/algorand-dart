@@ -34,6 +34,7 @@ class AlgorandOptions {
     Duration sendTimeout = const Duration(seconds: 30),
     int timeout = 5,
     bool debug = false,
+    bool enableGzip = true,
     Interceptor? logInterceptor,
     Transformer? transformer,
   }) {
@@ -46,6 +47,7 @@ class AlgorandOptions {
           receiveTimeout: receiveTimeout,
           sendTimeout: sendTimeout,
           debug: debug,
+          enableGzip: enableGzip,
           logInterceptor: logInterceptor,
           transformer: transformer,
         );
@@ -59,6 +61,7 @@ class AlgorandOptions {
           receiveTimeout: receiveTimeout,
           sendTimeout: sendTimeout,
           debug: debug,
+          enableGzip: enableGzip,
           logInterceptor: logInterceptor,
           transformer: transformer,
         );

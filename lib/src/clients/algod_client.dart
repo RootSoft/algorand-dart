@@ -16,6 +16,7 @@ class AlgodClient extends AlgorandClient {
     Duration receiveTimeout = const Duration(seconds: 30),
     Duration sendTimeout = const Duration(seconds: 30),
     bool debug = false,
+    bool enableGzip = true,
     Interceptor? logInterceptor,
     Transformer? transformer,
   }) : super(
@@ -26,6 +27,7 @@ class AlgodClient extends AlgorandClient {
           receiveTimeout: receiveTimeout,
           sendTimeout: sendTimeout,
           debug: debug,
+          enableGzip: enableGzip,
           logInterceptor: logInterceptor,
           transformer: transformer,
         );
