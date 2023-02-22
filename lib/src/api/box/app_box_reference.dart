@@ -88,4 +88,15 @@ class AppBoxReference implements MessagePackable {
       'n': name,
     };
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AppBoxReference &&
+          runtimeType == other.runtimeType &&
+          applicationId == other.applicationId &&
+          name == other.name;
+
+  @override
+  int get hashCode => applicationId.hashCode ^ name.hashCode;
 }
