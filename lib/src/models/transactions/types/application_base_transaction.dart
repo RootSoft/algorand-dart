@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/api/box/box.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
 
@@ -29,6 +30,9 @@ class ApplicationBaseTransaction extends RawTransaction {
   /// approval-program and clear-state-program. The access is read-only.
   List<int>? foreignAssets;
 
+  /// The boxes that should be made available for the runtime of the program.
+  List<AppBoxReference>? appBoxReferences;
+
   ApplicationBaseTransaction.builder(
     ApplicationBaseTransactionBuilder builder,
   )   : applicationId = builder.applicationId,
@@ -37,6 +41,7 @@ class ApplicationBaseTransaction extends RawTransaction {
         accounts = builder.accounts,
         foreignApps = builder.foreignApps,
         foreignAssets = builder.foreignAssets,
+        appBoxReferences = builder.appBoxReferences,
         super(
           type: builder.type.value,
           fee: builder.fee,
@@ -60,6 +65,13 @@ class ApplicationBaseTransaction extends RawTransaction {
     fields['apat'] = accounts?.map((account) => account.publicKey).toList();
     fields['apfa'] = foreignApps;
     fields['apas'] = foreignAssets;
+    fields['apbx'] = appBoxReferences
+        ?.map(
+          (b) =>
+              AppBoxReference.fromAppBoxReference(b, foreignApps, applicationId)
+                  .toMessagePack(),
+        )
+        .toList();
 
     return fields;
   }

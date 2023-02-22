@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/api/box/box.dart';
 
 class ApplicationBaseTransactionBuilder<T extends ApplicationBaseTransaction>
     extends RawTransactionBuilder<ApplicationBaseTransaction> {
@@ -28,6 +29,9 @@ class ApplicationBaseTransactionBuilder<T extends ApplicationBaseTransaction>
   /// Lists the assets whose AssetParams may be accessed by this application's
   /// approval-program and clear-state-program. The access is read-only.
   List<int>? foreignAssets;
+
+  /// The boxes that should be made available for the runtime of the program.
+  List<AppBoxReference>? appBoxReferences;
 
   ApplicationBaseTransactionBuilder([this.onCompletion = OnCompletion.NO_OP_OC])
       : super(TransactionType.APPLICATION_CALL);

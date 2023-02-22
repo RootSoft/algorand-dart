@@ -36,6 +36,8 @@ AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) =>
           [],
       totalAppsOptedIn: json['total-apps-opted-in'] as int? ?? 0,
       totalAssetsOptedIn: json['total-assets-opted-in'] as int? ?? 0,
+      totalBoxBytes: json['total-box-bytes'] as int?,
+      totalBoxes: json['total-boxes'] as int?,
       totalCreatedApps: json['total-created-apps'] as int? ?? 0,
       totalCreatedAssets: json['total-created-assets'] as int? ?? 0,
       createdAtRound: json['created-at-round'] as int?,
@@ -84,6 +86,8 @@ Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
           const NullableBigIntSerializer().toJson(instance.minimumBalance),
       'total-apps-opted-in': instance.totalAppsOptedIn,
       'total-assets-opted-in': instance.totalAssetsOptedIn,
+      'total-box-bytes': instance.totalBoxBytes,
+      'total-boxes': instance.totalBoxes,
       'total-created-apps': instance.totalCreatedApps,
       'total-created-assets': instance.totalCreatedAssets,
     };

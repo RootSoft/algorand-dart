@@ -111,6 +111,15 @@ class AccountInformation {
   @JsonKey(name: 'total-assets-opted-in', defaultValue: 0)
   final int totalAssetsOptedIn;
 
+  /// The total number of bytes used by this account's app's box keys and
+  /// values.
+  @JsonKey(name: 'total-box-bytes')
+  final int? totalBoxBytes;
+
+  /// The number of existing boxes created by this account's app.
+  @JsonKey(name: 'total-boxes')
+  final int? totalBoxes;
+
   /// The count of all apps (AppParams objects) created by this account.
   @JsonKey(name: 'total-created-apps', defaultValue: 0)
   final int totalCreatedApps;
@@ -134,6 +143,8 @@ class AccountInformation {
     required this.createdAssets,
     required this.totalAppsOptedIn,
     required this.totalAssetsOptedIn,
+    required this.totalBoxBytes,
+    required this.totalBoxes,
     required this.totalCreatedApps,
     required this.totalCreatedAssets,
     this.createdAtRound,
@@ -163,6 +174,8 @@ class AccountInformation {
       createdAssets: [],
       totalAppsOptedIn: 0,
       totalAssetsOptedIn: 0,
+      totalBoxBytes: null,
+      totalBoxes: null,
       totalCreatedApps: 0,
       totalCreatedAssets: 0,
       minimumBalance: BigInt.from(100000),

@@ -26,6 +26,10 @@ ApplicationTransaction _$ApplicationTransactionFromJson(
           (json['apfa'] as List<dynamic>?)?.map((e) => e as int).toList() ?? [],
       foreignAssets:
           (json['apas'] as List<dynamic>?)?.map((e) => e as int).toList() ?? [],
+      boxes: (json['apbx'] as List<dynamic>?)
+              ?.map((e) => AppBoxReference.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       fee: json['fee'] as int?,
       firstValid: json['fv'] as int?,
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
@@ -64,4 +68,5 @@ Map<String, dynamic> _$ApplicationTransactionToJson(
       'apat': const ListByteArraySerializer().toJson(instance.accounts),
       'apfa': instance.foreignApps,
       'apas': instance.foreignAssets,
+      'apbx': instance.boxes,
     };

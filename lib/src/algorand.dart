@@ -13,6 +13,11 @@ import 'package:algorand_dart/src/api/block/block_algod_service.dart';
 import 'package:algorand_dart/src/api/block/block_indexer_service.dart';
 import 'package:algorand_dart/src/api/block/blocks_algod_api.dart';
 import 'package:algorand_dart/src/api/block/blocks_indexer_api.dart';
+import 'package:algorand_dart/src/api/box/box.dart';
+import 'package:algorand_dart/src/api/box/box_algod_service.dart';
+import 'package:algorand_dart/src/api/box/box_indexer_service.dart';
+import 'package:algorand_dart/src/api/box/boxes_algod_api.dart';
+import 'package:algorand_dart/src/api/box/boxes_indexer_api.dart';
 import 'package:algorand_dart/src/exceptions/algorand_factory.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
@@ -38,6 +43,8 @@ class Algorand {
 
   final ApplicationsIndexerApi _applicationsApi;
 
+  final BoxesAlgodApi _boxesApi;
+
   Algorand._({
     required AlgorandOptions options,
     required NodeRepository nodeRepo,
@@ -48,6 +55,7 @@ class Algorand {
     required AccountsAlgodApi accountsApi,
     required AssetsIndexerApi assetsApi,
     required ApplicationsIndexerApi applicationsApi,
+    required BoxesAlgodApi boxesApi,
   })  : _options = options,
         _nodeRepository = nodeRepo,
         _transactionRepository = transactionRepo,
@@ -56,7 +64,8 @@ class Algorand {
         _blocksApi = blocksApi,
         _accountsApi = accountsApi,
         _assetsApi = assetsApi,
-        _applicationsApi = applicationsApi;
+        _applicationsApi = applicationsApi,
+        _boxesApi = boxesApi;
 
   factory Algorand({
     AlgorandOptions? options,
@@ -87,6 +96,12 @@ class Algorand {
       service: AccountAlgodService(_options.algodClient.client),
     );
 
+    final boxesApi = BoxesAlgodApi(
+      api: api,
+      service: BoxAlgodService(_options.algodClient.client),
+    );
+
+    /// ------ Indexer APIs------ //
     final assetsApi = AssetsIndexerApi(
       api: api,
       service: AssetIndexerService(_options.indexerClient.client),
@@ -120,6 +135,10 @@ class Algorand {
         api: api,
         service: ApplicationIndexerService(_options.indexerClient.client),
       ),
+      boxesApi: BoxesIndexerApi(
+        api: api,
+        service: BoxIndexerService(_options.indexerClient.client),
+      ),
     );
 
     return Algorand._(
@@ -132,6 +151,7 @@ class Algorand {
       accountsApi: accountsApi,
       assetsApi: assetsApi,
       applicationsApi: applicationsApi,
+      boxesApi: boxesApi,
     );
   }
 
@@ -492,6 +512,59 @@ class Algorand {
     );
   }
 
+  /// Get box information for a given application.
+  ///
+  /// Given an application ID and box name, it returns the box name and value
+  /// (each base64 encoded).
+  /// Box names must be in the goal app call arg encoding form 'encoding:value'.
+  /// For ints, use the form 'int:1234'.
+  /// For raw bytes, use the form 'b64:A=='.
+  /// For printable strings, use the form 'str:hello'.
+  /// For addresses, use the form 'addr:XYZ...'.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the block in the given round number.
+  Future<BoxResponse> getBox(
+    int applicationId,
+    String name, {
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _boxesApi.getBoxByApplicationId(
+      applicationId,
+      name,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+  }
+
+  /// Get all box names for a given application.
+  ///
+  /// Given an application ID, return all Box names.
+  /// No particular ordering is guaranteed.
+  /// Request fails when client or server-side configured limits prevent
+  /// returning all Box names.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the block in the given round number.
+  Future<BoxNamesResponse> getBoxNames(
+    int applicationId, {
+    int? max,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _boxesApi.getBoxNamesByApplicationId(
+      applicationId,
+      max: max,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+  }
+
   /// Get the balance (in microAlgos) of the given address.
   /// Given a specific account public key, this call returns the current
   /// balance.
@@ -785,6 +858,7 @@ class Algorand {
     List<Address>? accounts,
     List<int>? foreignApps,
     List<int>? foreignAssets,
+    List<AppBoxReference>? appBoxReferences,
     String? note,
     OnCompletion onCompletion = OnCompletion.NO_OP_OC,
     TransactionParams? suggestedParams,
@@ -800,6 +874,7 @@ class Algorand {
           ..accounts = accounts
           ..foreignApps = foreignApps
           ..foreignAssets = foreignAssets
+          ..appBoxReferences = appBoxReferences
           ..noteText = note
           ..suggestedParams = params)
         .build();
@@ -820,6 +895,7 @@ class Algorand {
     List<Address>? accounts,
     List<int>? foreignApps,
     List<int>? foreignAssets,
+    List<AppBoxReference>? appBoxReferences,
     String? note,
     TransactionParams? suggestedParams,
   }) async {
@@ -834,6 +910,7 @@ class Algorand {
           ..accounts = accounts
           ..foreignApps = foreignApps
           ..foreignAssets = foreignAssets
+          ..appBoxReferences = appBoxReferences
           ..noteText = note
           ..suggestedParams = params)
         .build();
@@ -855,6 +932,7 @@ class Algorand {
     List<Address>? accounts,
     List<int>? foreignApps,
     List<int>? foreignAssets,
+    List<AppBoxReference>? appBoxReferences,
     String? note,
     TransactionParams? suggestedParams,
   }) async {
@@ -869,6 +947,7 @@ class Algorand {
           ..accounts = accounts
           ..foreignApps = foreignApps
           ..foreignAssets = foreignAssets
+          ..appBoxReferences = appBoxReferences
           ..noteText = note
           ..suggestedParams = params)
         .build();

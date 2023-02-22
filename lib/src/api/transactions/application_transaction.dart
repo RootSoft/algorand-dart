@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/api/api.dart';
+import 'package:algorand_dart/src/api/box/box.dart';
 import 'package:algorand_dart/src/api/converters/converters.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/serializers/serializers.dart';
@@ -79,6 +80,10 @@ class ApplicationTransaction extends RawTransaction {
   @JsonKey(name: 'apas', defaultValue: [])
   final List<int> foreignAssets;
 
+  /// The boxes that should be made available for the runtime of the program.
+  @JsonKey(name: 'apbx', defaultValue: [])
+  final List<AppBoxReference> boxes;
+
   ApplicationTransaction({
     required this.globalStateSchema,
     required this.localStateSchema,
@@ -91,6 +96,7 @@ class ApplicationTransaction extends RawTransaction {
     required this.accounts,
     required this.foreignApps,
     required this.foreignAssets,
+    required this.boxes,
     int? fee,
     int? firstValid,
     Uint8List? genesisHash,
@@ -136,5 +142,6 @@ class ApplicationTransaction extends RawTransaction {
         accounts,
         foreignApps,
         foreignAssets,
+        boxes,
       ];
 }
