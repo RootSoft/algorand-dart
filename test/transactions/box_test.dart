@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:test/test.dart';
@@ -56,5 +57,26 @@ void main() {
     // Prefer foreign apps index when present.
     final expected2 = BoxReference.fromAppBoxReference(abr, [1, 3, 4], appId);
     expect(BoxReference(appIndex: 0, name: abr.name), equals(expected2));
+  });
+
+  test('test box serialization', () async {
+    final tx =
+        'i6RhcGFhlsQEExz+t8QBAMQIAAAAACye4FfECAAAAAAs2NxIxAgAAAAAAAATJMQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkYXBhc5HOIPDs/KRhcGJ4koGhbsQIAAAAACDw7PyBoW7EKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDw7PykYXBpZM49KOEJomZ2zgGhClWjZ2VurG1haW5uZXQtdjEuMKJnaMQgwGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit+jZ3JwxCAA7SZ5a+gr6h7fZTkziG5SrqfgUzffYHYl4+64l3dpuqJsds4BoQ49o3NuZMQg1UDRaWq6dzSqvhixlzR7csPOhP2PEZ+axkr++8+lcyKkdHlwZaRhcHBs';
+
+    final rawTxnMsgpack = base64Decode(tx);
+    final o = Encoder.decodeMessagePack(rawTxnMsgpack);
+    final unsignedTxn = ApplicationTransaction.fromJson(o);
+    final b = Encoder.encodeMessagePack(unsignedTxn.toMessagePack());
+    final decoded = Encoder.decodeMessagePack(b);
+
+    final expectedBoxReference = BoxReference(
+      appIndex: 0,
+      name: Uint8List.fromList([0, 0, 0, 0, 32, 240, 236, 252]),
+    );
+
+    expect(o, equals(decoded));
+    expect(tx, equals(base64Encode(b)));
+    expect(unsignedTxn.boxes.length, equals(2));
+    expect(unsignedTxn.boxes[0], equals(expectedBoxReference));
   });
 }
