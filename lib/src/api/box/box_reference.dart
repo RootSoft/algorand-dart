@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/converters/converters.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
+import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'box_reference.g.dart';
@@ -18,8 +19,8 @@ class BoxReference implements MessagePackable {
   /// The app ID of the app this box belongs to.
   /// Instead of serializing this value, it's used to calculate the appIdx for
   /// AppBoxReference.
-  @JsonKey(name: 'i')
-  final int? appIndex;
+  @JsonKey(name: 'i', defaultValue: NEW_APP_ID)
+  final int appIndex;
 
   /// the name of the box unique to the app it belongs to
   @JsonKey(name: 'n')
@@ -73,16 +74,18 @@ class BoxReference implements MessagePackable {
 
   @override
   Map<String, dynamic> toMessagePack() {
-    return toJson();
+    return {
+      'i': appIndex,
+      'n': name,
+    };
   }
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is BoxReference &&
-          runtimeType == other.runtimeType &&
           appIndex == other.appIndex &&
-          name == other.name;
+          name.equals(other.name);
 
   @override
   int get hashCode => appIndex.hashCode ^ name.hashCode;

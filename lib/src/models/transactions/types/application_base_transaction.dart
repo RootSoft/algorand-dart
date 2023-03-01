@@ -4,6 +4,8 @@ import 'package:algorand_dart/src/api/box/box.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
 
+/// TODO Deprecate and use the new [ApplicationTransaction] which contains
+/// TODO all the fields from create & update.
 class ApplicationBaseTransaction extends RawTransaction {
   /// ApplicationID is the application being interacted with,
   /// or 0 if creating a new application.

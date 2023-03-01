@@ -121,6 +121,25 @@ class ApplicationTransaction extends RawTransaction {
           rekeyTo: rekeyTo,
         );
 
+  @override
+  Map<String, dynamic> toMessagePack() {
+    final fields = super.toMessagePack();
+    fields['apid'] = applicationId;
+    fields['apan'] = onCompletion?.value;
+    fields['apaa'] = arguments;
+    fields['apat'] = accounts;
+    fields['apfa'] = foreignApps;
+    fields['apas'] = foreignAssets;
+    fields['apbx'] = boxes.map((b) => b.toMessagePack()).toList();
+    fields['apls'] = localStateSchema?.toMessagePack();
+    fields['apgs'] = globalStateSchema?.toMessagePack();
+    fields['apep'] = extraPages;
+    fields['apap'] = approvalProgram?.program;
+    fields['apsu'] = clearStateProgram?.program;
+
+    return fields;
+  }
+
   factory ApplicationTransaction.fromJson(Map<String, dynamic> json) =>
       _$ApplicationTransactionFromJson(json);
 
