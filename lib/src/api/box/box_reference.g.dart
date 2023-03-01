@@ -1,19 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_box_reference.dart';
+part of 'box_reference.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AppBoxReference _$AppBoxReferenceFromJson(Map<String, dynamic> json) =>
-    AppBoxReference(
-      applicationId: json['i'] as int? ?? 0,
+BoxReference _$BoxReferenceFromJson(Map<String, dynamic> json) => BoxReference(
+      appIndex: json['i'] as int?,
       name: const B64ToByteArrayConverter().fromJson(json['n']),
     );
 
-Map<String, dynamic> _$AppBoxReferenceToJson(AppBoxReference instance) =>
+Map<String, dynamic> _$BoxReferenceToJson(BoxReference instance) =>
     <String, dynamic>{
-      'i': instance.applicationId,
+      'i': instance.appIndex,
       'n': const B64ToByteArrayConverter().toJson(instance.name),
     };

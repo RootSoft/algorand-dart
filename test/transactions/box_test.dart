@@ -18,9 +18,9 @@ void main() {
     final appId = 7;
     final abr = genWithAppId(appId);
     final expected =
-        AppBoxReference.fromAppBoxReference(abr, [1, 3, 4, appId], appId - 1);
+        BoxReference.fromAppBoxReference(abr, [1, 3, 4, appId], appId - 1);
 
-    expect(AppBoxReference(applicationId: 4, name: abr.name), equals(expected));
+    expect(BoxReference(appIndex: 4, name: abr.name), equals(expected));
   });
 
   test('test app index does not exist', () async {
@@ -28,8 +28,7 @@ void main() {
     final abr = genWithAppId(appId);
 
     expect(
-      () async =>
-          AppBoxReference.fromAppBoxReference(abr, [1, 3, 4], appId - 1),
+      () async => BoxReference.fromAppBoxReference(abr, [1, 3, 4], appId - 1),
       throwsA(
           (e) => e is AlgorandException && e.message.startsWith('Box app ID')),
     );
@@ -38,9 +37,9 @@ void main() {
   test('test new app id', () async {
     final abr = genWithNewAppId();
 
-    final expected = AppBoxReference.fromAppBoxReference(abr, [], 1);
+    final expected = BoxReference.fromAppBoxReference(abr, [], 1);
 
-    expect(AppBoxReference(applicationId: 0, name: abr.name), equals(expected));
+    expect(BoxReference(appIndex: 0, name: abr.name), equals(expected));
   });
 
   test('test fallback to current pp', () async {
@@ -51,13 +50,11 @@ void main() {
 
     // Prefer foreign apps index when present.
     final expected =
-        AppBoxReference.fromAppBoxReference(abr, [1, 3, 4, appId], appId);
-    expect(AppBoxReference(applicationId: 4, name: abr.name), equals(expected));
+        BoxReference.fromAppBoxReference(abr, [1, 3, 4, appId], appId);
+    expect(BoxReference(appIndex: 4, name: abr.name), equals(expected));
 
     // Prefer foreign apps index when present.
-    final expected2 =
-        AppBoxReference.fromAppBoxReference(abr, [1, 3, 4], appId);
-    expect(
-        AppBoxReference(applicationId: 0, name: abr.name), equals(expected2));
+    final expected2 = BoxReference.fromAppBoxReference(abr, [1, 3, 4], appId);
+    expect(BoxReference(appIndex: 0, name: abr.name), equals(expected2));
   });
 }

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/api/api.dart';
-import 'package:algorand_dart/src/api/box/box.dart';
 import 'package:algorand_dart/src/api/converters/converters.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/serializers/serializers.dart';
@@ -9,7 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'application_transaction.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.kebab)
+@JsonSerializable(fieldRename: FieldRename.kebab, explicitToJson: true)
 class ApplicationTransaction extends RawTransaction {
   /// Holds the maximum number of global state values defined within a
   /// StateSchema object.
@@ -82,7 +81,7 @@ class ApplicationTransaction extends RawTransaction {
 
   /// The boxes that should be made available for the runtime of the program.
   @JsonKey(name: 'apbx', defaultValue: [])
-  final List<AppBoxReference> boxes;
+  final List<BoxReference> boxes;
 
   ApplicationTransaction({
     required this.globalStateSchema,

@@ -67,8 +67,8 @@ class ApplicationBaseTransaction extends RawTransaction {
     fields['apas'] = foreignAssets;
     fields['apbx'] = appBoxReferences
         ?.map(
-          (b) =>
-              AppBoxReference.fromAppBoxReference(b, foreignApps, applicationId)
+          (abr) =>
+              BoxReference.fromAppBoxReference(abr, foreignApps, applicationId)
                   .toMessagePack(),
         )
         .toList();

@@ -27,7 +27,7 @@ ApplicationTransaction _$ApplicationTransactionFromJson(
       foreignAssets:
           (json['apas'] as List<dynamic>?)?.map((e) => e as int).toList() ?? [],
       boxes: (json['apbx'] as List<dynamic>?)
-              ?.map((e) => AppBoxReference.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => BoxReference.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       fee: json['fee'] as int?,
@@ -57,8 +57,8 @@ Map<String, dynamic> _$ApplicationTransactionToJson(
       'lx': const NullableByteArraySerializer().toJson(instance.lease),
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': const AddressSerializer().toJson(instance.rekeyTo),
-      'apgs': instance.globalStateSchema,
-      'apls': instance.localStateSchema,
+      'apgs': instance.globalStateSchema?.toJson(),
+      'apls': instance.localStateSchema?.toJson(),
       'apep': instance.extraPages,
       'apap': const TealProgramConverter().toJson(instance.approvalProgram),
       'apsu': const TealProgramConverter().toJson(instance.clearStateProgram),
@@ -68,5 +68,5 @@ Map<String, dynamic> _$ApplicationTransactionToJson(
       'apat': const ListByteArraySerializer().toJson(instance.accounts),
       'apfa': instance.foreignApps,
       'apas': instance.foreignAssets,
-      'apbx': instance.boxes,
+      'apbx': instance.boxes.map((e) => e.toJson()).toList(),
     };
