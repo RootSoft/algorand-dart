@@ -1,5 +1,4 @@
 import 'package:algorand_dart/src/api/api.dart';
-import 'package:algorand_dart/src/api/box/box.dart';
 import 'package:algorand_dart/src/api/box/box_indexer_service.dart';
 import 'package:dio/dio.dart';
 

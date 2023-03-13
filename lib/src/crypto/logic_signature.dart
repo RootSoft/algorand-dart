@@ -45,7 +45,7 @@ class LogicSignature extends Equatable implements MessagePackable {
   @SignatureSerializer()
   final Signature? signature;
 
-  @JsonKey(name: 'msig', ignore: true)
+  @JsonKey(name: 'msig', includeFromJson: false, includeToJson: false)
   final MultiSignature? multiSignature;
 
   /// Create a new logic signature.

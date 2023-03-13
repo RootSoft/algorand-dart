@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/src/api/encoding/algorand_codec.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
-import 'package:msgpack_dart/msgpack_dart.dart';
+import 'package:algorand_msgpack/algorand_msgpack.dart';
 
 class Encoder {
   /// Encode the messagepack.

@@ -46,7 +46,7 @@ class AbiMethod {
   @JsonKey(name: 'returns')
   final Returns returns;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   int txnCallCount = 1;
 
   AbiMethod({

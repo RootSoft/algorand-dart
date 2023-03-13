@@ -13,7 +13,6 @@ import 'package:algorand_dart/src/api/block/block_algod_service.dart';
 import 'package:algorand_dart/src/api/block/block_indexer_service.dart';
 import 'package:algorand_dart/src/api/block/blocks_algod_api.dart';
 import 'package:algorand_dart/src/api/block/blocks_indexer_api.dart';
-import 'package:algorand_dart/src/api/box/box.dart';
 import 'package:algorand_dart/src/api/box/box_algod_service.dart';
 import 'package:algorand_dart/src/api/box/box_indexer_service.dart';
 import 'package:algorand_dart/src/api/box/boxes_algod_api.dart';

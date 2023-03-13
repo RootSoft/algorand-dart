@@ -3,7 +3,6 @@ import 'package:algorand_dart/src/api/account/accounts_indexer_api.dart';
 import 'package:algorand_dart/src/api/application/applications_indexer_api.dart';
 import 'package:algorand_dart/src/api/asset/assets_indexer_api.dart';
 import 'package:algorand_dart/src/api/block/blocks_indexer_api.dart';
-import 'package:algorand_dart/src/api/box/box.dart';
 import 'package:algorand_dart/src/api/box/boxes_indexer_api.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';

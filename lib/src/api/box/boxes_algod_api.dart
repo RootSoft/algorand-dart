@@ -1,7 +1,5 @@
 import 'package:algorand_dart/src/api/api.dart';
 import 'package:algorand_dart/src/api/box/box_algod_service.dart';
-import 'package:algorand_dart/src/api/box/box_names_response.dart';
-import 'package:algorand_dart/src/api/box/box_response.dart';
 import 'package:dio/dio.dart';
 
 class BoxesAlgodApi {

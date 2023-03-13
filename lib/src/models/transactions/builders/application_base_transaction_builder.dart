@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/api/box/box.dart';
 
 class ApplicationBaseTransactionBuilder<T extends ApplicationBaseTransaction>
     extends RawTransactionBuilder<ApplicationBaseTransaction> {

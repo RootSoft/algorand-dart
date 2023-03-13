@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/api/box/app_box_reference.dart';
 
 class MethodCallParams {
   /// if the abi type argument number > 15, then the abi types after 14th
