@@ -1,6 +1,4 @@
-import 'package:algorand_dart/src/api/responses.dart';
-import 'package:algorand_dart/src/indexer/indexer_health.dart';
-import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/services/api_service.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -33,10 +31,5 @@ abstract class IndexerService extends ApiService {
   //@GET("/v2/transactions/{transactionId}")
   Future<TransactionResponse> getTransactionById(
     /*@Path('transactionId')*/ String transactionId,
-  );
-
-  //@GET("/v2/blocks/{round}")
-  Future<Block> getBlockByRound(
-    /*@Path('round')*/ int round,
   );
 }

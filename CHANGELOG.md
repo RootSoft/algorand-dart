@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0-dev.6 - 2022-12-15
+
+- Boxes support
+- msig auth address
+- Bugfixes
+- General API improvements
+
+## 2.0.0-dev.5 - 2022-12-15
+
+- Small improvements
+- TealValue BigInt support
+
 ## 2.0.0-dev.4 - 2022-08-09
 
 - Added support for TEAL v6 & AVM 1.1

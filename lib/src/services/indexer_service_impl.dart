@@ -109,24 +109,4 @@ class _IndexerService implements IndexerService {
     final value = TransactionResponse.fromJson(_result.data!);
     return value;
   }
-
-  @override
-  Future<Block> getBlockByRound(int round) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-      '/v2/blocks/$round',
-      queryParameters: queryParameters,
-      options: dio.Options(
-        method: 'GET',
-        headers: <String, dynamic>{},
-        extra: _extra,
-      ),
-      data: _data,
-    );
-    final value = Block.fromJson(_result.data!);
-    return value;
-  }
 }

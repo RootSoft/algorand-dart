@@ -1,4 +1,4 @@
-import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/api/account/account.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'account_lookup_response.g.dart';

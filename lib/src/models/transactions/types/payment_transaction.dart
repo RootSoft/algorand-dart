@@ -26,7 +26,7 @@ class PaymentTransaction extends RawTransaction {
 
   /// Number of MicroAlgos that were sent to the close-remainder-to address
   /// when closing the sender account.
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   final int? closeAmount;
 
   /// When set, indicates that the sending account should be closed and all

@@ -14,7 +14,7 @@ class Returns {
   final String? description;
 
   const Returns({
-    this.type = VoidRetType,
+    this.type = 'void',
     this.description,
   });
 

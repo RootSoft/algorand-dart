@@ -19,6 +19,8 @@ class Base64Serializer implements JsonConverter<Uint8List?, dynamic> {
     if (data is String) {
       return base64.decode(data);
     }
+
+    return null;
   }
 
   @override

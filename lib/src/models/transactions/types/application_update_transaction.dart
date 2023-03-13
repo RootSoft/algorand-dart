@@ -1,6 +1,6 @@
+import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
-import 'package:algorand_dart/src/models/transactions/types/application_base_transaction.dart';
 
 class ApplicationUpdateTransaction extends ApplicationBaseTransaction {
   /// Logic executed for every application transaction, except when

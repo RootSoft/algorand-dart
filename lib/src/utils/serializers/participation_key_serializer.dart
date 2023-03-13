@@ -19,6 +19,8 @@ class ParticipationKeySerializer
     if (data is String) {
       return ParticipationPublicKey(bytes: base64Decode(data));
     }
+
+    return null;
   }
 
   @override

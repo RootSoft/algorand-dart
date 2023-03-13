@@ -1,6 +1,5 @@
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/raw_transaction_builder.dart';
-import 'package:algorand_dart/src/models/transactions/types/payment_transaction.dart';
 import 'package:algorand_dart/src/utils/fee_calculator.dart';
 
 class PaymentTransactionBuilder

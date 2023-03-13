@@ -5,7 +5,6 @@ import 'package:algorand_dart/src/api/responses.dart';
 import 'package:algorand_dart/src/exceptions/algorand_exception.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/services/services.dart';
-import 'package:algorand_dart/src/services/transaction_service.dart';
 import 'package:algorand_dart/src/utils/encoders/msgpack_encoder.dart';
 import 'package:buffer/buffer.dart';
 import 'package:dio/dio.dart';
@@ -149,8 +148,10 @@ class TransactionRepository {
     int max = 0,
   }) async {
     try {
-      return await transactionService.getPendingTransactionsByAddress(address,
-          max: max);
+      return transactionService.getPendingTransactionsByAddress(
+        address,
+        max: max,
+      );
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }
@@ -167,7 +168,7 @@ class TransactionRepository {
     int max = 0,
   }) async {
     try {
-      return await transactionService.getPendingTransactions(max: max);
+      return transactionService.getPendingTransactions(max: max);
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }
@@ -193,7 +194,7 @@ class TransactionRepository {
     String transactionId,
   ) async {
     try {
-      return await transactionService.getPendingTransactionById(transactionId);
+      return transactionService.getPendingTransactionById(transactionId);
     } on DioError catch (ex) {
       throw AlgorandException(message: ex.message, cause: ex);
     }

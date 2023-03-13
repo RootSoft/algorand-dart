@@ -1,11 +1,12 @@
-import 'package:algorand_dart/src/api/responses.dart';
-import 'package:algorand_dart/src/api/responses/accounts/created_assets_response.dart';
+import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/api/account/accounts_indexer_api.dart';
+import 'package:algorand_dart/src/api/application/applications_indexer_api.dart';
+import 'package:algorand_dart/src/api/asset/assets_indexer_api.dart';
+import 'package:algorand_dart/src/api/block/blocks_indexer_api.dart';
+import 'package:algorand_dart/src/api/box/boxes_indexer_api.dart';
 import 'package:algorand_dart/src/api/responses/applications/application_logs_response.dart';
-import 'package:algorand_dart/src/indexer/builders/application_query_builder.dart';
-import 'package:algorand_dart/src/indexer/builders/query_builders.dart';
-import 'package:algorand_dart/src/indexer/indexer_health.dart';
-import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
+import 'package:dio/dio.dart';
 
 /// The AlgorandIndexer provides a set of REST API calls for searching
 /// blockchain Transactions, Accounts, Assets and Blocks.
@@ -16,8 +17,29 @@ class AlgorandIndexer {
   /// Client used to perform indexing operations.
   final IndexerRepository _indexerRepository;
 
-  AlgorandIndexer({required IndexerRepository indexerRepository})
-      : _indexerRepository = indexerRepository;
+  final BlocksIndexerApi _blocksApi;
+
+  final AccountsIndexerApi _accountsApi;
+
+  final AssetsIndexerApi _assetsApi;
+
+  final ApplicationsIndexerApi _applicationsApi;
+
+  final BoxesIndexerApi _boxesApi;
+
+  AlgorandIndexer({
+    required IndexerRepository indexerRepository,
+    required BlocksIndexerApi blocksApi,
+    required AccountsIndexerApi accountsApi,
+    required AssetsIndexerApi assetsApi,
+    required ApplicationsIndexerApi applicationsApi,
+    required BoxesIndexerApi boxesApi,
+  })  : _indexerRepository = indexerRepository,
+        _blocksApi = blocksApi,
+        _accountsApi = accountsApi,
+        _assetsApi = assetsApi,
+        _applicationsApi = applicationsApi,
+        _boxesApi = boxesApi;
 
   /// Get the health status of the indexer.
   ///
@@ -62,55 +84,73 @@ class AlgorandIndexer {
     );
   }
 
-  /// Lookup account information by a given account id.
+  /// Lookup account information by a given account address.
   ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// If [throwOnEmptyBalance] is true, an [AlgorandException] will be thrown,
+  /// otherwise an empty account will be returned.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error, or an invalid
+  /// address is passed.
   /// Returns the account information for the given account id.
-  Future<AccountResponse> getAccountById(
-    String accountId, {
+  Future<AccountResponse> getAccountByAddress(
+    String address, {
+    bool throwOnEmptyBalance = true,
     int? round,
-    String? exclude,
+    List<Exclude>? exclude,
+    bool? includeAll,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
-    return _indexerRepository.getAccountById(accountId, round: round);
-  }
+    try {
+      final response = await _accountsApi.getAccountByAddress(
+        address,
+        round: round,
+        exclude: exclude,
+        includeAll: includeAll,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
 
-  /// Lookup assets information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the assets information for the given account id.
-  Future<List<AssetHolding>> getAssetsByAddress(String address) async {
-    final response = await _indexerRepository.getAssetsByAddress(address);
-    return response.assets;
-  }
+      return response;
+    } on AlgorandException catch (ex) {
+      final statusCode = ex.statusCode;
+      if (statusCode == 404 && !throwOnEmptyBalance) {
+        return Future.value(
+          AccountResponse(
+            currentRound: 0,
+            account: AccountInformation.empty(address),
+          ),
+        );
+      }
 
-  /// Lookup created assets information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the created assets information for the given account id.
-  Future<CreatedAssetsResponse> getCreatedAssetsByAddress(
-    String address,
-  ) async {
-    return _indexerRepository.getCreatedAssetsByAddress(address);
-  }
-
-  /// Lookup created applications information by a given account id.
-  ///
-  /// Throws an [AlgorandException] if there is an HTTP error.
-  /// Returns the created applications information for the given account id.
-  Future<List<Application>> getCreatedApplicationsByAddress(
-    String address,
-  ) async {
-    final response =
-        await _indexerRepository.getCreatedApplicationsByAddress(address);
-    return response.applications;
+      rethrow;
+    }
   }
 
   /// Lookup asset information by a given asset id.
   ///
+  /// Include all items including closed accounts, deleted applications,
+  /// destroyed assets, opted-out asset holdings, and closed-out application
+  /// localstates.
+  ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the asset information for the given asset id.
-  Future<AssetResponse> getAssetById(int assetId) async {
-    return _indexerRepository.getAssetById(assetId);
+  Future<AssetResponse> getAssetById(
+    int assetId, {
+    bool? includeAll,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _assetsApi.getAssetById(
+      assetId,
+      includeAll: includeAll,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 
   /// Lookup application information by a given id.
@@ -119,11 +159,17 @@ class AlgorandIndexer {
   /// Returns the application information for the given application id.
   Future<ApplicationResponse> getApplicationById(
     int applicationId, {
-    Map<String, dynamic>? queryParameters,
+    bool? includeAll,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
-    return _indexerRepository.getApplicationById(
+    return _applicationsApi.getApplicationById(
       applicationId,
-      queryParameters: queryParameters,
+      includeAll: includeAll,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
   }
 
@@ -133,11 +179,27 @@ class AlgorandIndexer {
   /// Returns the application information for the given application id.
   Future<ApplicationLogsResponse> getApplicationLogsById(
     int applicationId, {
-    Map<String, dynamic> queryParameters = const {},
+    int? limit,
+    int? maxRound,
+    int? minRound,
+    String? next,
+    String? senderAddress,
+    String? transactionId,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
-    return _indexerRepository.getApplicationLogsById(
+    return _applicationsApi.getApplicationLogsById(
       applicationId,
-      queryParameters: queryParameters,
+      limit: limit,
+      maxRound: maxRound,
+      minRound: minRound,
+      next: next,
+      senderAddress: senderAddress,
+      transactionId: transactionId,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
   }
 
@@ -153,7 +215,70 @@ class AlgorandIndexer {
   ///
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the block in the given round number.
-  Future<Block> getBlockByRound(int round) async {
-    return _indexerRepository.getBlockByRound(round);
+  Future<Block> getBlockByRound(
+    int round, {
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _blocksApi.getBlockByRound(
+      round,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+  }
+
+  /// Get box information for a given application.
+  ///
+  /// Given an application ID and box name, it returns the box name and value
+  /// (each base64 encoded).
+  /// Box names must be in the goal app call arg encoding form 'encoding:value'.
+  /// For ints, use the form 'int:1234'.
+  /// For raw bytes, use the form 'b64:A=='.
+  /// For printable strings, use the form 'str:hello'.
+  /// For addresses, use the form 'addr:XYZ...'.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the block in the given round number.
+  Future<BoxResponse> getBox(
+    int applicationId,
+    String name, {
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _boxesApi.getBoxByApplicationId(
+      applicationId,
+      name,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+  }
+
+  /// Get all box names for a given application.
+  ///
+  /// Given an application ID, return all Box names.
+  /// No particular ordering is guaranteed.
+  /// Request fails when client or server-side configured limits prevent
+  /// returning all Box names.
+  ///
+  /// Throws an [AlgorandException] if there is an HTTP error.
+  /// Returns the block in the given round number.
+  Future<List<BoxDescriptor>> getBoxNames(
+    int applicationId, {
+    int? perPage,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _boxesApi.getBoxNamesByApplicationId(
+      applicationId,
+      limit: perPage,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 }

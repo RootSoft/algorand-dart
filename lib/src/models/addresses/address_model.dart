@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:algorand_dart/src/crypto/crypto.dart' as crypto;
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/models/models.dart';
-import 'package:algorand_dart/src/utils/crypto_utils.dart';
 import 'package:algorand_dart/src/utils/utils.dart';
 import 'package:base32/base32.dart';
 import 'package:collection/collection.dart';
@@ -44,6 +43,18 @@ class Address extends Equatable {
   /// Throws [AlgorandException] if unable to decode the address.
   Address.fromAlgorandAddress(String address)
       : this(publicKey: decodeAddress(address));
+
+  static Address? tryParse(String? address) {
+    if (address == null) {
+      return null;
+    }
+
+    try {
+      return Address.fromAlgorandAddress(address);
+    } catch (ex) {
+      return null;
+    }
+  }
 
   /// Encode a public key to a human-readable representation, with a 4-byte
   /// checksum appended at the end, using SHA512/256.

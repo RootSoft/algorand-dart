@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/abi/abi_type.dart';
 
 class TypeArrayDynamic extends AbiType {
   final AbiType elemType;

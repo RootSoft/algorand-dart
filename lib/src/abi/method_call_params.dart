@@ -1,13 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/abi/abi_method.dart';
-import 'package:algorand_dart/src/abi/abi_type.dart';
-import 'package:algorand_dart/src/abi/transaction_signer.dart';
-import 'package:algorand_dart/src/abi/transaction_with_signer.dart';
-import 'package:algorand_dart/src/abi/types/type_address.dart';
-import 'package:algorand_dart/src/abi/types/type_tuple.dart';
-import 'package:algorand_dart/src/abi/types/type_uint.dart';
 
 class MethodCallParams {
   /// if the abi type argument number > 15, then the abi types after 14th
@@ -24,6 +17,7 @@ class MethodCallParams {
   final List<Address> foreignAccounts;
   final List<int> foreignAssets;
   final List<int> foreignApps;
+  final List<AppBoxReference> appBoxReferences;
 
   final TEALProgram? approvalProgram;
   final TEALProgram? clearStateProgram;
@@ -51,6 +45,7 @@ class MethodCallParams {
     required this.foreignAccounts,
     required this.foreignAssets,
     required this.foreignApps,
+    required this.appBoxReferences,
     required this.approvalProgram,
     required this.clearStateProgram,
     required this.globalStateSchema,
@@ -90,6 +85,7 @@ class MethodCallParams {
     List<Address>? foreignAccounts,
     List<int>? foreignAssets,
     List<int>? foreignApps,
+    List<AppBoxReference>? appBoxReferences,
     Uint8List? lease,
     Uint8List? note,
     Address? rekeyTo,
@@ -152,8 +148,8 @@ class MethodCallParams {
           localStateSchema != null ||
           extraPages != null) {
         throw ArgumentError(
-            'One of the following application creation parameters were set on a non-creation call: ' +
-                'approvalProgram, clearProgram, globalStateSchema, localStateSchema, extraPages');
+            'One of the following application creation parameters were set on a non-creation call: '
+            'approvalProgram, clearProgram, globalStateSchema, localStateSchema, extraPages');
       }
     }
 
@@ -178,6 +174,9 @@ class MethodCallParams {
       foreignAccounts: List<Address>.from(foreignAccounts ?? <Address>[]),
       foreignAssets: List<int>.from(foreignAssets ?? <int>[]),
       foreignApps: List<int>.from(foreignApps ?? <int>[]),
+      appBoxReferences: List<AppBoxReference>.from(
+        appBoxReferences ?? <AppBoxReference>[],
+      ),
       lease: lease,
       note: note,
       rekeyTo: rekeyTo,
@@ -198,6 +197,7 @@ class MethodCallParams {
     final foreignAccounts = List<Address>.of(this.foreignAccounts);
     final foreignAssets = List<int>.of(this.foreignAssets);
     final foreignApps = List<int>.of(this.foreignApps);
+    final appBoxReferences = List<AppBoxReference>.of(this.appBoxReferences);
 
     for (var i = 0; i < method.arguments.length; i++) {
       final arg = method.arguments[i];
@@ -279,6 +279,7 @@ class MethodCallParams {
           ..accounts = foreignAccounts
           ..foreignApps = foreignApps
           ..foreignAssets = foreignAssets
+          ..appBoxReferences = appBoxReferences
           ..approvalProgram = approvalProgram
           ..clearStateProgram = clearStateProgram
           ..globalStateSchema = globalStateSchema

@@ -1,4 +1,4 @@
-import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'search_applications_response.g.dart';

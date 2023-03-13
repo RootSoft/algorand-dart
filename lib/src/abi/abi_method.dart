@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/abi/abi_type.dart';
-import 'package:algorand_dart/src/abi/argument.dart';
-import 'package:algorand_dart/src/abi/returns.dart';
 import 'package:crypto/crypto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -49,7 +46,7 @@ class AbiMethod {
   @JsonKey(name: 'returns')
   final Returns returns;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   int txnCallCount = 1;
 
   AbiMethod({

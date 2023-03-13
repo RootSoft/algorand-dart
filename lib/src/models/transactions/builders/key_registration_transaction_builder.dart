@@ -1,7 +1,5 @@
-import 'package:algorand_dart/src/models/keys/vrf_public_key.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/raw_transaction_builder.dart';
-import 'package:algorand_dart/src/models/transactions/types/key_registration_transaction.dart';
 import 'package:algorand_dart/src/utils/fee_calculator.dart';
 
 class KeyRegistrationTransactionBuilder

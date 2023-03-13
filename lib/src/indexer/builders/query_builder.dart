@@ -33,7 +33,7 @@ abstract class QueryBuilder<T extends QueryBuilder<T>> {
 
   /// The next page of results.
   /// Use the next token provided by the previous results.
-  T next(String next) {
+  T next(String? next) {
     addQueryParameter('next', next);
     return me();
   }

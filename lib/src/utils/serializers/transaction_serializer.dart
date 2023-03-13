@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/api/transactions/application_transaction.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -23,7 +24,7 @@ class TransactionSerializer
       case 'keyreg':
         return KeyRegistrationTransaction.fromJson(data);
       case 'appl':
-        return RawTransaction.fromJson(data);
+        return ApplicationTransaction.fromJson(data);
     }
 
     return RawTransaction.fromJson(data);

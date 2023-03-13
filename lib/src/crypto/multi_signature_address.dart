@@ -48,6 +48,7 @@ class MultiSigAddress extends Equatable implements MessagePackable {
     required RawTransaction transaction,
   }) async {
     final sender = transaction.sender;
+    final address = toAddress();
     if (sender == null) {
       throw AlgorandException(message: 'Sender is not valid');
     }
@@ -96,11 +97,17 @@ class MultiSigAddress extends Equatable implements MessagePackable {
       subsigs: subsigs,
     );
 
-    return SignedTransaction(
+    final msigTx = SignedTransaction(
       transaction: transaction,
       multiSignature: mSig,
       transactionId: signedTx.transactionId,
     );
+
+    if (sender.encodedAddress != address.encodedAddress) {
+      msigTx.authAddress = address;
+    }
+
+    return msigTx;
   }
 
   /// Appends our signature to the given multisig transaction.

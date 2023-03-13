@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'payment_model.g.dart';
@@ -10,8 +11,9 @@ class Payment {
   /// The total amount to be sent in microAlgos.
   /// Amounts are returned in microAlgos - the base unit for Algos.
   /// Micro denotes a unit x 10^-6. 1 Algo equals 1,000,000 microAlgos.
-  /// TODO BigInt
-  final int amount;
+  @JsonKey(name: 'amount')
+  @BigIntSerializer()
+  final BigInt amount;
 
   /// Number of MicroAlgos that were sent to the close-remainder-to address
   /// when closing the sender account.

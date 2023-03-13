@@ -3,11 +3,7 @@ import 'dart:typed_data';
 import 'package:algorand_dart/algorand_dart.dart';
 
 void main() async {
-  final algodClient = AlgodClient(
-    apiUrl: AlgoExplorer.TESTNET_ALGOD_API_URL,
-  );
-
-  final algorand = Algorand(algodClient: algodClient);
+  final algorand = Algorand();
 
   final words =
       // ignore: lines_longer_than_80_chars
@@ -47,11 +43,9 @@ Future<int> createApplication({
   final globalInts = 1;
   final globalBytes = 0;
 
-  final approvalProgram =
-      await algorand.applicationManager.compileTEAL(approvalProgramSource);
+  final approvalProgram = await algorand.compileTEAL(approvalProgramSource);
 
-  final clearProgram =
-      await algorand.applicationManager.compileTEAL(clearProgramSource);
+  final clearProgram = await algorand.compileTEAL(clearProgramSource);
 
   final params = await algorand.getSuggestedTransactionParams();
 

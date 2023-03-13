@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/api/responses.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -123,10 +124,6 @@ class Transaction {
   /// Inner transactions produced by application execution.
   @JsonKey(name: 'inner-txns', defaultValue: [])
   final List<Transaction> innerTxns;
-
-  /// Fields for a payment transaction.
-  //@JsonKey(name: 'payment-transaction')
-  //final Payment? payment;
 
   /// Optional information about a payment transaction - see payment
   @JsonKey(name: 'payment-transaction')

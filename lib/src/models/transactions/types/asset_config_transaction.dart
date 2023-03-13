@@ -93,7 +93,7 @@ class AssetConfigTransaction extends RawTransaction {
 
   /// Boolean to destroy the asset.
   /// use in combination with the asset id.
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   final bool destroy;
 
   AssetConfigTransaction({

@@ -37,10 +37,10 @@ class SignedTransaction extends Equatable implements MessagePackable {
   final LogicSignature? logicSignature;
 
   /// The logic signature
-  @JsonKey(name: 'msig', ignore: true)
+  @JsonKey(name: 'msig', includeFromJson: false, includeToJson: false)
   final MultiSignature? multiSignature;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   final String? _transactionId;
 
   SignedTransaction({

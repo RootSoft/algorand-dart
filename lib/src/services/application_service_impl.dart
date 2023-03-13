@@ -64,49 +64,4 @@ class _ApplicationService implements ApplicationService {
     final value = SearchApplicationsResponse.fromJson(_result.data!);
     return value;
   }
-
-  @override
-  Future<ApplicationResponse> getApplicationById(
-    int applicationId, {
-    Map<String, dynamic>? queryParameters,
-  }) async {
-    const _extra = <String, dynamic>{};
-    final params = queryParameters ?? <String, dynamic>{};
-    params.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-      '/v2/applications/$applicationId',
-      queryParameters: params,
-      options: dio.Options(
-        method: 'GET',
-        headers: <String, dynamic>{},
-        extra: _extra,
-      ),
-      data: _data,
-    );
-    final value = ApplicationResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<ApplicationLogsResponse> getApplicationLogsById(
-    int applicationId, {
-    Map<String, dynamic> queryParameters = const {},
-  }) async {
-    const _extra = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-      '/v2/applications/$applicationId/logs',
-      queryParameters: queryParameters,
-      options: dio.Options(
-        method: 'GET',
-        headers: <String, dynamic>{},
-        extra: _extra,
-      ),
-      data: _data,
-    );
-    final value = ApplicationLogsResponse.fromJson(_result.data!);
-    return value;
-  }
 }

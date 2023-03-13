@@ -3,8 +3,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algorand_dart/src/crypto/crypto.dart';
-import 'package:algorand_dart/src/models/models.dart';
 
 class ContractTemplate {
   final Address address;

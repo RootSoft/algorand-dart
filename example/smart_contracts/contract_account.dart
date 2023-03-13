@@ -3,15 +3,11 @@ import 'dart:typed_data';
 import 'package:algorand_dart/algorand_dart.dart';
 
 void main() async {
-  final algodClient = AlgodClient(
-    apiUrl: AlgoExplorer.TESTNET_ALGOD_API_URL,
-  );
-
-  final algorand = Algorand(algodClient: algodClient);
+  final algorand = Algorand();
   final arguments = <Uint8List>[];
   arguments.add(Uint8List.fromList([123]));
 
-  final result = await algorand.applicationManager.compileTEAL(sampleArgsTeal);
+  final result = await algorand.compileTEAL(sampleArgsTeal);
 
   final logicSig = LogicSignature.fromProgram(
     program: result.program,

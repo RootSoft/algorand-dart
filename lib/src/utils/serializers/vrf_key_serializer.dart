@@ -18,6 +18,8 @@ class VRFKeySerializer implements JsonConverter<VRFPublicKey?, dynamic> {
     if (data is String) {
       return VRFPublicKey(bytes: base64Decode(data));
     }
+
+    return null;
   }
 
   @override

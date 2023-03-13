@@ -32,6 +32,7 @@ test/development/
 .pub-cache/
 .pub/
 build/
+venv/
 
 # Android related
 **/android/**/gradle-wrapper.jar

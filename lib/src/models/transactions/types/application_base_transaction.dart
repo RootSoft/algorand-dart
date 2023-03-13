@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/api/box/box.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
-import 'package:algorand_dart/src/models/transactions/on_completion_model.dart';
 
+/// TODO Deprecate and use the new [ApplicationTransaction] which contains
+/// TODO all the fields from create & update.
 class ApplicationBaseTransaction extends RawTransaction {
   /// ApplicationID is the application being interacted with,
   /// or 0 if creating a new application.
@@ -30,6 +32,9 @@ class ApplicationBaseTransaction extends RawTransaction {
   /// approval-program and clear-state-program. The access is read-only.
   List<int>? foreignAssets;
 
+  /// The boxes that should be made available for the runtime of the program.
+  List<AppBoxReference>? appBoxReferences;
+
   ApplicationBaseTransaction.builder(
     ApplicationBaseTransactionBuilder builder,
   )   : applicationId = builder.applicationId,
@@ -38,6 +43,7 @@ class ApplicationBaseTransaction extends RawTransaction {
         accounts = builder.accounts,
         foreignApps = builder.foreignApps,
         foreignAssets = builder.foreignAssets,
+        appBoxReferences = builder.appBoxReferences,
         super(
           type: builder.type.value,
           fee: builder.fee,
@@ -61,6 +67,13 @@ class ApplicationBaseTransaction extends RawTransaction {
     fields['apat'] = accounts?.map((account) => account.publicKey).toList();
     fields['apfa'] = foreignApps;
     fields['apas'] = foreignAssets;
+    fields['apbx'] = appBoxReferences
+        ?.map(
+          (abr) =>
+              BoxReference.fromAppBoxReference(abr, foreignApps, applicationId)
+                  .toMessagePack(),
+        )
+        .toList();
 
     return fields;
   }
