@@ -1,6 +1,6 @@
 name: algorand_dart
 description: Unofficial community SDK to interact with the Algorand network, for Dart & Flutter
-version: 2.0.0-dev.5
+version: 2.0.0-dev.6
 homepage: https://www.algorand.com
 repository: https://github.com/RootSoft/algorand-dart
 issue_tracker: https://github.com/RootSoft/algorand-dart/issues
@@ -38,14 +38,9 @@ dependencies:
   retrofit: ^3.3.1
 
   # Messagepack
-  #   msgpack_dart: ^1.0.0
-  msgpack_dart:
-    git:
-      url: https://github.com/RootSoft/msgpack_dart.git
+  algorand_msgpack: ^1.0.0
 
-  algorand_json:
-    git:
-      url: https://github.com/RootSoft/algorand-json.git
+  algorand_json: ^0.0.1
 
   # Key Management Daemon API
   algorand_kmd: ^1.0.0

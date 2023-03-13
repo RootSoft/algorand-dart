@@ -12,17 +12,24 @@ packages:
   algorand_json:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "58b8d5e1e8c4aeb4b40948a2256881fa0135246d"
-      url: "https://github.com/RootSoft/algorand-json.git"
-    source: git
+      name: algorand_json
+      sha256: f718e83bf2e7fb5c0246f10cda18fed0524692a4004ab2ee4495a8166893a64a
+      url: "https://pub.dev"
+    source: hosted
     version: "0.0.1"
   algorand_kmd:
     dependency: "direct main"
     description:
       name: algorand_kmd
       sha256: "9fb8daba25064ecd18b2668bf8551ad2feb3e97d5055e7bbaca677676c02ee1c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  algorand_msgpack:
+    dependency: "direct main"
+    description:
+      name: algorand_msgpack
+      sha256: "5492b1082ee266141372f8290625ac236255c02673a64060296818fa154d4218"
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
@@ -346,15 +353,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  msgpack_dart:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "47ae50c6b8a88d7a633b25446af4d0f0fc9cb22b"
-      url: "https://github.com/RootSoft/msgpack_dart.git"
-    source: git
-    version: "1.0.0"
   node_preamble:
     dependency: transitive
     description:
@@ -628,4 +626,4 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.19.0 <4.0.0"
+  dart: ">=2.19.0 <3.0.0"
