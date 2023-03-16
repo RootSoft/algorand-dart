@@ -2,7 +2,6 @@ import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algorand_dart/src/api/algod/signed_transaction_with_ad.dart';
 import 'package:algorand_dart/src/api/converters/global_state_delta_converter.dart';
 import 'package:algorand_dart/src/api/converters/local_state_delta_converter.dart';
-import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'algod_eval_delta.g.dart';

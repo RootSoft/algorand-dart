@@ -20,7 +20,7 @@ class AccountsAlgodApi {
   /// Returns the account information.
   Future<AccountInformation> getAccountByAddress(
     String address, {
-    Exclude? exclude,
+    List<Exclude>? exclude,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
@@ -28,7 +28,7 @@ class AccountsAlgodApi {
     return _api.execute<AccountInformation>(
       () => _service.getAccountByAddress(
         address: address,
-        exclude: exclude,
+        exclude: exclude?.map((e) => e.toJson()).join(','),
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,

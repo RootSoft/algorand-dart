@@ -6,7 +6,6 @@ import 'package:algorand_dart/src/crypto/crypto.dart';
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
-import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:algorand_dart/src/utils/utils.dart';
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart' as crypto;
