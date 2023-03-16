@@ -1,5 +1,12 @@
 # Changelog
 
+
+## 2.0.0-dev.7 - 2023-03-16
+
+- List exclude
+- Export serializers
+- Updated dependencies
+
 ## 2.0.0-dev.6 - 2022-12-15
 
 - Boxes support
