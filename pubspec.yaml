@@ -31,7 +31,7 @@ dependencies:
   json_annotation: ^4.8.0
 
   # Equality
-  collection: ^1.17.1
+  collection: ^1.17.0
 
   # HTTP & REST
   dio: ^4.0.6
