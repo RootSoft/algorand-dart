@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0-dev.8 - 2023-03-16
+
+- Reverted collection dependency
 
 ## 2.0.0-dev.7 - 2023-03-16
 
