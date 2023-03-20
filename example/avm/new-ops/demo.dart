@@ -32,7 +32,7 @@ void main() async {
   final payTx = await algorand.createPaymentTransaction(
     sender: account1.address,
     receiver: appAddress,
-    amount: 10000000,
+    amount: BigInt.from(10000000),
   );
 
   final sTx = await payTx.sign(account1);

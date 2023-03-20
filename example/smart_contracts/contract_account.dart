@@ -19,7 +19,7 @@ void main() async {
   final transaction = await (PaymentTransactionBuilder()
         ..sender = logicSig.toAddress()
         ..noteText = 'Logic Signature'
-        ..amount = 100000
+        ..amount = BigInt.from(100000)
         ..receiver = Address.fromAlgorandAddress(receiver)
         ..suggestedParams = params)
       .build();

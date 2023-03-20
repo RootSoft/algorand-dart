@@ -41,7 +41,7 @@ void main() async {
   final tx = await (PaymentTransactionBuilder()
         ..sender = msa.toAddress()
         ..receiver = account3.address
-        ..amount = 1000000
+        ..amount = BigInt.from(1000000)
         ..noteText = ' These are some notes encoded in some way!'
         ..suggestedParams = params)
       .build();

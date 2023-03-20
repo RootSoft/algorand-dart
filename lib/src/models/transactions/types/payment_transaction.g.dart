@@ -9,7 +9,7 @@ part of 'payment_transaction.dart';
 PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) =>
     PaymentTransaction(
       receiver: const AddressSerializer().fromJson(json['rcv']),
-      amount: json['amt'] as int?,
+      amount: const NullableBigIntSerializer().fromJson(json['amt']),
       closeRemainderTo: const AddressSerializer().fromJson(json['close']),
       fee: json['fee'] as int?,
       firstValid: json['fv'] as int?,
@@ -38,6 +38,6 @@ Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': const AddressSerializer().toJson(instance.rekeyTo),
       'rcv': const AddressSerializer().toJson(instance.receiver),
-      'amt': instance.amount,
+      'amt': const NullableBigIntSerializer().toJson(instance.amount),
       'close': const AddressSerializer().toJson(instance.closeRemainderTo),
     };

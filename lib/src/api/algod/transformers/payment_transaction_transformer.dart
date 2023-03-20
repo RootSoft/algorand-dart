@@ -12,8 +12,8 @@ class PaymentTransactionTransformer
     }
 
     return PaymentTransactionResponse(
-      amount: BigInt.from(input.amount ?? 0),
-      closeAmount: BigInt.from(input.closeAmount ?? 0),
+      amount: input.amount ?? BigInt.zero,
+      closeAmount: input.closeAmount,
       receiver: input.receiver?.encodedAddress ?? '',
       closeRemainderTo: input.closeRemainderTo?.encodedAddress,
     );

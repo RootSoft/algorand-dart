@@ -98,14 +98,14 @@ class LimitOrder {
           ..firstValid = firstValid
           ..lastValid = lastValid
           ..genesisHashB64 = genesisHash
-          ..amount = microAlgoAmount
+          ..amount = BigInt.from(microAlgoAmount)
           ..receiver = sender.address)
         .build();
 
     final tx2 = await (AssetTransferTransactionBuilder()
           ..sender = sender.address
           ..receiver = owner
-          ..amount = assetAmount
+          ..amount = BigInt.from(assetAmount)
           ..suggestedFeePerByte = feePerByte
           ..firstValid = firstValid
           ..lastValid = lastValid

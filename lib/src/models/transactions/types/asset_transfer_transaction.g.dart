@@ -10,7 +10,7 @@ AssetTransferTransaction _$AssetTransferTransactionFromJson(
         Map<String, dynamic> json) =>
     AssetTransferTransaction(
       assetId: json['xaid'] as int?,
-      amount: json['aamt'] as int?,
+      amount: const NullableBigIntSerializer().fromJson(json['aamt']),
       assetSender: const AddressSerializer().fromJson(json['asnd']),
       receiver: const AddressSerializer().fromJson(json['arcv']),
       closeTo: const AddressSerializer().fromJson(json['aclose']),
@@ -42,7 +42,7 @@ Map<String, dynamic> _$AssetTransferTransactionToJson(
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': const AddressSerializer().toJson(instance.rekeyTo),
       'xaid': instance.assetId,
-      'aamt': instance.amount,
+      'aamt': const NullableBigIntSerializer().toJson(instance.amount),
       'asnd': const AddressSerializer().toJson(instance.assetSender),
       'arcv': const AddressSerializer().toJson(instance.receiver),
       'aclose': const AddressSerializer().toJson(instance.closeTo),

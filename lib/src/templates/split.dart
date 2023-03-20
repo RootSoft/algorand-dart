@@ -106,7 +106,7 @@ class Split {
           ..sender = contract.address
           ..receiver = receiver1
           ..suggestedFeePerByte = feePerByte
-          ..amount = amountReceiverOne
+          ..amount = BigInt.from(amountReceiverOne)
           ..firstValid = firstValid
           ..lastValid = lastValid
           ..genesisHashB64 = genesisHash)
@@ -116,7 +116,7 @@ class Split {
           ..sender = contract.address
           ..receiver = receiver2
           ..suggestedFeePerByte = feePerByte
-          ..amount = amountReceiverTwo
+          ..amount = BigInt.from(amountReceiverTwo)
           ..firstValid = firstValid
           ..lastValid = lastValid
           ..genesisHashB64 = genesisHash)

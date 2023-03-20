@@ -13,7 +13,7 @@ class AssetConfigTransactionBuilder
 
   /// The total number of base units of the asset to create.
   /// This number cannot be changed. Required on creation.
-  int? totalAssetsToCreate;
+  BigInt? totalAssetsToCreate;
 
   /// The number of digits to use after the decimal point when displaying
   /// the asset.

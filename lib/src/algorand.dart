@@ -381,7 +381,7 @@ class Algorand {
   Future<String> sendPayment({
     required Account account,
     required Address recipient,
-    required int amount,
+    required BigInt amount,
     String? note,
     bool waitForConfirmation = false,
     int? timeout,
@@ -678,7 +678,7 @@ class Algorand {
   Future<PaymentTransaction> createPaymentTransaction({
     required Address sender,
     required Address receiver,
-    required int amount,
+    required BigInt amount,
     String? note,
     TransactionParams? suggestedParams,
   }) async {
@@ -710,7 +710,7 @@ class Algorand {
     required Address sender,
     required String assetName,
     required String unitName,
-    required int totalAssetsToCreate,
+    required BigInt totalAssetsToCreate,
     required int decimals,
     bool defaultFrozen = false,
     Address? managerAddress,
@@ -781,7 +781,7 @@ class Algorand {
   Future<AssetTransferTransaction> createAssetTransferTransaction({
     required Address sender,
     int? assetId,
-    int? amount,
+    BigInt? amount,
     Address? assetSender,
     Address? receiver,
     Address? closeTo,

@@ -10,7 +10,7 @@ AssetConfigTransaction _$AssetConfigTransactionFromJson(
         Map<String, dynamic> json) =>
     AssetConfigTransaction(
       assetId: json['caid'] as int?,
-      total: json['t'] as int?,
+      total: const NullableBigIntSerializer().fromJson(json['t']),
       decimals: json['dc'] as int? ?? 0,
       defaultFrozen: json['df'] as bool?,
       unitName: json['un'] as String?,
@@ -49,7 +49,7 @@ Map<String, dynamic> _$AssetConfigTransactionToJson(
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': const AddressSerializer().toJson(instance.rekeyTo),
       'caid': instance.assetId,
-      't': instance.total,
+      't': const NullableBigIntSerializer().toJson(instance.total),
       'dc': instance.decimals,
       'df': instance.defaultFrozen,
       'un': instance.unitName,

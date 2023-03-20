@@ -14,7 +14,7 @@ void main() async {
   final tx = await algorand.createPaymentTransaction(
     sender: account.address,
     receiver: account.address,
-    amount: 0,
+    amount: BigInt.zero,
     note: 'note',
   );
 
@@ -40,13 +40,13 @@ void main() async {
   final p1Tx = await algorand.createPaymentTransaction(
     sender: account.address,
     receiver: firstAddress,
-    amount: 1000000,
+    amount: BigInt.from(1000000),
   );
 
   final p2Tx = await algorand.createPaymentTransaction(
     sender: account.address,
     receiver: secondAddress,
-    amount: 1000000,
+    amount: BigInt.from(1000000),
   );
 
   final txs = AtomicTransfer.group([p1Tx, p2Tx]);

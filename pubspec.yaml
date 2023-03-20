@@ -38,7 +38,7 @@ dependencies:
   retrofit: ^3.3.1
 
   # Messagepack
-  algorand_msgpack: ^1.0.0
+  algorand_msgpack: ^1.0.1
 
   algorand_json: ^0.0.1
 

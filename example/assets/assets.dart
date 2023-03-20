@@ -63,7 +63,7 @@ Future<int> createAsset({
   // Create the asset
   final tx = await (AssetConfigTransactionBuilder()
         ..sender = sender.address
-        ..totalAssetsToCreate = 10000
+        ..totalAssetsToCreate = BigInt.from(10000)
         ..decimals = 0
         ..unitName = 'myunit'
         ..assetName = 'my longer asset name'
@@ -179,7 +179,7 @@ Future<bool> transfer({
         ..assetId = assetId
         ..sender = sender.address
         ..receiver = receiver.address
-        ..amount = 10
+        ..amount = BigInt.from(10)
         ..suggestedParams = params)
       .build();
 

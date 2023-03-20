@@ -17,7 +17,7 @@ class AssetConfigTransactionTransformer
       parameters: AssetParameters(
         decimals: input.decimals ?? 0,
         creator: '',
-        total: BigInt.from(input.total ?? 0),
+        total: input.total ?? BigInt.zero,
         clawback: input.clawbackAddress?.encodedAddress,
         defaultFrozen: input.defaultFrozen,
         freeze: input.freezeAddress?.encodedAddress,

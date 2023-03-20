@@ -20,7 +20,7 @@ void main() async {
   final transaction = await (PaymentTransactionBuilder()
         ..sender = account.address
         ..noteText = 'Hello world'
-        ..amount = 100000
+        ..amount = BigInt.from(100000)
         ..receiver = receiver
         ..suggestedParams = params)
       .build();

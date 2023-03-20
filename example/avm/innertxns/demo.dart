@@ -24,7 +24,7 @@ void main() async {
       algorand: algorand,
       sender: account,
       receiver: applicationAddress,
-      amount: 500000,
+      amount: BigInt.from(500000),
     ),
     await getApplicationCallTransaction(
       algorand: algorand,
@@ -119,7 +119,7 @@ Future<PaymentTransaction> getFundTransaction({
   required Algorand algorand,
   required Account sender,
   required Address receiver,
-  required int amount,
+  required BigInt amount,
 }) async {
   // Get the suggested transaction parameters
   final params = await algorand.getSuggestedTransactionParams();
