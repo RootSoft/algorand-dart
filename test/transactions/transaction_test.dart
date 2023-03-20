@@ -47,7 +47,7 @@ void main() {
           ..firstValid = 322575
           ..lastValid = 323575
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
-          ..totalAssetsToCreate = 100
+          ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = decimals
           ..unitName = 'tst'
           ..assetName = 'testcoin'
@@ -74,7 +74,31 @@ void main() {
     final tx = await (PaymentTransactionBuilder()
           ..sender = sender
           ..receiver = receiver
-          ..amount = 100
+          ..amount = BigInt.from(100)
+          ..firstValid = 301
+          ..lastValid = 1300)
+        .build();
+
+    final b = Encoder.encodeMessagePack(tx.toMessagePack());
+    final o = Encoder.decodeMessagePack(b);
+    final otx = PaymentTransaction.fromJson(o);
+
+    expectEqualTransaction(tx, otx);
+  });
+
+  test('Test serialization msgpack uint64', () async {
+    final sender = Address.fromAlgorandAddress(
+      'VKM6KSCTDHEM6KGEAMSYCNEGIPFJMHDSEMIRAQLK76CJDIRMMDHKAIRMFQ',
+    );
+
+    final receiver = Address.fromAlgorandAddress(
+      'VKM6KSCTDHEM6KGEAMSYCNEGIPFJMHDSEMIRAQLK76CJDIRMMDHKAIRMFQ',
+    );
+
+    final tx = await (PaymentTransactionBuilder()
+          ..sender = sender
+          ..receiver = receiver
+          ..amount = BigIntEncoder.MAX_UINT64 - BigInt.one
           ..firstValid = 301
           ..lastValid = 1300)
         .build();
@@ -123,7 +147,7 @@ void main() {
           ..sender = address
           ..receiver = address
           ..closeTo = address
-          ..amount = 1
+          ..amount = BigInt.from(1)
           ..flatFee = 10
           ..firstValid = 322575
           ..lastValid = 323576
@@ -159,7 +183,7 @@ void main() {
           ..sender = address
           ..assetSender = address
           ..receiver = address
-          ..amount = 1
+          ..amount = BigInt.one
           ..flatFee = 10
           ..firstValid = 322575
           ..lastValid = 323575
@@ -278,7 +302,7 @@ void main() {
     final tx = await (PaymentTransactionBuilder()
           ..sender = lsig.toAddress()
           ..receiver = address
-          ..amount = 100
+          ..amount = BigInt.from(100)
           ..firstValid = 301
           ..lastValid = 1300
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=')
@@ -323,7 +347,7 @@ void main() {
     final tx = await (PaymentTransactionBuilder()
           ..sender = lsig.toAddress()
           ..receiver = address
-          ..amount = 100
+          ..amount = BigInt.from(100)
           ..firstValid = 301
           ..lastValid = 1300
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=')
@@ -375,7 +399,7 @@ void main() {
           ..sender = sender
           ..suggestedFeePerByte = 4
           ..receiver = receiver
-          ..amount = 1000
+          ..amount = BigInt.from(1000)
           ..firstValid = 12466
           ..lastValid = 13466
           ..noteB64 = '6gAVR0Nsv5Y='
@@ -416,7 +440,7 @@ void main() {
         'UPYAFLHSIPMJOHVXU2MPLQ46GXJKSDCEMZ6RLCQ7GWB5PRDKJUWKKXECXI');
 
     final fee = 1000;
-    final amount = 2000;
+    final amount = BigInt.from(2000);
     final genesisId = 'devnet-v1.0';
     final genesisHash = 'sC3P7e2SdbqKJK0tbiCdK9tdSpbe6XeCGKdoNzmlj0E=';
     final firstValid = 710399;
@@ -514,7 +538,7 @@ void main() {
     final tx = await (PaymentTransactionBuilder()
           ..sender = sender
           ..receiver = receiver
-          ..amount = 100
+          ..amount = BigInt.from(100)
           ..firstValid = 301
           ..lastValid = 1300)
         .build();
@@ -557,7 +581,7 @@ void main() {
           ..firstValid = 322575
           ..lastValid = 323575
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
-          ..totalAssetsToCreate = 100
+          ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = 5
           ..unitName = 'tst'
           ..assetName = 'testcoin'
@@ -575,7 +599,7 @@ void main() {
           ..firstValid = 322575
           ..lastValid = 323575
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
-          ..totalAssetsToCreate = 100
+          ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = 5
           ..unitName = 'tst'
           ..assetName = 'testcoin'
@@ -593,7 +617,7 @@ void main() {
           ..firstValid = 322575
           ..lastValid = 323575
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
-          ..totalAssetsToCreate = 100
+          ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = 5
           ..unitName = 'tst'
           ..assetName = 'testcoin'
@@ -611,7 +635,7 @@ void main() {
           ..firstValid = 322575
           ..lastValid = 323575
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
-          ..totalAssetsToCreate = 100
+          ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = 5
           ..unitName = 'tst'
           ..assetName = 'testcoin'
