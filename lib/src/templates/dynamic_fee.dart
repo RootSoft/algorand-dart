@@ -70,7 +70,7 @@ class DynamicFee {
           ..firstValid = firstValid
           ..lastValid = lastValid
           ..genesisHashB64 = genesisHash
-          ..amount = amount
+          ..amount = BigInt.from(amount)
           ..receiver = receiver
           ..closeRemainderTo = closeTo
           ..lease = lease)
@@ -100,7 +100,7 @@ class DynamicFee {
           ..lastValid = transaction.lastValid
           ..genesisId = transaction.genesisId
           ..genesisHash = transaction.genesisHash
-          ..amount = transaction.fee
+          ..amount = BigInt.from(transaction.fee ?? 0)
           ..receiver = transaction.sender)
         .build();
 

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:algorand_dart/src/utils/transformers/address_transformer.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -19,7 +20,8 @@ class AssetConfigTransaction extends RawTransaction {
   /// This number cannot be changed.
   /// Required on creation.
   @JsonKey(name: 't')
-  final int? total;
+  @NullableBigIntSerializer()
+  final BigInt? total;
 
   /// The number of digits to use after the decimal point when
   /// displaying the asset.

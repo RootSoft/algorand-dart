@@ -75,7 +75,7 @@ class HashTimeLockContract {
           ..firstValid = firstValid
           ..lastValid = lastValid
           ..genesisHashB64 = genesisHash
-          ..amount = 0
+          ..amount = BigInt.zero
           ..suggestedFeePerByte = feePerByte
           ..closeRemainderTo = receiver)
         .build();

@@ -23,7 +23,7 @@ void main() async {
       unitName: 'test',
       decimals: 0,
       note: '1',
-      totalAssetsToCreate: 10,
+      totalAssetsToCreate: BigInt.from(10),
       suggestedParams: params,
     );
 
@@ -33,7 +33,7 @@ void main() async {
       unitName: 'test',
       decimals: 0,
       note: '2',
-      totalAssetsToCreate: 10,
+      totalAssetsToCreate: BigInt.from(10),
       suggestedParams: params,
     );
 

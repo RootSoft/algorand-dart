@@ -31,7 +31,7 @@ class AssetManager {
     required Account account,
     required String assetName,
     required String unitName,
-    required int totalAssets,
+    required BigInt totalAssets,
     required int decimals,
     bool defaultFrozen = false,
     Address? managerAddress,
@@ -191,7 +191,7 @@ class AssetManager {
     required int assetId,
     required Account account,
     required Address receiver,
-    required int amount,
+    required BigInt amount,
   }) async {
     // Fetch the suggested transaction params
     final params = await transactionRepository.getSuggestedTransactionParams();
@@ -291,7 +291,7 @@ class AssetManager {
   Future<String> revoke({
     required int assetId,
     required Account account,
-    required int amount,
+    required BigInt amount,
     required Address revokeAddress,
     Address? clawbackAddress,
   }) async {

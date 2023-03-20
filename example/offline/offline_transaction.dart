@@ -50,7 +50,7 @@ Future<File> exportSignedTransaction({
   final tx = await (PaymentTransactionBuilder()
         ..sender = account.address
         ..receiver = receiver
-        ..amount = 100000
+        ..amount = BigInt.from(100000)
         ..noteText = 'Hello world'
         ..suggestedParams = params)
       .build();

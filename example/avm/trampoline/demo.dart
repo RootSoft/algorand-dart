@@ -27,7 +27,7 @@ void main() async {
   final payTx = await algorand.createPaymentTransaction(
     sender: account1.address,
     receiver: fundAppAddress,
-    amount: 1e5.toInt(),
+    amount: BigInt.from(1e5.toInt()),
   );
 
   // Fund to proxy app
@@ -38,7 +38,10 @@ void main() async {
   final appCreateTx =
       await getAppCreateTx(algorand: algorand, account: account1);
   final pay2Tx = await algorand.createPaymentTransaction(
-      sender: account1.address, receiver: fundAppAddress, amount: 1e5.toInt());
+    sender: account1.address,
+    receiver: fundAppAddress,
+    amount: BigInt.from(1e5.toInt()),
+  );
 
   // Create atc to handle method calling for us
   final atc = AtomicTransactionComposer();

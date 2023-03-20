@@ -19,7 +19,7 @@ void main() async {
   final tx = await (PaymentTransactionBuilder()
         ..sender = account1.address
         ..receiver = account1.address
-        ..amount = Algo.toMicroAlgos(0)
+        ..amount = BigInt.from(Algo.toMicroAlgos(0))
         ..rekeyTo = account2.address
         ..suggestedParams = params)
       .build();

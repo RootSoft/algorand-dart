@@ -12,7 +12,7 @@ class AssetTransferTransactionTransformer extends AlgodTransformer<
     }
 
     return AssetTransferTransactionResponse(
-      amount: BigInt.from(input.amount ?? 0),
+      amount: input.amount ?? BigInt.zero,
       assetId: input.assetId ?? 0,
       receiver: input.receiver?.encodedAddress ?? '',
       closeAmount: BigInt.zero,

@@ -23,7 +23,7 @@ void main() async {
   final p1Tx = await algorand.createPaymentTransaction(
     sender: account.address,
     receiver: appAddress,
-    amount: 1000000,
+    amount: BigInt.from(1000000),
   );
 
   final appCallTx = await algorand.createApplicationCallTransaction(

@@ -1,8 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:algorand_dart/src/models/models.dart';
-import 'package:algorand_dart/src/models/transactions/builders/transaction_builders.dart';
-import 'package:algorand_dart/src/utils/serializers/serializers.dart';
+import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:algorand_dart/src/utils/transformers/address_transformer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,7 +17,8 @@ class AssetTransferTransaction extends RawTransaction {
   /// A zero amount transferred to self allocates that asset in the account's
   /// Asset map.
   @JsonKey(name: 'aamt')
-  final int? amount;
+  @NullableBigIntSerializer()
+  final BigInt? amount;
 
   /// The sender of the transfer.
   /// The regular sender field should be used and this one set to the zero value

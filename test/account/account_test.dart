@@ -31,7 +31,7 @@ void main() {
           ..sender = sender
           ..receiver = receiver
           ..flatFee = 1000
-          ..amount = 1234
+          ..amount = BigInt.from(1234)
           ..firstValid = 106575
           ..lastValid = 107575)
         .build();
@@ -82,7 +82,7 @@ void main() {
           ..lastValid = 973508
           ..noteB64 = 'tFF5Ofz60nE='
           ..genesisId = 'testnet-v31.0'
-          ..amount = 5000)
+          ..amount = BigInt.from(5000))
         .build();
 
     final goldenTxId = 'KY6I7NQXQDAMDUCAVATI45BAODW6NRYQKFH4KIHLH2HQI4DO4XBA';
@@ -163,7 +163,7 @@ void main() {
           ..noteB64 = '8xMCTuLQ810='
           ..genesisId = 'devnet-v1.0'
           ..genesisHashB64 = 'sC3P7e2SdbqKJK0tbiCdK9tdSpbe6XeCGKdoNzmlj0E='
-          ..amount = 2000
+          ..amount = BigInt.from(2000)
           ..receiver = to)
         .build();
 

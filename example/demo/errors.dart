@@ -17,7 +17,7 @@ void main() async {
     final paymentTx = await algorand.createPaymentTransaction(
       sender: account.address,
       receiver: account.address,
-      amount: Algo.toMicroAlgos(1.0),
+      amount: BigInt.from(Algo.toMicroAlgos(1.0)),
     );
 
     final signedTx = await paymentTx.sign(account);

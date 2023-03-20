@@ -10,7 +10,7 @@ class PaymentTransactionBuilder
   /// The total amount to be sent in microAlgos.
   /// Amounts are returned in microAlgos - the base unit for Algos.
   /// Micro denotes a unit x 10^-6. 1 Algo equals 1,000,000 microAlgos.
-  int? amount;
+  BigInt? amount;
 
   /// When set, indicates that the sending account should be closed and all
   /// remaining funds be transferred to this address.

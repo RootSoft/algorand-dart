@@ -11,7 +11,7 @@ class AssetTransferTransactionBuilder
   /// The amount of the asset to be transferred.
   /// A zero amount transferred to self allocates that asset in the account's
   /// Asset map.
-  int? amount;
+  BigInt? amount;
 
   /// The sender of the transfer.
   /// The regular sender field should be used and this one set to the zero value

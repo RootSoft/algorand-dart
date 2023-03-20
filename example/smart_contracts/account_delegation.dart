@@ -24,7 +24,7 @@ void main() async {
   final transaction = await (PaymentTransactionBuilder()
         ..sender = account.address
         ..noteText = 'Account delegation'
-        ..amount = 100000
+        ..amount = BigInt.from(100000)
         ..receiver = Address.fromAlgorandAddress(receiver)
         ..suggestedParams = params)
       .build();

@@ -77,7 +77,7 @@ class PeriodicPayment {
           ..suggestedFeePerByte = feePerByte
           ..firstValid = firstValid
           ..lastValid = firstValid + withdrawingWindow
-          ..amount = amount
+          ..amount = BigInt.from(amount)
           ..genesisHashB64 = genesisHash
           ..lease = lease)
         .build();

@@ -30,7 +30,7 @@ void main() async {
   final tx1 = await (PaymentTransactionBuilder()
         ..sender = account1.address
         ..receiver = account3.address
-        ..amount = 10000
+        ..amount = BigInt.from(10000)
         ..suggestedParams = params)
       .build();
 
@@ -38,7 +38,7 @@ void main() async {
   final tx2 = await (PaymentTransactionBuilder()
         ..sender = account2.address
         ..receiver = account1.address
-        ..amount = 20000
+        ..amount = BigInt.from(20000)
         ..suggestedParams = params)
       .build();
 
