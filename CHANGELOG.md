@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0-dev.9 - 2023-03-20
+
+- Better support for uint64 (de)serialization (msgpack/json)
+
 ## 2.0.0-dev.8 - 2023-03-16
 
 - Reverted collection dependency
