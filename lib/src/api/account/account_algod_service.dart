@@ -11,7 +11,7 @@ abstract class AccountAlgodService {
   @GET('/v2/accounts/{address}')
   Future<AccountInformation> getAccountByAddress({
     @Path('address') required String address,
-    @Query('exclude') String? exclude,
+    @Query('exclude') Exclude? exclude,
     @CancelRequest() CancelToken? cancelToken,
     @SendProgress() ProgressCallback? onSendProgress,
     @ReceiveProgress() ProgressCallback? onReceiveProgress,

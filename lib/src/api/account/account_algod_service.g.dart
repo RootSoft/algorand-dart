@@ -27,7 +27,7 @@ class _AccountAlgodService implements AccountAlgodService {
     onReceiveProgress,
   }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'exclude': exclude};
+    final queryParameters = <String, dynamic>{r'exclude': exclude?.toJson()};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

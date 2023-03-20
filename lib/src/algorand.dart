@@ -421,7 +421,7 @@ class Algorand {
   /// Returns the account information.
   Future<AccountInformation> getAccountByAddress(
     String address, {
-    List<Exclude>? exclude,
+    Exclude? exclude,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
