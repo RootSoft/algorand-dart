@@ -34,7 +34,7 @@ void main() async {
   final sTx = await payTx.sign(account1);
   await algorand.sendTransaction(sTx, waitForConfirmation: true);
 
-  params = params.copyWith(fee: params.minFee * 4);
+  params = params.copyWith(fee: params.minFee * BigInt.from(4));
   final appCreateTx =
       await getAppCreateTx(algorand: algorand, account: account1);
   final pay2Tx = await algorand.createPaymentTransaction(

@@ -27,8 +27,8 @@ class MethodCallParams {
 
   final TxnSigner signer;
   final Address sender;
-  final int? fee;
-  final int? flatFee;
+  final BigInt? fee;
+  final BigInt? flatFee;
   final int firstValid;
   final int lastValid;
   final Uint8List? note;
@@ -74,8 +74,8 @@ class MethodCallParams {
     Uint8List? genesisHash,
     int? firstValid,
     int? lastValid,
-    int? fee,
-    int? flatFee,
+    BigInt? fee,
+    BigInt? flatFee,
     List<dynamic>? methodArgs,
     TEALProgram? approvalProgram,
     TEALProgram? clearStateProgram,

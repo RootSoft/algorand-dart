@@ -96,7 +96,7 @@ class ApplicationTransaction extends RawTransaction {
     required this.foreignApps,
     required this.foreignAssets,
     required this.boxes,
-    int? fee,
+    BigInt? fee,
     int? firstValid,
     Uint8List? genesisHash,
     int? lastValid,

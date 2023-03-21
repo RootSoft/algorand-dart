@@ -1,7 +1,9 @@
 export 'address_serializer.dart';
 export 'base32_serializer.dart';
 export 'base64_serializer.dart';
+export 'bigint_serializer.dart';
 export 'byte_array_serializer.dart';
+export 'list_address_converter.dart';
 export 'list_signed_transaction_converter.dart';
 export 'participation_key_serializer.dart';
 export 'signature_serializer.dart';

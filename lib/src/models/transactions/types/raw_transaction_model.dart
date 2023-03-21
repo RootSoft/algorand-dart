@@ -29,13 +29,14 @@ class RawTransaction extends Equatable {
   static const TX_PREFIX = 'TX';
 
   /// The minimum transaction fees (in micro algos).
-  static const MIN_TX_FEE_UALGOS = 1000;
+  static final MIN_TX_FEE_UALGOS = BigInt.from(1000);
 
   /// Paid by the sender to the FeeSink to prevent denial-of-service.
   /// The minimum fee on Algorand is currently 1000 microAlgos.
   /// This field cannot be combined with flat fee.
   @JsonKey(name: 'fee')
-  int? fee;
+  @NullableBigIntSerializer()
+  BigInt? fee;
 
   /// The first round for when the transaction is valid.
   /// If the transaction is sent prior to this round it will be rejected by
@@ -142,7 +143,7 @@ class RawTransaction extends Equatable {
   }
 
   /// Sets the transaction fee according to feePerByte * estimateTxSize.
-  Future setFeeByFeePerByte(int feePerByte) async {
+  Future setFeeByFeePerByte(BigInt feePerByte) async {
     fee = feePerByte;
     fee = await FeeCalculator.calculateFeePerByte(this, feePerByte);
   }

@@ -8,7 +8,7 @@ part of 'transaction_model.dart';
 
 Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       id: json['id'] as String?,
-      fee: json['fee'] as int,
+      fee: const BigIntSerializer().fromJson(json['fee']),
       firstValid: json['first-valid'] as int,
       lastValid: json['last-valid'] as int,
       sender: json['sender'] as String,
@@ -83,7 +83,7 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'confirmed-round': instance.confirmedRound,
       'created-application-index': instance.createdApplicationIndex,
       'created-asset-index': instance.createdAssetIndex,
-      'fee': instance.fee,
+      'fee': const BigIntSerializer().toJson(instance.fee),
       'first-valid': instance.firstValid,
       'genesis-hash': instance.genesisHash,
       'genesis-id': instance.genesisId,

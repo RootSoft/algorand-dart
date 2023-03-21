@@ -14,7 +14,7 @@ AssetTransferTransaction _$AssetTransferTransactionFromJson(
       assetSender: const AddressSerializer().fromJson(json['asnd']),
       receiver: const AddressSerializer().fromJson(json['arcv']),
       closeTo: const AddressSerializer().fromJson(json['aclose']),
-      fee: json['fee'] as int?,
+      fee: const NullableBigIntSerializer().fromJson(json['fee']),
       firstValid: json['fv'] as int?,
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
       lastValid: json['lv'] as int?,
@@ -30,7 +30,7 @@ AssetTransferTransaction _$AssetTransferTransactionFromJson(
 Map<String, dynamic> _$AssetTransferTransactionToJson(
         AssetTransferTransaction instance) =>
     <String, dynamic>{
-      'fee': instance.fee,
+      'fee': const NullableBigIntSerializer().toJson(instance.fee),
       'fv': instance.firstValid,
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
       'lv': instance.lastValid,

@@ -30,7 +30,7 @@ ApplicationTransaction _$ApplicationTransactionFromJson(
               ?.map((e) => BoxReference.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      fee: json['fee'] as int?,
+      fee: const NullableBigIntSerializer().fromJson(json['fee']),
       firstValid: json['fv'] as int?,
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
       lastValid: json['lv'] as int?,
@@ -46,7 +46,7 @@ ApplicationTransaction _$ApplicationTransactionFromJson(
 Map<String, dynamic> _$ApplicationTransactionToJson(
         ApplicationTransaction instance) =>
     <String, dynamic>{
-      'fee': instance.fee,
+      'fee': const NullableBigIntSerializer().toJson(instance.fee),
       'fv': instance.firstValid,
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
       'lv': instance.lastValid,

@@ -8,7 +8,7 @@ part of 'raw_transaction_model.dart';
 
 RawTransaction _$RawTransactionFromJson(Map<String, dynamic> json) =>
     RawTransaction(
-      fee: json['fee'] as int?,
+      fee: const NullableBigIntSerializer().fromJson(json['fee']),
       firstValid: json['fv'] as int?,
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
       lastValid: json['lv'] as int?,
@@ -23,7 +23,7 @@ RawTransaction _$RawTransactionFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RawTransactionToJson(RawTransaction instance) =>
     <String, dynamic>{
-      'fee': instance.fee,
+      'fee': const NullableBigIntSerializer().toJson(instance.fee),
       'fv': instance.firstValid,
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
       'lv': instance.lastValid,

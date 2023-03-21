@@ -40,7 +40,7 @@ class KeyRegistrationTransaction extends RawTransaction {
     this.voteFirst,
     this.voteLast,
     this.voteKeyDilution,
-    int? fee,
+    BigInt? fee,
     int? firstValid,
     Uint8List? genesisHash,
     int? lastValid,

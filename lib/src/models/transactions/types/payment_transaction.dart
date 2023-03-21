@@ -42,7 +42,7 @@ class PaymentTransaction extends RawTransaction {
     this.amount,
     this.closeAmount,
     this.closeRemainderTo,
-    int? fee,
+    BigInt? fee,
     int? firstValid,
     Uint8List? genesisHash,
     int? lastValid,

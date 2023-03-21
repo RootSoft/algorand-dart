@@ -30,7 +30,7 @@ void main() {
     final tx = await (PaymentTransactionBuilder()
           ..sender = sender
           ..receiver = receiver
-          ..flatFee = 1000
+          ..flatFee = BigInt.from(1000)
           ..amount = BigInt.from(1234)
           ..firstValid = 106575
           ..lastValid = 107575)
@@ -77,7 +77,7 @@ void main() {
           ..receiver = Address.fromAlgorandAddress(
             'DN7MBMCL5JQ3PFUQS7TMX5AH4EEKOBJVDUF4TCV6WERATKFLQF4MQUPZTA',
           )
-          ..flatFee = 217000
+          ..flatFee = BigInt.from(217000)
           ..firstValid = 972508
           ..lastValid = 973508
           ..noteB64 = 'tFF5Ofz60nE='
@@ -157,7 +157,7 @@ void main() {
 
     final tx = await (PaymentTransactionBuilder()
           ..sender = from
-          ..flatFee = 1000
+          ..flatFee = BigInt.from(1000)
           ..firstValid = 2063137
           ..lastValid = 2063137 + 1000
           ..noteB64 = '8xMCTuLQ810='

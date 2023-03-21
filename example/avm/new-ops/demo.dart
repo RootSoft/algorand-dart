@@ -65,7 +65,7 @@ void main() async {
 
   // Add a method call to "gitxn" method,
   // pass a the accounts we want to pay and how much to pay them
-  params = params.copyWith(fee: params.minFee * 3);
+  params = params.copyWith(fee: params.minFee * BigInt.from(3));
   await atc.addMethodCall(MethodCallParams(
     applicationId: appId,
     sender: account1.address,

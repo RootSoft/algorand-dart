@@ -11,7 +11,7 @@ PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) =>
       receiver: const AddressSerializer().fromJson(json['rcv']),
       amount: const NullableBigIntSerializer().fromJson(json['amt']),
       closeRemainderTo: const AddressSerializer().fromJson(json['close']),
-      fee: json['fee'] as int?,
+      fee: const NullableBigIntSerializer().fromJson(json['fee']),
       firstValid: json['fv'] as int?,
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
       lastValid: json['lv'] as int?,
@@ -26,7 +26,7 @@ PaymentTransaction _$PaymentTransactionFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$PaymentTransactionToJson(PaymentTransaction instance) =>
     <String, dynamic>{
-      'fee': instance.fee,
+      'fee': const NullableBigIntSerializer().toJson(instance.fee),
       'fv': instance.firstValid,
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
       'lv': instance.lastValid,

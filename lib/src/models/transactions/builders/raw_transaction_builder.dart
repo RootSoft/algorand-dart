@@ -9,19 +9,19 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
   /// Paid by the sender to the FeeSink to prevent denial-of-service.
   /// The minimum fee on Algorand is currently 1000 microAlgos.
   /// This field cannot be combined with flat fee.
-  int _fee = RawTransaction.MIN_TX_FEE_UALGOS;
+  BigInt _fee = RawTransaction.MIN_TX_FEE_UALGOS;
 
   /// Paid by the sender to the FeeSink to prevent denial-of-service.
   /// The minimum fee on Algorand is currently 1000 microAlgos.
   /// This field cannot be combined with flat fee.
-  int? suggestedFeePerByte;
+  BigInt? suggestedFeePerByte;
 
   /// This value will be used for the transaction fee, or 1000,
   /// whichever is higher.
   ///
   /// This field cannot be combined with fee.
   /// The minimum fee on Algorand is currently 1000 microAlgos.
-  int? flatFee;
+  BigInt? flatFee;
 
   /// The first round for when the transaction is valid.
   /// If the transaction is sent prior to this round it will be rejected by
@@ -112,7 +112,7 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
     lastValid = value.lastRound + 1000; // TODO Bigint
   }
 
-  int get fee => _fee;
+  BigInt get fee => _fee;
 
   Future<int> estimatedTransactionSize();
 

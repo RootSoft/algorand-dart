@@ -55,7 +55,7 @@ void main() async {
 
   // Set the fee to 2x min fee, this allows the inner app call to proceed even though the app address is not funded
   params = await algorand.getSuggestedTransactionParams();
-  params = params.copyWith(fee: params.minFee * 3);
+  params = params.copyWith(fee: params.minFee * BigInt.from(3));
 
   // Create atc to handle method calling for us
   final atc = AtomicTransactionComposer();

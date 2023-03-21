@@ -8,10 +8,10 @@ class FeeCalculator {
   ///
   /// If the result is less than the minimum fee, the minimum fee is used
   /// instead.
-  static Future<int> calculateFeePerByte(
-      RawTransaction transaction, int suggestedFeePerByte) async {
+  static Future<BigInt> calculateFeePerByte(
+      RawTransaction transaction, BigInt suggestedFeePerByte) async {
     final transactionSize = await estimateTransactionSize(transaction);
-    var transactionFee = suggestedFeePerByte * transactionSize;
+    var transactionFee = suggestedFeePerByte * BigInt.from(transactionSize);
 
     // Check min fee
     if (transactionFee < RawTransaction.MIN_TX_FEE_UALGOS) {
@@ -27,9 +27,9 @@ class FeeCalculator {
   ///
   /// If the result is less than the minimum fee, the minimum fee is used
   /// instead.
-  static Future<int> calculateTransactionFee(
-      int transactionSize, int suggestedFeePerByte) async {
-    var transactionFee = suggestedFeePerByte * transactionSize;
+  static Future<BigInt> calculateTransactionFee(
+      int transactionSize, BigInt suggestedFeePerByte) async {
+    var transactionFee = suggestedFeePerByte * BigInt.from(transactionSize);
 
     // Check min fee
     if (transactionFee < RawTransaction.MIN_TX_FEE_UALGOS) {

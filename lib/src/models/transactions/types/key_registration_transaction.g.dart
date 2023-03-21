@@ -14,7 +14,7 @@ KeyRegistrationTransaction _$KeyRegistrationTransactionFromJson(
       voteFirst: json['votefst'] as int?,
       voteLast: json['votelst'] as int?,
       voteKeyDilution: json['votekd'] as int?,
-      fee: json['fee'] as int?,
+      fee: const NullableBigIntSerializer().fromJson(json['fee']),
       firstValid: json['fv'] as int?,
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
       lastValid: json['lv'] as int?,
@@ -30,7 +30,7 @@ KeyRegistrationTransaction _$KeyRegistrationTransactionFromJson(
 Map<String, dynamic> _$KeyRegistrationTransactionToJson(
         KeyRegistrationTransaction instance) =>
     <String, dynamic>{
-      'fee': instance.fee,
+      'fee': const NullableBigIntSerializer().toJson(instance.fee),
       'fv': instance.firstValid,
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
       'lv': instance.lastValid,

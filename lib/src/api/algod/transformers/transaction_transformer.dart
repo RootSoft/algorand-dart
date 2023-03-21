@@ -19,7 +19,7 @@ class TransactionTransformer
 
     return Transaction(
       id: txn.id,
-      fee: txn.fee ?? 0,
+      fee: txn.fee ?? BigInt.zero,
       genesisId: block.genesisId,
       genesisHash: block.genesisHash,
       firstValid: txn.firstValid ?? 0,

@@ -27,7 +27,7 @@ class AssetFreezeTransaction extends RawTransaction {
     this.freezeAddress,
     this.assetId,
     this.freeze,
-    int? fee,
+    BigInt? fee,
     int? firstValid,
     Uint8List? genesisHash,
     int? lastValid,

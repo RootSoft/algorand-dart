@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
 import 'package:algorand_dart/src/utils/serializers/byte_array_serializer.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,9 +15,8 @@ class TransactionParams {
   /// Fee is in units of micro-Algos per byte.
   /// Fee may fall to zero but transactions must still have a fee of
   /// at least MinTxnFee for the current network protocol.
-  ///
-  /// todo Uint64
-  final int fee;
+  @BigIntSerializer()
+  final BigInt fee;
 
   /// GenesisID is an ID listed in the genesis block.
   final String genesisId;
@@ -33,9 +33,9 @@ class TransactionParams {
 
   /// The minimum transaction fee (not per byte) required for the txn to
   /// validate for the current network protocol.
-  ///
-  /// todo Uint64
-  final int minFee;
+  @JsonKey(name: 'min-fee')
+  @BigIntSerializer()
+  final BigInt minFee;
 
   TransactionParams({
     required this.consensusVersion,
@@ -53,11 +53,11 @@ class TransactionParams {
 
   TransactionParams copyWith({
     String? consensusVersion,
-    int? fee,
+    BigInt? fee,
     String? genesisId,
     Uint8List? genesisHash,
     int? lastRound,
-    int? minFee,
+    BigInt? minFee,
   }) {
     return TransactionParams(
       consensusVersion: consensusVersion ?? this.consensusVersion,

@@ -21,7 +21,7 @@ AssetConfigTransaction _$AssetConfigTransactionFromJson(
       reserveAddress: const AddressSerializer().fromJson(json['r']),
       freezeAddress: const AddressSerializer().fromJson(json['f']),
       clawbackAddress: const AddressSerializer().fromJson(json['c']),
-      fee: json['fee'] as int?,
+      fee: const NullableBigIntSerializer().fromJson(json['fee']),
       firstValid: json['fv'] as int?,
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
       lastValid: json['lv'] as int?,
@@ -37,7 +37,7 @@ AssetConfigTransaction _$AssetConfigTransactionFromJson(
 Map<String, dynamic> _$AssetConfigTransactionToJson(
         AssetConfigTransaction instance) =>
     <String, dynamic>{
-      'fee': instance.fee,
+      'fee': const NullableBigIntSerializer().toJson(instance.fee),
       'fv': instance.firstValid,
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
       'lv': instance.lastValid,

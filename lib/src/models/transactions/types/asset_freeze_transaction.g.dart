@@ -12,7 +12,7 @@ AssetFreezeTransaction _$AssetFreezeTransactionFromJson(
       freezeAddress: const AddressSerializer().fromJson(json['fadd']),
       assetId: json['faid'] as int?,
       freeze: json['afrz'] as bool?,
-      fee: json['fee'] as int?,
+      fee: const NullableBigIntSerializer().fromJson(json['fee']),
       firstValid: json['fv'] as int?,
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
       lastValid: json['lv'] as int?,
@@ -28,7 +28,7 @@ AssetFreezeTransaction _$AssetFreezeTransactionFromJson(
 Map<String, dynamic> _$AssetFreezeTransactionToJson(
         AssetFreezeTransaction instance) =>
     <String, dynamic>{
-      'fee': instance.fee,
+      'fee': const NullableBigIntSerializer().toJson(instance.fee),
       'fv': instance.firstValid,
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
       'lv': instance.lastValid,
