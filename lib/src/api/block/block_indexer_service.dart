@@ -10,7 +10,7 @@ abstract class BlockIndexerService {
 
   @GET('/v2/blocks/{round}')
   Future<Block> getBlockByRound({
-    @Path('round') required int round,
+    @Path('round') required BigInt round,
     @CancelRequest() CancelToken? cancelToken,
     @SendProgress() ProgressCallback? onSendProgress,
     @ReceiveProgress() ProgressCallback? onReceiveProgress,

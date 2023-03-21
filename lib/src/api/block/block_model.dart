@@ -1,5 +1,6 @@
 import 'package:algorand_dart/src/api/block/block.dart';
 import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'block_model.g.dart';
@@ -19,7 +20,9 @@ class Block {
   final BlockRewards? rewards;
 
   /// Current round on which this block was appended to the chain.
-  final int? round;
+  @JsonKey(name: 'round')
+  @NullableBigIntSerializer()
+  final BigInt? round;
 
   /// Sortition seed.
   final String? seed;

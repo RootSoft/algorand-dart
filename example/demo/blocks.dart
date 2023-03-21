@@ -14,7 +14,7 @@ void main() async {
   /// 17411560 - asset config
   try {
     final block = await algorand.getBlockByRound(
-      26031514,
+      BigInt.from(26031514),
       cancelToken: CancelToken(),
       onSendProgress: (count, total) {},
       onReceiveProgress: (count, total) {},
@@ -24,7 +24,8 @@ void main() async {
         .where((tx) => tx.applicationTransaction != null)
         .toList();
     print(txs);
-    final iBlock = await algorand.indexer().getBlockByRound(26031514);
+    final iBlock =
+        await algorand.indexer().getBlockByRound(BigInt.from(26031514));
     final iTxs = iBlock.transactions
         .where((tx) => tx.applicationTransaction != null)
         .toList();

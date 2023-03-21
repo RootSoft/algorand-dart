@@ -11,7 +11,7 @@ IndexerHealth _$IndexerHealthFromJson(Map<String, dynamic> json) =>
       dbAvailable: json['db-available'] as bool,
       isMigrating: json['is-migrating'] as bool,
       message: json['message'] as String,
-      round: json['round'] as int,
+      round: const BigIntSerializer().fromJson(json['round']),
       data: json['data'],
     );
 
@@ -21,5 +21,5 @@ Map<String, dynamic> _$IndexerHealthToJson(IndexerHealth instance) =>
       'db-available': instance.dbAvailable,
       'is-migrating': instance.isMigrating,
       'message': instance.message,
-      'round': instance.round,
+      'round': const BigIntSerializer().toJson(instance.round),
     };

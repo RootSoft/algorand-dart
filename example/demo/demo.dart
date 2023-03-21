@@ -6,14 +6,15 @@ void main() async {
   final algorand = Algorand(options: options);
 
   try {
+    final round = BigInt.from(26031514);
     final block = await algorand.getBlockByRound(
-      26031514,
+      round,
       cancelToken: CancelToken(),
       onSendProgress: (count, total) {},
       onReceiveProgress: (count, total) {},
     );
 
-    final block2 = await algorand.indexer().getBlockByRound(26031514);
+    final block2 = await algorand.indexer().getBlockByRound(round);
     print(block);
     print(block2);
   } on AlgorandException catch (ex) {
