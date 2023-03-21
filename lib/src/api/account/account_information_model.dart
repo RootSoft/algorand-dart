@@ -31,15 +31,21 @@ class AccountInformation {
   final bool deleted;
 
   /// amount of MicroAlgos of pending rewards in this account.
-  final int pendingRewards;
+  @JsonKey(name: 'pending-rewards')
+  @BigIntSerializer()
+  final BigInt pendingRewards;
 
   /// used as part of the rewards computation.
   /// Only applicable to accounts which are participating.
-  final int? rewardBase;
+  @JsonKey(name: 'reward-base')
+  @NullableBigIntSerializer()
+  final BigInt? rewardBase;
 
   /// total rewards of MicroAlgos the account has received,
   /// including pending rewards.
-  final int rewards;
+  @JsonKey(name: 'rewards')
+  @BigIntSerializer()
+  final BigInt rewards;
 
   /// The round for which this information is relevant.
   final int round;
@@ -163,8 +169,8 @@ class AccountInformation {
       address: address,
       amount: BigInt.zero,
       amountWithoutPendingRewards: BigInt.zero,
-      pendingRewards: 0,
-      rewards: 0,
+      pendingRewards: BigInt.zero,
+      rewards: BigInt.zero,
       round: 0,
       status: 'Offline',
       deleted: false,
