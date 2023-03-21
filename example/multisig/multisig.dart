@@ -23,9 +23,7 @@ void main() async {
   print('Account 2: ${account2.publicAddress}');
   print('Account 3: ${account3.publicAddress}');
 
-  final publicKeys = [account1.address, account2.address, account3.address]
-      .map((address) => Ed25519PublicKey(bytes: address.toBytes()))
-      .toList();
+  final publicKeys = [account1.address, account2.address, account3.address];
 
   final msa = MultiSigAddress(
     version: 1,

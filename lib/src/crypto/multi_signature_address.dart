@@ -5,9 +5,13 @@ import 'package:algorand_dart/src/crypto/crypto.dart';
 import 'package:algorand_dart/src/exceptions/exceptions.dart';
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/message_packable.dart';
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:buffer/buffer.dart';
 import 'package:crypto/crypto.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'multi_signature_address.g.dart';
 
 /// Multisignature accounts are a logical representation of an ordered set of
 /// addresses with a threshold and version.
@@ -22,12 +26,20 @@ import 'package:equatable/equatable.dart';
 ///
 /// MultisigAddress is a convenience class for handling multisignature public
 /// identities.
+
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class MultiSigAddress extends Equatable implements MessagePackable {
   static const MULTISIG_PREFIX = 'MultisigAddr';
 
+  @JsonKey(name: 'version', defaultValue: 1)
   final int version;
+
+  @JsonKey(name: 'threshold', defaultValue: 2)
   final int threshold;
-  final List<Ed25519PublicKey> publicKeys;
+
+  @JsonKey(name: 'addrs', defaultValue: [])
+  @ListAddressConverter()
+  final List<Address> publicKeys;
 
   MultiSigAddress({
     required this.version,
@@ -61,11 +73,8 @@ class MultiSigAddress extends Equatable implements MessagePackable {
     }
 
     // check that account secret key is in multisig pk list
-    final publicKey = Ed25519PublicKey(
-      bytes: Uint8List.fromList(account.publicKey.bytes),
-    );
 
-    final index = publicKeys.indexOf(publicKey);
+    final index = publicKeys.indexOf(account.address);
     if (index == -1) {
       throw AlgorandException(
         message: 'Multisig account does not contain this secret key',
@@ -80,7 +89,7 @@ class MultiSigAddress extends Equatable implements MessagePackable {
       if (i == index) {
         subsigs.add(
           MultisigSubsig(
-            key: publicKey,
+            key: account.address,
             signature: Signature(
               bytes: signedTx.signature ?? Uint8List.fromList([]),
             ),
@@ -134,7 +143,7 @@ class MultiSigAddress extends Equatable implements MessagePackable {
     writer.writeUint8(version);
     writer.writeUint8(threshold);
     for (var key in publicKeys) {
-      writer.write(key.bytes);
+      writer.write(key.publicKey);
     }
 
     final digest = sha512256.convert(writer.toBytes());
@@ -202,12 +211,17 @@ class MultiSigAddress extends Equatable implements MessagePackable {
     return keys.map((key) => Ed25519PublicKey(bytes: key)).toList();
   }
 
+  factory MultiSigAddress.fromJson(Map<String, dynamic> json) =>
+      _$MultiSigAddressFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MultiSigAddressToJson(this);
+
   @override
   Map<String, dynamic> toMessagePack() {
     return {
       'version': version,
       'threshold': threshold,
-      'publicKeys': publicKeys.map((key) => key.bytes).toList(),
+      'publicKeys': publicKeys.map((key) => key.publicKey).toList(),
     };
   }
 

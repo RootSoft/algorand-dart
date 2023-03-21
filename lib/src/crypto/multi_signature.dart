@@ -36,7 +36,7 @@ class MultiSignature extends Equatable implements MessagePackable {
         continue;
       }
 
-      final pk = Address(publicKey: subsig.key.bytes).toVerifyKey();
+      final pk = Address(publicKey: subsig.key.publicKey).toVerifyKey();
       final verified = await crypto.Ed25519().verify(
         data,
         signature: crypto.Signature(
@@ -67,7 +67,7 @@ class MultiSignature extends Equatable implements MessagePackable {
 }
 
 class MultisigSubsig extends Equatable implements MessagePackable {
-  final Ed25519PublicKey key;
+  final Address key;
   final Signature? signature;
 
   MultisigSubsig({required this.key, this.signature});
@@ -85,7 +85,7 @@ class MultisigSubsig extends Equatable implements MessagePackable {
   @override
   Map<String, dynamic> toMessagePack() {
     return {
-      'pk': key.bytes,
+      'pk': key.publicKey,
       's': signature?.bytes,
     };
   }
