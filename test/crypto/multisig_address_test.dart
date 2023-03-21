@@ -16,9 +16,7 @@ void main() {
       'E6JSNTY4PVCY3IRZ6XEDHEO6VIHCQ5KGXCIQKFQCMB2N6HXRY4IB43VSHI',
     );
 
-    final publicKeys = [one, two, three]
-        .map((address) => Ed25519PublicKey(bytes: address.publicKey))
-        .toList();
+    final publicKeys = [one, two, three];
 
     final multiSigAddr =
         MultiSigAddress(version: 1, threshold: 2, publicKeys: publicKeys);

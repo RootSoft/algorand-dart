@@ -53,9 +53,7 @@ void main() {
     final three = Address.fromAlgorandAddress(
         '47YPQTIGQEO7T4Y4RWDYWEKV6RTR2UNBQXBABEEGM72ESWDQNCQ52OPASU');
 
-    final publicKeys = [one, two, three]
-        .map((address) => Ed25519PublicKey(bytes: address.publicKey))
-        .toList();
+    final publicKeys = [one, two, three];
 
     final msa =
         MultiSigAddress(version: 1, threshold: 2, publicKeys: publicKeys);

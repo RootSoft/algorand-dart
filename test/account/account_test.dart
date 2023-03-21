@@ -240,8 +240,6 @@ MultiSigAddress createTestMsigAddress() {
   return MultiSigAddress(
     version: 1,
     threshold: 2,
-    publicKeys: [one, two, three]
-        .map((address) => Ed25519PublicKey(bytes: address.toBytes()))
-        .toList(),
+    publicKeys: [one, two, three],
   );
 }
