@@ -42,9 +42,6 @@ dependencies:
 
   algorand_json: ^0.0.1
 
-  # Key Management Daemon API
-  algorand_kmd: ^1.0.0
-
 dev_dependencies:
   # Testing framework
   test: ^1.23.1

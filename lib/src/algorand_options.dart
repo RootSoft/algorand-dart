@@ -6,8 +6,6 @@ class AlgorandOptions {
 
   final IndexerClient indexerClient;
 
-  final KmdClient? kmdClient;
-
   /// The timeout parameter indicates how many rounds you wish to check
   /// pending transactions for. Defaults to 5.
   final int timeout;
@@ -19,7 +17,6 @@ class AlgorandOptions {
   AlgorandOptions._({
     required this.algodClient,
     required this.indexerClient,
-    required this.kmdClient,
     required this.timeout,
     required this.debug,
   });
@@ -27,7 +24,6 @@ class AlgorandOptions {
   factory AlgorandOptions({
     AlgodClient? algodClient,
     IndexerClient? indexerClient,
-    KmdClient? kmdClient,
     bool mainnet = false,
     Duration connectTimeout = const Duration(seconds: 30),
     Duration receiveTimeout = const Duration(seconds: 30),
@@ -69,7 +65,6 @@ class AlgorandOptions {
     return AlgorandOptions._(
       algodClient: _algodClient,
       indexerClient: _indexerClient,
-      kmdClient: kmdClient,
       timeout: timeout,
       debug: debug,
     );
@@ -78,7 +73,6 @@ class AlgorandOptions {
   AlgorandOptions copyWith({
     AlgodClient Function()? algodClient,
     IndexerClient Function()? indexerClient,
-    KmdClient Function()? kmdClient,
     int Function()? timeout,
     bool Function()? debug,
   }) {
@@ -86,7 +80,6 @@ class AlgorandOptions {
       algodClient: algodClient != null ? algodClient() : this.algodClient,
       indexerClient:
           indexerClient != null ? indexerClient() : this.indexerClient,
-      kmdClient: kmdClient != null ? kmdClient() : this.kmdClient,
       timeout: timeout != null ? timeout() : this.timeout,
       debug: debug != null ? debug() : this.debug,
     );
