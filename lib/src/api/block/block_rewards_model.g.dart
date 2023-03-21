@@ -8,19 +8,23 @@ part of 'block_rewards_model.dart';
 
 BlockRewards _$BlockRewardsFromJson(Map<String, dynamic> json) => BlockRewards(
       feeSink: json['fee-sink'] as String,
-      rewardsCalculationRound: json['rewards-calculation-round'] as int,
-      rewardsLevel: json['rewards-level'] as int,
+      rewardsCalculationRound:
+          const BigIntSerializer().fromJson(json['rewards-calculation-round']),
+      rewardsLevel: const BigIntSerializer().fromJson(json['rewards-level']),
       rewardsPool: json['rewards-pool'] as String,
-      rewardsRate: json['rewards-rate'] as int,
-      rewardsResidue: json['rewards-residue'] as int,
+      rewardsRate: const BigIntSerializer().fromJson(json['rewards-rate']),
+      rewardsResidue:
+          const BigIntSerializer().fromJson(json['rewards-residue']),
     );
 
 Map<String, dynamic> _$BlockRewardsToJson(BlockRewards instance) =>
     <String, dynamic>{
       'fee-sink': instance.feeSink,
-      'rewards-calculation-round': instance.rewardsCalculationRound,
-      'rewards-level': instance.rewardsLevel,
+      'rewards-calculation-round':
+          const BigIntSerializer().toJson(instance.rewardsCalculationRound),
+      'rewards-level': const BigIntSerializer().toJson(instance.rewardsLevel),
       'rewards-pool': instance.rewardsPool,
-      'rewards-rate': instance.rewardsRate,
-      'rewards-residue': instance.rewardsResidue,
+      'rewards-rate': const BigIntSerializer().toJson(instance.rewardsRate),
+      'rewards-residue':
+          const BigIntSerializer().toJson(instance.rewardsResidue),
     };

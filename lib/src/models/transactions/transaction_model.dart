@@ -1,6 +1,7 @@
 import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/api/responses.dart';
 import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'transaction_model.g.dart';
@@ -29,10 +30,19 @@ class Transaction {
   final int? createdAssetIndex;
 
   /// Transaction fee.
-  final int fee;
+  @JsonKey(name: 'fee')
+  @BigIntSerializer()
+  final BigInt fee;
 
   /// First valid round for this transaction
-  final int firstValid;
+  @JsonKey(name: 'first-valid')
+  @BigIntSerializer()
+  final BigInt firstValid;
+
+  /// Last valid round for this transaction.
+  @JsonKey(name: 'last-valid')
+  @BigIntSerializer()
+  final BigInt lastValid;
 
   /// Hash of genesis block.
   final String? genesisHash;
@@ -75,9 +85,6 @@ class Transaction {
 
   /// Offset into the round where this transaction was confirmed.
   final int? intraRoundOffset;
-
-  /// Last valid round for this transaction.
-  final int lastValid;
 
   /// Rewards applied to receiver account.
   final int? receiverRewards;

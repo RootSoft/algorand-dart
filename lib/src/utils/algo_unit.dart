@@ -10,8 +10,8 @@ class Algo {
   };
 
   /// Convert an amount of Algo's to the base unit of microAlgos.
-  static int toMicroAlgos(double algos) {
-    return (algos * converters[ALGOS]!).round();
+  static BigInt toMicroAlgos(double algos) {
+    return BigInt.from((algos * converters[ALGOS]!).round());
   }
 
   /// Convert an amount of microAlgo's to Algos.

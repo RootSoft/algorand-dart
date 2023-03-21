@@ -19,11 +19,11 @@ class TransactionTransformer
 
     return Transaction(
       id: txn.id,
-      fee: txn.fee ?? 0,
+      fee: txn.fee ?? BigInt.zero,
       genesisId: block.genesisId,
       genesisHash: block.genesisHash,
-      firstValid: txn.firstValid ?? 0,
-      lastValid: txn.lastValid ?? 0,
+      firstValid: txn.firstValid ?? BigInt.zero,
+      lastValid: txn.lastValid ?? BigInt.zero,
       sender: txn.sender?.encodedAddress ?? '',
       type: txn.type ?? '',
       note: const ByteArrayToB64Converter().fromJson(txn.note),

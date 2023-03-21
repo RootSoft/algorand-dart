@@ -2,7 +2,7 @@ import 'package:algorand_dart/src/api/account/account.dart';
 import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/api/asset/asset.dart';
 import 'package:algorand_dart/src/models/models.dart';
-import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'account_information_model.g.dart';
@@ -24,6 +24,8 @@ class AccountInformation {
   final BigInt amountWithoutPendingRewards;
 
   /// Round during which this account first appeared in a transaction.
+  @JsonKey(name: 'created-at-round')
+  @NullableBigIntSerializer()
   final int? createdAtRound;
 
   /// Whether or not this account is currently closed.
@@ -31,18 +33,26 @@ class AccountInformation {
   final bool deleted;
 
   /// amount of MicroAlgos of pending rewards in this account.
-  final int pendingRewards;
+  @JsonKey(name: 'pending-rewards')
+  @BigIntSerializer()
+  final BigInt pendingRewards;
 
   /// used as part of the rewards computation.
   /// Only applicable to accounts which are participating.
-  final int? rewardBase;
+  @JsonKey(name: 'reward-base')
+  @NullableBigIntSerializer()
+  final BigInt? rewardBase;
 
   /// total rewards of MicroAlgos the account has received,
   /// including pending rewards.
-  final int rewards;
+  @JsonKey(name: 'rewards')
+  @BigIntSerializer()
+  final BigInt rewards;
 
   /// The round for which this information is relevant.
-  final int round;
+  @JsonKey(name: 'round')
+  @BigIntSerializer()
+  final BigInt round;
 
   /// Delegation status of the account's MicroAlgos
   /// * Offline - the associated account is delegated.
@@ -52,6 +62,8 @@ class AccountInformation {
   final String status;
 
   /// Round during which this account was most recently closed.
+  @JsonKey(name: 'closed-at-round')
+  @NullableBigIntSerializer()
   final int? closedAtRound;
 
   /// Indicates what type of signature is used by this account, must be one of:
@@ -163,9 +175,9 @@ class AccountInformation {
       address: address,
       amount: BigInt.zero,
       amountWithoutPendingRewards: BigInt.zero,
-      pendingRewards: 0,
-      rewards: 0,
-      round: 0,
+      pendingRewards: BigInt.zero,
+      rewards: BigInt.zero,
+      round: BigInt.zero,
       status: 'Offline',
       deleted: false,
       assets: [],

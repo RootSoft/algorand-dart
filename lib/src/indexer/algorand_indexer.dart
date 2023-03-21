@@ -216,7 +216,7 @@ class AlgorandIndexer {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the block in the given round number.
   Future<Block> getBlockByRound(
-    int round, {
+    BigInt round, {
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,

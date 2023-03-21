@@ -1,3 +1,4 @@
+import 'package:algorand_dart/algorand_dart.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'indexer_health.g.dart';
@@ -8,7 +9,10 @@ class IndexerHealth {
   final bool dbAvailable;
   final bool isMigrating;
   final String message;
-  final int round;
+
+  @JsonKey(name: 'round')
+  @BigIntSerializer()
+  final BigInt round;
 
   IndexerHealth({
     required this.dbAvailable,

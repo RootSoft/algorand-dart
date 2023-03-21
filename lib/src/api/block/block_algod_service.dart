@@ -10,7 +10,7 @@ abstract class BlockAlgodService {
   @GET('/v2/blocks/{round}')
   @DioResponseType(ResponseType.bytes)
   Future<List<int>> getBlockByRound({
-    @Path('round') required int round,
+    @Path('round') required BigInt round,
     @Query('format') String format = 'msgpack',
     @CancelRequest() CancelToken? cancelToken,
     @SendProgress() ProgressCallback? onSendProgress,

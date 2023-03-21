@@ -140,7 +140,7 @@ Future getBlockInfo({
   required Account account,
 }) async {
   try {
-    final response = await algorand.getBlockByRound(16280357);
+    final response = await algorand.getBlockByRound(BigInt.from(16280357));
     print(response.toJson());
   } on AlgorandException catch (ex) {
     final error = ex.cause as DioError;

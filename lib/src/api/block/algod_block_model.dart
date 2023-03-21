@@ -23,7 +23,8 @@ class AlgodBlock {
 
   /// Current round on which this block was appended to the chain.
   @JsonKey(name: 'rnd')
-  final int? round;
+  @NullableBigIntSerializer()
+  final BigInt? round;
 
   /// Sortition seed.
   @JsonKey(name: 'seed')

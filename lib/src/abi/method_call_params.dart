@@ -27,10 +27,10 @@ class MethodCallParams {
 
   final TxnSigner signer;
   final Address sender;
-  final int? fee;
-  final int? flatFee;
-  final int firstValid;
-  final int lastValid;
+  final BigInt? fee;
+  final BigInt? flatFee;
+  final BigInt firstValid;
+  final BigInt lastValid;
   final Uint8List? note;
   final Uint8List? lease;
   final Address? rekeyTo;
@@ -72,10 +72,10 @@ class MethodCallParams {
     AbiMethod? method,
     String? genesisId,
     Uint8List? genesisHash,
-    int? firstValid,
-    int? lastValid,
-    int? fee,
-    int? flatFee,
+    BigInt? firstValid,
+    BigInt? lastValid,
+    BigInt? fee,
+    BigInt? flatFee,
     List<dynamic>? methodArgs,
     TEALProgram? approvalProgram,
     TEALProgram? clearStateProgram,
@@ -100,7 +100,7 @@ class MethodCallParams {
       genesisId = params.genesisId;
       genesisHash = params.genesisHash;
       firstValid = params.lastRound;
-      lastValid = params.lastRound + 1000;
+      lastValid = params.lastRound + BigInt.from(1000);
       fee = params.fee;
     } else {
       if (genesisId == null ||

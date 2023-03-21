@@ -173,10 +173,7 @@ class LogicSignature extends Equatable implements MessagePackable {
     required Account account,
     required MultiSigAddress address,
   }) async {
-    final publicKey = Ed25519PublicKey(
-      bytes: Uint8List.fromList(account.publicKey.bytes),
-    );
-
+    final publicKey = account.address;
     final index = address.publicKeys.indexOf(publicKey);
     if (index == -1) {
       throw AlgorandException(
@@ -245,9 +242,7 @@ class LogicSignature extends Equatable implements MessagePackable {
       throw AlgorandException(message: 'The logicsig has no valid multisig');
     }
 
-    final publicKey = Ed25519PublicKey(
-      bytes: Uint8List.fromList(account.publicKey.bytes),
-    );
+    final publicKey = account.address;
 
     final index = multiSignature.subsigs.indexWhere(
       (subsig) => subsig.key == publicKey,

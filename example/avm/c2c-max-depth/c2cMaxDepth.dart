@@ -40,7 +40,7 @@ void main() async {
     throw ArgumentError('Invalid fee');
   }
 
-  appCallTx.fee = fee * ((depth * 3) + 1);
+  appCallTx.fee = fee * BigInt.from(((depth * 3) + 1));
 
   final txs = AtomicTransfer.group([p1Tx, appCallTx]);
   final signedTxs = await Future.wait(txs.map((tx) => tx.sign(account)));

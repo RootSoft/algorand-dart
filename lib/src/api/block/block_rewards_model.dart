@@ -1,3 +1,4 @@
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'block_rewards_model.g.dart';
@@ -9,11 +10,15 @@ class BlockRewards {
 
   /// number of leftover MicroAlgos after the distribution of rewards-rate
   /// MicroAlgos for every reward unit in the next round.
-  final int rewardsCalculationRound;
+  @JsonKey(name: 'rewards-calculation-round')
+  @BigIntSerializer()
+  final BigInt rewardsCalculationRound;
 
   /// How many rewards, in MicroAlgos, have been distributed to each RewardUnit
   /// of MicroAlgos since genesis.
-  final int rewardsLevel;
+  @JsonKey(name: 'rewards-level')
+  @BigIntSerializer()
+  final BigInt rewardsLevel;
 
   /// accepts periodic injections from the fee-sink and continually
   /// redistributes them as rewards.
@@ -21,11 +26,15 @@ class BlockRewards {
 
   /// Number of new MicroAlgos added to the participation stake from rewards at
   /// the next round.
-  final int rewardsRate;
+  @JsonKey(name: 'rewards-rate')
+  @BigIntSerializer()
+  final BigInt rewardsRate;
 
   /// Number of leftover MicroAlgos after the distribution of
   /// RewardsRate/rewardUnits MicroAlgos for every reward unit in the next round.
-  final int rewardsResidue;
+  @JsonKey(name: 'rewards-residue')
+  @BigIntSerializer()
+  final BigInt rewardsResidue;
 
   BlockRewards({
     required this.feeSink,

@@ -20,7 +20,6 @@ import 'package:algorand_dart/src/api/box/boxes_indexer_api.dart';
 import 'package:algorand_dart/src/exceptions/algorand_factory.dart';
 import 'package:algorand_dart/src/repositories/repositories.dart';
 import 'package:algorand_dart/src/services/services.dart';
-import 'package:algorand_kmd/algorand_kmd.dart';
 import 'package:dio/dio.dart';
 
 class Algorand {
@@ -154,10 +153,6 @@ class Algorand {
     );
   }
 
-  /// Get the key management daemon.
-  DefaultApi get kmd =>
-      _options.kmdClient?.api.getDefaultApi() ?? AlgorandKmd().getDefaultApi();
-
   /// Get the algorand indexer which lets you search the blockchain.
   AlgorandIndexer indexer() => _indexer;
 
@@ -169,11 +164,6 @@ class Algorand {
   /// Set the base url of the [IndexerClient].
   void setIndexerUrl(String baseUrl) {
     _options.indexerClient.client.options.baseUrl = baseUrl;
-  }
-
-  /// Set the base url of the [IndexerClient].
-  void setKmdUrl(String baseUrl) {
-    _options.kmdClient?.api.dio.options.baseUrl = baseUrl;
   }
 
   /// Override the base options for the Algod HTTP client.
@@ -278,7 +268,7 @@ class Algorand {
   /// Throws an [AlgorandException] if there is an HTTP error.
   /// Returns the block in the given round number.
   Future<Block> getBlockByRound(
-    int round, {
+    BigInt round, {
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,

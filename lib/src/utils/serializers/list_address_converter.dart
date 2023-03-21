@@ -2,15 +2,15 @@ import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-class ListAddressConverter implements JsonConverter<List<Address>?, dynamic> {
+class ListAddressConverter implements JsonConverter<List<Address>, dynamic> {
   const ListAddressConverter();
 
   @override
-  List<Address>? fromJson(dynamic data) {
-    if (data == null) return null;
+  List<Address> fromJson(dynamic data) {
+    if (data == null) return [];
 
     if (data is! List) {
-      return null;
+      return [];
     }
 
     final serializer = const AddressSerializer();
@@ -22,11 +22,7 @@ class ListAddressConverter implements JsonConverter<List<Address>?, dynamic> {
   }
 
   @override
-  dynamic toJson(List<Address>? data) {
-    if (data == null) {
-      return null;
-    }
-
+  List<String> toJson(List<Address> data) {
     return data.map((a) => a.encodedAddress).toList();
   }
 }

@@ -9,21 +9,21 @@ part of 'transaction_params_model.dart';
 TransactionParams _$TransactionParamsFromJson(Map<String, dynamic> json) =>
     TransactionParams(
       consensusVersion: json['consensus-version'] as String,
-      fee: json['fee'] as int,
+      fee: const BigIntSerializer().fromJson(json['fee']),
       genesisId: json['genesis-id'] as String,
       genesisHash:
           const NullableByteArraySerializer().fromJson(json['genesis-hash']),
-      lastRound: json['last-round'] as int,
-      minFee: json['min-fee'] as int,
+      lastRound: const BigIntSerializer().fromJson(json['last-round']),
+      minFee: const BigIntSerializer().fromJson(json['min-fee']),
     );
 
 Map<String, dynamic> _$TransactionParamsToJson(TransactionParams instance) =>
     <String, dynamic>{
       'consensus-version': instance.consensusVersion,
-      'fee': instance.fee,
+      'fee': const BigIntSerializer().toJson(instance.fee),
       'genesis-id': instance.genesisId,
       'genesis-hash':
           const NullableByteArraySerializer().toJson(instance.genesisHash),
-      'last-round': instance.lastRound,
-      'min-fee': instance.minFee,
+      'last-round': const BigIntSerializer().toJson(instance.lastRound),
+      'min-fee': const BigIntSerializer().toJson(instance.minFee),
     };

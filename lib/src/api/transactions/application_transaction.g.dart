@@ -30,10 +30,10 @@ ApplicationTransaction _$ApplicationTransactionFromJson(
               ?.map((e) => BoxReference.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      fee: json['fee'] as int?,
-      firstValid: json['fv'] as int?,
+      fee: const NullableBigIntSerializer().fromJson(json['fee']),
+      firstValid: const NullableBigIntSerializer().fromJson(json['fv']),
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
-      lastValid: json['lv'] as int?,
+      lastValid: const NullableBigIntSerializer().fromJson(json['lv']),
       sender: const AddressSerializer().fromJson(json['snd']),
       type: json['type'] as String?,
       genesisId: json['gen'] as String?,
@@ -46,10 +46,10 @@ ApplicationTransaction _$ApplicationTransactionFromJson(
 Map<String, dynamic> _$ApplicationTransactionToJson(
         ApplicationTransaction instance) =>
     <String, dynamic>{
-      'fee': instance.fee,
-      'fv': instance.firstValid,
+      'fee': const NullableBigIntSerializer().toJson(instance.fee),
+      'fv': const NullableBigIntSerializer().toJson(instance.firstValid),
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
-      'lv': instance.lastValid,
+      'lv': const NullableBigIntSerializer().toJson(instance.lastValid),
       'snd': const AddressSerializer().toJson(instance.sender),
       'type': instance.type,
       'gen': instance.genesisId,
