@@ -35,7 +35,14 @@ class Transaction {
   final BigInt fee;
 
   /// First valid round for this transaction
-  final int firstValid;
+  @JsonKey(name: 'first-valid')
+  @BigIntSerializer()
+  final BigInt firstValid;
+
+  /// Last valid round for this transaction.
+  @JsonKey(name: 'last-valid')
+  @BigIntSerializer()
+  final BigInt lastValid;
 
   /// Hash of genesis block.
   final String? genesisHash;
@@ -78,9 +85,6 @@ class Transaction {
 
   /// Offset into the round where this transaction was confirmed.
   final int? intraRoundOffset;
-
-  /// Last valid round for this transaction.
-  final int lastValid;
 
   /// Rewards applied to receiver account.
   final int? receiverRewards;

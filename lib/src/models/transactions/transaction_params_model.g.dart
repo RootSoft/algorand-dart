@@ -13,7 +13,7 @@ TransactionParams _$TransactionParamsFromJson(Map<String, dynamic> json) =>
       genesisId: json['genesis-id'] as String,
       genesisHash:
           const NullableByteArraySerializer().fromJson(json['genesis-hash']),
-      lastRound: json['last-round'] as int,
+      lastRound: const BigIntSerializer().fromJson(json['last-round']),
       minFee: const BigIntSerializer().fromJson(json['min-fee']),
     );
 
@@ -24,6 +24,6 @@ Map<String, dynamic> _$TransactionParamsToJson(TransactionParams instance) =>
       'genesis-id': instance.genesisId,
       'genesis-hash':
           const NullableByteArraySerializer().toJson(instance.genesisHash),
-      'last-round': instance.lastRound,
+      'last-round': const BigIntSerializer().toJson(instance.lastRound),
       'min-fee': const BigIntSerializer().toJson(instance.minFee),
     };

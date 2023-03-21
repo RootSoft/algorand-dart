@@ -44,8 +44,8 @@ void main() {
     final tx = await (AssetConfigTransactionBuilder()
           ..sender = address
           ..suggestedFeePerByte = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323575
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323575)
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
           ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = decimals
@@ -75,8 +75,8 @@ void main() {
           ..sender = sender
           ..receiver = receiver
           ..amount = BigInt.from(100)
-          ..firstValid = 301
-          ..lastValid = 1300)
+          ..firstValid = BigInt.from(301)
+          ..lastValid = BigInt.from(1300))
         .build();
 
     final b = Encoder.encodeMessagePack(tx.toMessagePack());
@@ -99,8 +99,8 @@ void main() {
           ..sender = sender
           ..receiver = receiver
           ..amount = BigIntEncoder.MAX_UINT64 - BigInt.one
-          ..firstValid = 301
-          ..lastValid = 1300)
+          ..firstValid = BigInt.from(301)
+          ..lastValid = BigInt.from(1300))
         .build();
 
     final b = Encoder.encodeMessagePack(tx.toMessagePack());
@@ -149,8 +149,8 @@ void main() {
           ..closeTo = address
           ..amount = BigInt.from(1)
           ..flatFee = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323576
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323576)
           ..assetId = 1
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=')
         .build();
@@ -185,8 +185,8 @@ void main() {
           ..receiver = address
           ..amount = BigInt.one
           ..flatFee = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323575
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323575)
           ..assetId = 1
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=')
         .build();
@@ -226,8 +226,8 @@ void main() {
           ..freezeTarget = address
           ..freeze = true
           ..flatFee = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323576
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323576)
           ..assetId = 1
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=')
         .build();
@@ -268,8 +268,8 @@ void main() {
           ..voteLast = 323576
           ..voteKeyDilution = 10000
           ..flatFee = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323576
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323576)
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=')
         .build();
 
@@ -303,8 +303,8 @@ void main() {
           ..sender = lsig.toAddress()
           ..receiver = address
           ..amount = BigInt.from(100)
-          ..firstValid = 301
-          ..lastValid = 1300
+          ..firstValid = BigInt.from(301)
+          ..lastValid = BigInt.from(1300)
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=')
         .build();
 
@@ -348,8 +348,8 @@ void main() {
           ..sender = lsig.toAddress()
           ..receiver = address
           ..amount = BigInt.from(100)
-          ..firstValid = 301
-          ..lastValid = 1300
+          ..firstValid = BigInt.from(301)
+          ..lastValid = BigInt.from(1300)
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=')
         .build();
 
@@ -400,8 +400,8 @@ void main() {
           ..suggestedFeePerByte = BigInt.from(4)
           ..receiver = receiver
           ..amount = BigInt.from(1000)
-          ..firstValid = 12466
-          ..lastValid = 13466
+          ..firstValid = BigInt.from(12466)
+          ..lastValid = BigInt.from(13466)
           ..noteB64 = '6gAVR0Nsv5Y='
           ..genesisId = 'devnet-v33.0'
           ..genesisHashB64 = 'JgsgCaCTqIaLeVhyL6XlRu3n7Rfk2FxMeK+wRSaQ7dI='
@@ -451,8 +451,8 @@ void main() {
           ..flatFee = fee
           ..receiver = receiver
           ..amount = amount
-          ..firstValid = firstValid
-          ..lastValid = firstValid + 1000
+          ..firstValid = BigInt.from(firstValid)
+          ..lastValid = BigInt.from(firstValid + 1000)
           ..noteB64 = note
           ..genesisId = genesisId
           ..genesisHashB64 = genesisHash)
@@ -466,8 +466,8 @@ void main() {
           ..flatFee = fee
           ..receiver = receiver
           ..amount = amount
-          ..firstValid = firstValid2
-          ..lastValid = firstValid2 + 1000
+          ..firstValid = BigInt.from(firstValid2)
+          ..lastValid = BigInt.from(firstValid2 + 1000)
           ..noteB64 = note2
           ..genesisId = genesisId
           ..genesisHashB64 = genesisHash)
@@ -539,8 +539,8 @@ void main() {
           ..sender = sender
           ..receiver = receiver
           ..amount = BigInt.from(100)
-          ..firstValid = 301
-          ..lastValid = 1300)
+          ..firstValid = BigInt.from(301)
+          ..lastValid = BigInt.from(1300))
         .build();
 
     final transactions =
@@ -578,8 +578,8 @@ void main() {
     final txBytes = await (AssetConfigTransactionBuilder()
           ..sender = address
           ..flatFee = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323575
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323575)
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
           ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = 5
@@ -596,8 +596,8 @@ void main() {
     final txUTF8 = await (AssetConfigTransactionBuilder()
           ..sender = address
           ..flatFee = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323575
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323575)
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
           ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = 5
@@ -614,8 +614,8 @@ void main() {
     final txUTF8Different = await (AssetConfigTransactionBuilder()
           ..sender = address
           ..flatFee = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323575
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323575)
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
           ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = 5
@@ -632,8 +632,8 @@ void main() {
     final txB64 = await (AssetConfigTransactionBuilder()
           ..sender = address
           ..flatFee = BigInt.from(10)
-          ..firstValid = 322575
-          ..lastValid = 323575
+          ..firstValid = BigInt.from(322575)
+          ..lastValid = BigInt.from(323575)
           ..genesisHashB64 = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
           ..totalAssetsToCreate = BigInt.from(100)
           ..decimals = 5

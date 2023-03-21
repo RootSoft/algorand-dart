@@ -22,9 +22,9 @@ AssetConfigTransaction _$AssetConfigTransactionFromJson(
       freezeAddress: const AddressSerializer().fromJson(json['f']),
       clawbackAddress: const AddressSerializer().fromJson(json['c']),
       fee: const NullableBigIntSerializer().fromJson(json['fee']),
-      firstValid: json['fv'] as int?,
+      firstValid: const NullableBigIntSerializer().fromJson(json['fv']),
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
-      lastValid: json['lv'] as int?,
+      lastValid: const NullableBigIntSerializer().fromJson(json['lv']),
       sender: const AddressSerializer().fromJson(json['snd']),
       type: json['type'] as String?,
       genesisId: json['gen'] as String?,
@@ -38,9 +38,9 @@ Map<String, dynamic> _$AssetConfigTransactionToJson(
         AssetConfigTransaction instance) =>
     <String, dynamic>{
       'fee': const NullableBigIntSerializer().toJson(instance.fee),
-      'fv': instance.firstValid,
+      'fv': const NullableBigIntSerializer().toJson(instance.firstValid),
       'gh': const NullableByteArraySerializer().toJson(instance.genesisHash),
-      'lv': instance.lastValid,
+      'lv': const NullableBigIntSerializer().toJson(instance.lastValid),
       'snd': const AddressSerializer().toJson(instance.sender),
       'type': instance.type,
       'gen': instance.genesisId,

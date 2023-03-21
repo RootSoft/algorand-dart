@@ -9,8 +9,8 @@ part of 'transaction_model.dart';
 Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       id: json['id'] as String?,
       fee: const BigIntSerializer().fromJson(json['fee']),
-      firstValid: json['first-valid'] as int,
-      lastValid: json['last-valid'] as int,
+      firstValid: const BigIntSerializer().fromJson(json['first-valid']),
+      lastValid: const BigIntSerializer().fromJson(json['last-valid']),
       sender: json['sender'] as String,
       type: json['tx-type'] as String,
       signature: json['signature'] == null
@@ -84,7 +84,8 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'created-application-index': instance.createdApplicationIndex,
       'created-asset-index': instance.createdAssetIndex,
       'fee': const BigIntSerializer().toJson(instance.fee),
-      'first-valid': instance.firstValid,
+      'first-valid': const BigIntSerializer().toJson(instance.firstValid),
+      'last-valid': const BigIntSerializer().toJson(instance.lastValid),
       'genesis-hash': instance.genesisHash,
       'genesis-id': instance.genesisId,
       'global-state-delta': instance.globalStateDelta,
@@ -94,7 +95,6 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'lease': instance.lease,
       'id': instance.id,
       'intra-round-offset': instance.intraRoundOffset,
-      'last-valid': instance.lastValid,
       'receiver-rewards': instance.receiverRewards,
       'round-time': instance.roundTime,
       'sender': instance.sender,

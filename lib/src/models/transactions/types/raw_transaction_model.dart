@@ -42,7 +42,8 @@ class RawTransaction extends Equatable {
   /// If the transaction is sent prior to this round it will be rejected by
   /// the network.
   @JsonKey(name: 'fv')
-  final int? firstValid;
+  @NullableBigIntSerializer()
+  final BigInt? firstValid;
 
   /// The hash of the genesis block of the network for which the transaction
   /// is valid. See the genesis hash for MainNet, TestNet, and BetaNet.
@@ -53,7 +54,8 @@ class RawTransaction extends Equatable {
   /// The ending round for which the transaction is valid.
   /// After this round, the transaction will be rejected by the network.
   @JsonKey(name: 'lv')
-  final int? lastValid;
+  @NullableBigIntSerializer()
+  final BigInt? lastValid;
 
   /// The address of the account that pays the fee and amount.
   @JsonKey(name: 'snd')

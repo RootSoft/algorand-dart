@@ -26,7 +26,7 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
   /// The first round for when the transaction is valid.
   /// If the transaction is sent prior to this round it will be rejected by
   /// the network.
-  int? firstValid;
+  BigInt? firstValid;
 
   /// The hash of the genesis block of the network for which the transaction
   /// is valid. See the genesis hash for MainNet, TestNet, and BetaNet.
@@ -34,7 +34,7 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
 
   /// The ending round for which the transaction is valid.
   /// After this round, the transaction will be rejected by the network.
-  int? lastValid;
+  BigInt? lastValid;
 
   /// The address of the account that pays the fee and amount.
   Address? sender;
@@ -108,8 +108,8 @@ abstract class RawTransactionBuilder<T extends RawTransaction> {
     _fee = value.fee;
     genesisId = value.genesisId;
     genesisHash = value.genesisHash;
-    firstValid = value.lastRound; // TODO Bigint
-    lastValid = value.lastRound + 1000; // TODO Bigint
+    firstValid = value.lastRound;
+    lastValid = value.lastRound + BigInt.from(1000);
   }
 
   BigInt get fee => _fee;

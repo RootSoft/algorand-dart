@@ -15,6 +15,7 @@ class TransactionParams {
   /// Fee is in units of micro-Algos per byte.
   /// Fee may fall to zero but transactions must still have a fee of
   /// at least MinTxnFee for the current network protocol.
+  @JsonKey(name: 'fee')
   @BigIntSerializer()
   final BigInt fee;
 
@@ -27,9 +28,9 @@ class TransactionParams {
   final Uint8List? genesisHash;
 
   /// LastRound indicates the last round seen
-  ///
-  /// todo Uint64
-  final int lastRound;
+  @JsonKey(name: 'last-round')
+  @BigIntSerializer()
+  final BigInt lastRound;
 
   /// The minimum transaction fee (not per byte) required for the txn to
   /// validate for the current network protocol.
@@ -56,7 +57,7 @@ class TransactionParams {
     BigInt? fee,
     String? genesisId,
     Uint8List? genesisHash,
-    int? lastRound,
+    BigInt? lastRound,
     BigInt? minFee,
   }) {
     return TransactionParams(

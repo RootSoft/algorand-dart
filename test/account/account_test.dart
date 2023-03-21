@@ -32,8 +32,8 @@ void main() {
           ..receiver = receiver
           ..flatFee = BigInt.from(1000)
           ..amount = BigInt.from(1234)
-          ..firstValid = 106575
-          ..lastValid = 107575)
+          ..firstValid = BigInt.from(106575)
+          ..lastValid = BigInt.from(107575))
         .build();
 
     final account = await Account.fromSeedPhrase(mnemonic.split(' '));
@@ -78,8 +78,8 @@ void main() {
             'DN7MBMCL5JQ3PFUQS7TMX5AH4EEKOBJVDUF4TCV6WERATKFLQF4MQUPZTA',
           )
           ..flatFee = BigInt.from(217000)
-          ..firstValid = 972508
-          ..lastValid = 973508
+          ..firstValid = BigInt.from(972508)
+          ..lastValid = BigInt.from(973508)
           ..noteB64 = 'tFF5Ofz60nE='
           ..genesisId = 'testnet-v31.0'
           ..amount = BigInt.from(5000))
@@ -158,8 +158,8 @@ void main() {
     final tx = await (PaymentTransactionBuilder()
           ..sender = from
           ..flatFee = BigInt.from(1000)
-          ..firstValid = 2063137
-          ..lastValid = 2063137 + 1000
+          ..firstValid = BigInt.from(2063137)
+          ..lastValid = BigInt.from(2063137 + 1000)
           ..noteB64 = '8xMCTuLQ810='
           ..genesisId = 'devnet-v1.0'
           ..genesisHashB64 = 'sC3P7e2SdbqKJK0tbiCdK9tdSpbe6XeCGKdoNzmlj0E='

@@ -15,7 +15,7 @@ AccountInformation _$AccountInformationFromJson(Map<String, dynamic> json) =>
       pendingRewards:
           const BigIntSerializer().fromJson(json['pending-rewards']),
       rewards: const BigIntSerializer().fromJson(json['rewards']),
-      round: json['round'] as int,
+      round: const BigIntSerializer().fromJson(json['round']),
       status: json['status'] as String,
       deleted: json['deleted'] as bool? ?? false,
       assets: (json['assets'] as List<dynamic>?)
@@ -74,7 +74,7 @@ Map<String, dynamic> _$AccountInformationToJson(AccountInformation instance) =>
       'reward-base':
           const NullableBigIntSerializer().toJson(instance.rewardBase),
       'rewards': const BigIntSerializer().toJson(instance.rewards),
-      'round': instance.round,
+      'round': const BigIntSerializer().toJson(instance.round),
       'status': instance.status,
       'closed-at-round': instance.closedAtRound,
       'sig-type': _$SignatureTypeEnumMap[instance.signatureType],

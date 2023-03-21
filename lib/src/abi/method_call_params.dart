@@ -29,8 +29,8 @@ class MethodCallParams {
   final Address sender;
   final BigInt? fee;
   final BigInt? flatFee;
-  final int firstValid;
-  final int lastValid;
+  final BigInt firstValid;
+  final BigInt lastValid;
   final Uint8List? note;
   final Uint8List? lease;
   final Address? rekeyTo;
@@ -72,8 +72,8 @@ class MethodCallParams {
     AbiMethod? method,
     String? genesisId,
     Uint8List? genesisHash,
-    int? firstValid,
-    int? lastValid,
+    BigInt? firstValid,
+    BigInt? lastValid,
     BigInt? fee,
     BigInt? flatFee,
     List<dynamic>? methodArgs,
@@ -100,7 +100,7 @@ class MethodCallParams {
       genesisId = params.genesisId;
       genesisHash = params.genesisHash;
       firstValid = params.lastRound;
-      lastValid = params.lastRound + 1000;
+      lastValid = params.lastRound + BigInt.from(1000);
       fee = params.fee;
     } else {
       if (genesisId == null ||

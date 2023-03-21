@@ -2,7 +2,7 @@ import 'package:algorand_dart/src/api/account/account.dart';
 import 'package:algorand_dart/src/api/application/application.dart';
 import 'package:algorand_dart/src/api/asset/asset.dart';
 import 'package:algorand_dart/src/models/models.dart';
-import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'account_information_model.g.dart';
@@ -24,6 +24,8 @@ class AccountInformation {
   final BigInt amountWithoutPendingRewards;
 
   /// Round during which this account first appeared in a transaction.
+  @JsonKey(name: 'created-at-round')
+  @NullableBigIntSerializer()
   final int? createdAtRound;
 
   /// Whether or not this account is currently closed.
@@ -48,7 +50,9 @@ class AccountInformation {
   final BigInt rewards;
 
   /// The round for which this information is relevant.
-  final int round;
+  @JsonKey(name: 'round')
+  @BigIntSerializer()
+  final BigInt round;
 
   /// Delegation status of the account's MicroAlgos
   /// * Offline - the associated account is delegated.
@@ -58,6 +62,8 @@ class AccountInformation {
   final String status;
 
   /// Round during which this account was most recently closed.
+  @JsonKey(name: 'closed-at-round')
+  @NullableBigIntSerializer()
   final int? closedAtRound;
 
   /// Indicates what type of signature is used by this account, must be one of:
@@ -171,7 +177,7 @@ class AccountInformation {
       amountWithoutPendingRewards: BigInt.zero,
       pendingRewards: BigInt.zero,
       rewards: BigInt.zero,
-      round: 0,
+      round: BigInt.zero,
       status: 'Offline',
       deleted: false,
       assets: [],
