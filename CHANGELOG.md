@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0-dev.10 - 2023-03-21
+
+- Better support for uint64 (fee, rounds)
+- ARC-35 setup
+- Removed KMD (available as seperate package)
+- Deprecated templates
+- Deprecated ED25519PublicKey
+
 ## 2.0.0-dev.9 - 2023-03-20
 
 - Better support for uint64 (de)serialization (msgpack/json)
