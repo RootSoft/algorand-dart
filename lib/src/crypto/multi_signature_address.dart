@@ -65,13 +65,6 @@ class MultiSigAddress extends Equatable implements MessagePackable {
       throw AlgorandException(message: 'Sender is not valid');
     }
 
-    // check that from addr of tx matches multisig preimage
-    if (sender.encodedAddress != toString()) {
-      throw AlgorandException(
-        message: 'Transaction sender does not match multisig account',
-      );
-    }
-
     // check that account secret key is in multisig pk list
 
     final index = publicKeys.indexOf(account.address);
