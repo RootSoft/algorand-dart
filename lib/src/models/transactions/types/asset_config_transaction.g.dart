@@ -10,17 +10,10 @@ AssetConfigTransaction _$AssetConfigTransactionFromJson(
         Map<String, dynamic> json) =>
     AssetConfigTransaction(
       assetId: json['caid'] as int?,
-      total: const NullableBigIntSerializer().fromJson(json['t']),
-      decimals: json['dc'] as int? ?? 0,
-      defaultFrozen: json['df'] as bool?,
-      unitName: json['un'] as String?,
-      assetName: json['an'] as String?,
-      url: json['au'] as String?,
-      metaData: const Base64Serializer().fromJson(json['am']),
-      managerAddress: const AddressSerializer().fromJson(json['m']),
-      reserveAddress: const AddressSerializer().fromJson(json['r']),
-      freezeAddress: const AddressSerializer().fromJson(json['f']),
-      clawbackAddress: const AddressSerializer().fromJson(json['c']),
+      params: json['apar'] == null
+          ? null
+          : AssetConfigParameters.fromJson(
+              json['apar'] as Map<String, dynamic>),
       fee: const NullableBigIntSerializer().fromJson(json['fee']),
       firstValid: const NullableBigIntSerializer().fromJson(json['fv']),
       genesisHash: const NullableByteArraySerializer().fromJson(json['gh']),
@@ -49,15 +42,5 @@ Map<String, dynamic> _$AssetConfigTransactionToJson(
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': const AddressSerializer().toJson(instance.rekeyTo),
       'caid': instance.assetId,
-      't': const NullableBigIntSerializer().toJson(instance.total),
-      'dc': instance.decimals,
-      'df': instance.defaultFrozen,
-      'un': instance.unitName,
-      'an': instance.assetName,
-      'au': instance.url,
-      'am': const Base64Serializer().toJson(instance.metaData),
-      'm': const AddressSerializer().toJson(instance.managerAddress),
-      'r': const AddressSerializer().toJson(instance.reserveAddress),
-      'f': const AddressSerializer().toJson(instance.freezeAddress),
-      'c': const AddressSerializer().toJson(instance.clawbackAddress),
+      'apar': instance.params,
     };

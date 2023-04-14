@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/models/models.dart';
+import 'package:algorand_dart/src/models/transactions/asset_config_parameters.dart';
 import 'package:algorand_dart/src/models/transactions/builders/raw_transaction_builder.dart';
 import 'package:algorand_dart/src/utils/fee_calculator.dart';
 
@@ -83,6 +84,20 @@ class AssetConfigTransactionBuilder
   set metadataB64(String data) {
     metaData = base64Decode(data);
   }
+
+  AssetConfigParameters get params => AssetConfigParameters(
+        total: totalAssetsToCreate,
+        decimals: decimals,
+        defaultFrozen: defaultFrozen,
+        unitName: unitName,
+        assetName: assetName,
+        url: url,
+        metaData: metaData,
+        managerAddress: managerAddress,
+        reserveAddress: reserveAddress,
+        freezeAddress: freezeAddress,
+        clawbackAddress: clawbackAddress,
+      );
 
   @override
   Future<int> estimatedTransactionSize() async {

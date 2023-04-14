@@ -15,21 +15,22 @@ class AssetConfigTransactionTransformer
     return AssetConfigTransactionResponse(
       assetId: input.assetId,
       parameters: AssetParameters(
-        decimals: input.decimals ?? 0,
+        decimals: input.params?.decimals ?? 0,
         creator: '',
-        total: input.total ?? BigInt.zero,
-        clawback: input.clawbackAddress?.encodedAddress,
-        defaultFrozen: input.defaultFrozen,
-        freeze: input.freezeAddress?.encodedAddress,
-        manager: input.managerAddress?.encodedAddress,
-        name: input.assetName,
+        total: input.params?.total ?? BigInt.zero,
+        clawback: input.params?.clawbackAddress?.encodedAddress,
+        defaultFrozen: input.params?.defaultFrozen,
+        freeze: input.params?.freezeAddress?.encodedAddress,
+        manager: input.params?.managerAddress?.encodedAddress,
+        name: input.params?.assetName,
         nameB64: '',
-        reserve: input.reserveAddress?.encodedAddress,
-        unitName: input.unitName,
+        reserve: input.params?.reserveAddress?.encodedAddress,
+        unitName: input.params?.unitName,
         unitNameB64: '',
-        url: input.url,
+        url: input.params?.url,
         urlB64: '',
-        metadataHash: const ByteArrayToB64Converter().fromJson(input.metaData),
+        metadataHash:
+            const ByteArrayToB64Converter().fromJson(input.params?.metaData),
       ),
     );
   }
