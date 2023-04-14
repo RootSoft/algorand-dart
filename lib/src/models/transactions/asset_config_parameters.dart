@@ -105,7 +105,6 @@ class AssetConfigParameters extends Equatable implements MessagePackable {
   factory AssetConfigParameters.fromJson(Map<String, dynamic> json) =>
       _$AssetConfigParametersFromJson(json);
 
-  @override
   Map<String, dynamic> toJson() => _$AssetConfigParametersToJson(this);
 
   @override

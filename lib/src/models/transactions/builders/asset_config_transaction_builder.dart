@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:algorand_dart/src/models/models.dart';
-import 'package:algorand_dart/src/models/transactions/asset_config_parameters.dart';
 import 'package:algorand_dart/src/models/transactions/builders/raw_transaction_builder.dart';
 import 'package:algorand_dart/src/utils/fee_calculator.dart';
 
