@@ -42,5 +42,5 @@ Map<String, dynamic> _$AssetConfigTransactionToJson(
       'note': const NullableByteArraySerializer().toJson(instance.note),
       'rekey': const AddressSerializer().toJson(instance.rekeyTo),
       'caid': instance.assetId,
-      'apar': instance.params,
+      'apar': instance.params?.toJson(),
     };

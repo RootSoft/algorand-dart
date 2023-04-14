@@ -7,7 +7,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'asset_config_transaction.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.kebab)
+@JsonSerializable(fieldRename: FieldRename.kebab, explicitToJson: true)
 class AssetConfigTransaction extends RawTransaction {
   /// For re-configure or destroy transactions, this is the unique asset ID.
   /// On asset creation, the ID is set to zero.
