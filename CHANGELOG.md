@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0-dev.13 - 2023-04-14
+
+- Fix: asset config params
+- 
 ## 2.0.0-dev.12 - 2023-04-14
 
 - Fix: asset config params
