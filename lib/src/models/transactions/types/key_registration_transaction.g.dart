@@ -11,6 +11,8 @@ KeyRegistrationTransaction _$KeyRegistrationTransactionFromJson(
     KeyRegistrationTransaction(
       votePK: const ParticipationKeySerializer().fromJson(json['votekey']),
       selectionPK: const VRFKeySerializer().fromJson(json['selkey']),
+      stateProofPublicKey:
+          const MerkleSignatureSerializer().fromJson(json['sprfkey']),
       voteFirst: json['votefst'] as int?,
       voteLast: json['votelst'] as int?,
       voteKeyDilution: json['votekd'] as int?,
@@ -43,6 +45,8 @@ Map<String, dynamic> _$KeyRegistrationTransactionToJson(
       'rekey': const AddressSerializer().toJson(instance.rekeyTo),
       'votekey': const ParticipationKeySerializer().toJson(instance.votePK),
       'selkey': const VRFKeySerializer().toJson(instance.selectionPK),
+      'sprfkey': const MerkleSignatureSerializer()
+          .toJson(instance.stateProofPublicKey),
       'votefst': instance.voteFirst,
       'votelst': instance.voteLast,
       'votekd': instance.voteKeyDilution,

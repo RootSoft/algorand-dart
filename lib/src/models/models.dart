@@ -1,6 +1,7 @@
 export 'accounts/account_model.dart';
 export 'addresses/address_model.dart';
 export 'addresses/address_role.dart';
+export 'keys/merkle_signature_verifier.dart';
 export 'keys/participation_public_key.dart';
 export 'keys/vrf_public_key.dart';
 export 'ledgers/ledger_supply.dart';
