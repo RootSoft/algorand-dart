@@ -264,6 +264,8 @@ void main() {
           ..sender = address
           ..votePK = ParticipationPublicKey(bytes: generateRandomBytes())
           ..selectionPK = VRFPublicKey(bytes: generateRandomBytes())
+          ..stateProofPublicKey =
+              MerkleSignatureVerifier(bytes: generateRandomBytes(null, 64))
           ..voteFirst = 322575
           ..voteLast = 323576
           ..voteKeyDilution = 10000

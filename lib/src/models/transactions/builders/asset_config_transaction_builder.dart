@@ -84,6 +84,20 @@ class AssetConfigTransactionBuilder
     metaData = base64Decode(data);
   }
 
+  AssetConfigParameters get params => AssetConfigParameters(
+        total: totalAssetsToCreate,
+        decimals: decimals,
+        defaultFrozen: defaultFrozen,
+        unitName: unitName,
+        assetName: assetName,
+        url: url,
+        metaData: metaData,
+        managerAddress: managerAddress,
+        reserveAddress: reserveAddress,
+        freezeAddress: freezeAddress,
+        clawbackAddress: clawbackAddress,
+      );
+
   @override
   Future<int> estimatedTransactionSize() async {
     return await FeeCalculator.estimateTransactionSize(

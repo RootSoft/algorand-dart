@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.0-dev.14 - 2023-04-26
+
+- State proof key
+
+## 2.0.0-dev.13 - 2023-04-14
+
+- Fix: asset config params
+
+## 2.0.0-dev.12 - 2023-04-14
+
+- Fix: asset config params
+
+## 2.0.0-dev.11 - 2023-03-27
+
+- Fix: signing msig tx as rekeyed account
+
 ## 2.0.0-dev.10 - 2023-03-21
 
 - Better support for uint64 (fee, rounds)

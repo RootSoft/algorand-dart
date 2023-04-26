@@ -13,10 +13,10 @@ packages:
     dependency: "direct main"
     description:
       name: algorand_json
-      sha256: f718e83bf2e7fb5c0246f10cda18fed0524692a4004ab2ee4495a8166893a64a
+      sha256: "0c6339e0fdb65ed1089c2ecf5260920361c00f68f4338034d0ae418e37d8adfd"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   algorand_msgpack:
     dependency: "direct main"
     description:

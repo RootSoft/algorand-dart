@@ -15,6 +15,8 @@ class KeyRegistrationTransactionTransformer extends AlgodTransformer<
       nonParticipation: null,
       selectionParticipationKey:
           const VRFKeySerializer().toJson(input.selectionPK),
+      stateProofKey:
+          const MerkleSignatureSerializer().toJson(input.stateProofPublicKey),
       voteFirstValid: input.voteFirst,
       voteLastValid: input.voteLast,
       voteKeyDilution: input.voteKeyDilution,

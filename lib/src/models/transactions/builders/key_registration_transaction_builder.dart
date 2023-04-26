@@ -10,6 +10,9 @@ class KeyRegistrationTransactionBuilder
   /// The VRF public key.
   VRFPublicKey? selectionPK;
 
+  /// The 64 byte state proof public key commitment.
+  MerkleSignatureVerifier? stateProofPublicKey;
+
   /// The first round that the participation key is valid.
   /// Not to be confused with the FirstValid round of the keyreg transaction.
   int? voteFirst;

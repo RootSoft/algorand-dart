@@ -2,10 +2,7 @@ import 'dart:typed_data';
 
 import 'package:algorand_dart/src/models/models.dart';
 import 'package:algorand_dart/src/models/transactions/builders/payment_transaction_builder.dart';
-import 'package:algorand_dart/src/utils/serializers/address_serializer.dart';
-import 'package:algorand_dart/src/utils/serializers/base32_serializer.dart';
-import 'package:algorand_dart/src/utils/serializers/bigint_serializer.dart';
-import 'package:algorand_dart/src/utils/serializers/byte_array_serializer.dart';
+import 'package:algorand_dart/src/utils/serializers/serializers.dart';
 import 'package:algorand_dart/src/utils/transformers/address_transformer.dart';
 import 'package:json_annotation/json_annotation.dart';
 

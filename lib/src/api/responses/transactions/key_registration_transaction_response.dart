@@ -14,6 +14,10 @@ class KeyRegistrationTransactionResponse {
   @JsonKey(name: 'selection-participation-key')
   final String? selectionParticipationKey;
 
+  /// Root of the state proof key (if any)
+  @JsonKey(name: 'state-proof-key')
+  final String? stateProofKey;
+
   /// First round this participation key is valid.
   @JsonKey(name: 'vote-first-valid')
   final int? voteFirstValid;
@@ -33,6 +37,7 @@ class KeyRegistrationTransactionResponse {
   KeyRegistrationTransactionResponse({
     this.nonParticipation,
     this.selectionParticipationKey,
+    this.stateProofKey,
     this.voteFirstValid,
     this.voteLastValid,
     this.voteKeyDilution,

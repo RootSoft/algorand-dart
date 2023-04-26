@@ -11,6 +11,7 @@ KeyRegistrationTransactionResponse _$KeyRegistrationTransactionResponseFromJson(
     KeyRegistrationTransactionResponse(
       nonParticipation: json['non-participation'] as bool?,
       selectionParticipationKey: json['selection-participation-key'] as String?,
+      stateProofKey: json['state-proof-key'] as String?,
       voteFirstValid: json['vote-first-valid'] as int?,
       voteLastValid: json['vote-last-valid'] as int?,
       voteKeyDilution: json['vote-key-dilution'] as int?,
@@ -22,6 +23,7 @@ Map<String, dynamic> _$KeyRegistrationTransactionResponseToJson(
     <String, dynamic>{
       'non-participation': instance.nonParticipation,
       'selection-participation-key': instance.selectionParticipationKey,
+      'state-proof-key': instance.stateProofKey,
       'vote-first-valid': instance.voteFirstValid,
       'vote-last-valid': instance.voteLastValid,
       'vote-key-dilution': instance.voteKeyDilution,

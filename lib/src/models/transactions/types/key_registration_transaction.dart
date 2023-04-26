@@ -20,6 +20,11 @@ class KeyRegistrationTransaction extends RawTransaction {
   @VRFKeySerializer()
   final VRFPublicKey? selectionPK;
 
+  /// The 64 byte state proof public key commitment.
+  @JsonKey(name: 'sprfkey')
+  @MerkleSignatureSerializer()
+  final MerkleSignatureVerifier? stateProofPublicKey;
+
   /// The first round that the participation key is valid.
   /// Not to be confused with the FirstValid round of the keyreg transaction.
   @JsonKey(name: 'votefst')
@@ -37,6 +42,7 @@ class KeyRegistrationTransaction extends RawTransaction {
   KeyRegistrationTransaction({
     this.votePK,
     this.selectionPK,
+    this.stateProofPublicKey,
     this.voteFirst,
     this.voteLast,
     this.voteKeyDilution,
@@ -68,6 +74,7 @@ class KeyRegistrationTransaction extends RawTransaction {
   KeyRegistrationTransaction.builder(KeyRegistrationTransactionBuilder builder)
       : votePK = builder.votePK,
         selectionPK = builder.selectionPK,
+        stateProofPublicKey = builder.stateProofPublicKey,
         voteFirst = builder.voteFirst,
         voteLast = builder.voteLast,
         voteKeyDilution = builder.voteKeyDilution,
@@ -89,9 +96,11 @@ class KeyRegistrationTransaction extends RawTransaction {
   Map<String, dynamic> toMessagePack() {
     final voteBytes = votePK?.bytes;
     final selBytes = selectionPK?.bytes;
+    final stateProofBytes = stateProofPublicKey?.bytes;
     final fields = super.toMessagePack();
     fields['votekey'] = voteBytes;
     fields['selkey'] = selBytes;
+    fields['sprfkey'] = stateProofBytes;
     fields['votefst'] = voteFirst;
     fields['votelst'] = voteLast;
     fields['votekd'] = voteKeyDilution;
@@ -110,6 +119,7 @@ class KeyRegistrationTransaction extends RawTransaction {
         ...super.props,
         votePK,
         selectionPK,
+        stateProofPublicKey,
         voteFirst,
         voteLast,
         voteKeyDilution,
