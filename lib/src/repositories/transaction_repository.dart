@@ -25,8 +25,8 @@ class TransactionRepository {
   Future<TransactionParams> getSuggestedTransactionParams() async {
     try {
       return await transactionService.getSuggestedTransactionParams();
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -48,8 +48,8 @@ class TransactionRepository {
       await this.waitForConfirmation(response.transactionId, timeout: timeout);
 
       return response.transactionId;
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -77,8 +77,8 @@ class TransactionRepository {
       await this.waitForConfirmation(response.transactionId, timeout: timeout);
 
       return response.transactionId;
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -102,8 +102,8 @@ class TransactionRepository {
       await this.waitForConfirmation(response.transactionId, timeout: timeout);
 
       return response.transactionId;
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -131,8 +131,8 @@ class TransactionRepository {
       await this.waitForConfirmation(response.transactionId, timeout: timeout);
 
       return response.transactionId;
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -152,8 +152,8 @@ class TransactionRepository {
         address,
         max: max,
       );
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -169,8 +169,8 @@ class TransactionRepository {
   }) async {
     try {
       return transactionService.getPendingTransactions(max: max);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -195,8 +195,8 @@ class TransactionRepository {
   ) async {
     try {
       return transactionService.getPendingTransactionById(transactionId);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -227,8 +227,8 @@ class TransactionRepository {
         await nodeService.statusAfterRound(currentRound);
         currentRound++;
       }
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
 
     throw AlgorandException(

@@ -27,9 +27,9 @@ abstract class AlgorandClient {
 
     final options = BaseOptions(
       baseUrl: apiUrl,
-      connectTimeout: connectTimeout.inMilliseconds,
-      receiveTimeout: receiveTimeout.inMilliseconds,
-      sendTimeout: sendTimeout.inMilliseconds,
+      connectTimeout: connectTimeout,
+      receiveTimeout: receiveTimeout,
+      sendTimeout: sendTimeout,
       headers: headers,
     );
 

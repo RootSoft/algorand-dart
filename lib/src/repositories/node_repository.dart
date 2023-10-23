@@ -16,8 +16,8 @@ class NodeRepository {
     try {
       final genesis = await service.genesis();
       return genesis;
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -28,7 +28,7 @@ class NodeRepository {
     try {
       await service.health();
       return true;
-    } on DioError {
+    } on DioException {
       return false;
     }
   }
@@ -40,8 +40,8 @@ class NodeRepository {
   Future<NodeStatus> status() async {
     try {
       return await service.status();
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -57,8 +57,8 @@ class NodeRepository {
   Future<NodeStatus> statusAfterRound(int round) async {
     try {
       return await service.statusAfterRound(round);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -69,8 +69,8 @@ class NodeRepository {
   Future<LedgerSupply> supply() async {
     try {
       return await service.supply();
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 }
