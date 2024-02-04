@@ -8,7 +8,7 @@ part of 'account_lookup_response.dart';
 
 AccountResponse _$AccountResponseFromJson(Map<String, dynamic> json) =>
     AccountResponse(
-      currentRound: json['current-round'] as int,
+      currentRound: json['current-round'] as int?,
       account:
           AccountInformation.fromJson(json['account'] as Map<String, dynamic>),
     );
