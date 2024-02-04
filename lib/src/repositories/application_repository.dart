@@ -21,8 +21,8 @@ class ApplicationRepository {
   Future<TealCompilation> compileTEAL(String sourceCode) async {
     try {
       return await applicationService.compileTEAL(sourceCode);
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 
@@ -34,8 +34,8 @@ class ApplicationRepository {
   Future<DryRunResponse> dryrun(DryRunRequest request) async {
     try {
       return await applicationService.dryrun(request.toMessagePack());
-    } on DioError catch (ex) {
-      throw AlgorandException(message: ex.message, cause: ex);
+    } on DioException catch (ex) {
+      throw AlgorandException(message: ex.message!, cause: ex);
     }
   }
 }

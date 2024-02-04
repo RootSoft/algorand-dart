@@ -15,10 +15,10 @@ class AlgorandException implements Exception {
     this.cause,
   }) : _message = message;
 
-  factory AlgorandException.fromDioError(DioError error) {
+  factory AlgorandException.fromDioError(DioException error) {
     return AlgorandException(
       statusCode: error.response?.statusCode,
-      message: error.message,
+      message: error.message!,
       cause: error,
     );
   }

@@ -563,7 +563,9 @@ class Algorand {
   Future<BigInt> getBalance(String address) async {
     final response = await _indexer.getAccountByAddress(address);
 
-    return response.account.amountWithoutPendingRewards;
+    return response.account != null
+        ? response.account!.amountWithoutPendingRewards
+        : BigInt.zero;
   }
 
   /// Get the list of pending transactions by address, sorted by priority,
